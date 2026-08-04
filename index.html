@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>PIBO AR</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script type="module"
+src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+</script>
+
+</head>
+
+<body>
+
+<!-- Loading -->
+
+<div id="loading">
+
+<div class="loader"></div>
+
+<div class="loading-text">
+
+درحال آماده سازی...
+
+</div>
+
+<div class="progress">
+
+<div id="progressBar"></div>
+
+</div>
+
+</div>
+
+<!-- Main -->
+
+<div id="app">
+
+<header>
+
+<img src="assets/logo.png"
+
+class="logo">
+
+</header>
+
+<section class="card">
+
+<h1 id="pizzaName">
+
+...
+
+</h1>
+
+<p id="pizzaDesc">
+
+...
+
+</p>
+
+<model-viewer
+
+id="viewer"
+
+poster=""
+
+src=""
+
+ios-src=""
+
+ar
+
+camera-controls
+
+auto-rotate
+
+shadow-intensity="1.4"
+
+environment-image="neutral"
+
+tone-mapping="aces"
+
+exposure="1.1"
+
+ar-modes="scene-viewer quick-look webxr">
+
+</model-viewer>
+
+<div class="info">
+
+<div>
+
+🍕
+
+قطر
+
+<span id="pizzaSize"></span>
+
+</div>
+
+<div>
+
+⚖️
+
+وزن
+
+<span id="pizzaWeight"></span>
+
+</div>
+
+</div>
+
+<button id="arButton">
+
+مشاهده روی میز
+
+</button>
+
+</section>
+
+<footer>
+
+Pibo © 2026
+
+</footer>
+
+</div>
+
+<script src="data.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
