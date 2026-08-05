@@ -95,19 +95,16 @@ const fakeLoading = setInterval(() => {
 // Model Loaded
 // =====================================
 
-viewer.addEventListener("load", () => {
+if(pizza.glb){
 
-    clearInterval(fakeLoading);
+    viewer.src=pizza.glb;
 
-    progress.style.width = "100%";
+}
+else{
 
-    setTimeout(() => {
+    showPlaceholder();
 
-        loading.style.opacity = "0";
-
-        setTimeout(() => {
-
-            loading.style.display = "none";
+}
 
             app.style.display = "block";
 
