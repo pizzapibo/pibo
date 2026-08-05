@@ -66,11 +66,23 @@ weight.innerText = pizza.weight;
 
 // مدل سه بعدی
 
-viewer.src = pizza.glb;
+if (pizza.glb) {
 
-viewer.setAttribute("ios-src", pizza.usdz);
+    viewer.src = pizza.glb;
 
-viewer.poster = pizza.poster;
+}
+
+if (pizza.usdz) {
+
+    viewer.setAttribute("ios-src", pizza.usdz);
+
+}
+
+if (pizza.poster) {
+
+    viewer.poster = pizza.poster;
+
+}
 
 // لودینگ
 
@@ -112,14 +124,6 @@ window.addEventListener("load", () => {
         },400);
 
     },800);
-
-});
-
-            app.style.display = "block";
-
-        },500);
-
-    },300);
 
 });
 
