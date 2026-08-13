@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF5A1F">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<title>پنل مدیریت | پیبو</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-screen">
+  <div class="auth-card">
+    <div class="mark site-logo-mark" style="border-radius:16px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:1.4rem">پ</div>
+    <h1>پنل مدیریت پیبو</h1>
+    <p>برای ورود، رمز عبور را وارد کنید</p>
+    <form data-auth-form>
+      <div class="field">
+        <input type="password" name="password" placeholder="رمز عبور" autocomplete="off" required>
+      </div>
+      <div class="auth-error" data-auth-error></div>
+      <button type="submit" class="btn btn-primary">ورود</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-shell">
+  <div class="admin-top">
+    <div class="container">
+      <span class="logo"><span class="mark site-logo-mark">پ</span> پنل پیبو</span>
+      <button class="btn btn-outline" data-logout>خروج</button>
+    </div>
+  </div>
+
+  <div class="admin-main">
+    <div class="container">
+
+      <div class="admin-panel" data-publish-bar>
+        <h2>وضعیت انتشار</h2>
+        <p class="sub" data-publish-status>—</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button type="button" class="btn btn-primary" data-publish-github hidden>انتشار مستقیم روی گیت‌هاب</button>
+          <button type="button" class="btn btn-outline" data-publish-download>دانلود فایل به‌روز (store.json)</button>
+          <button type="button" class="btn btn-outline" data-publish-discard>بازگشت به نسخه‌ی منتشرشده</button>
+          <span data-publish-github-status style="font-size:.85rem;font-weight:700"></span>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <h2>انتشار مستقیم روی گیت‌هاب (اختیاری)</h2>
+        <p class="sub">این رو یک‌بار پر کن تا دیگه لازم نباشه دستی فایل رو دانلود و Push کنی — با زدن «انتشار مستقیم»، تغییرات مستقیماً روی ریپازیتوری گیت‌هابت ذخیره می‌شه و خودِ گیت‌هاب سایت رو آپدیت می‌کنه. اطلاعات این فرم فقط توی همین مرورگر شما ذخیره می‌شه، جای دیگه‌ای فرستاده نمی‌شه.</p>
+        <form data-github-form class="order-form">
+          <div class="grid-2">
+            <div class="field">
+              <label for="gh-owner">یوزرنیم گیت‌هاب</label>
+              <input id="gh-owner" name="owner" type="text" placeholder="مثلاً pizzapibo">
+            </div>
+            <div class="field">
+              <label for="gh-repo">اسم ریپازیتوری</label>
+              <input id="gh-repo" name="repo" type="text" placeholder="مثلاً pizzapibo">
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="gh-branch">شاخه (branch)</label>
+              <input id="gh-branch" name="branch" type="text" placeholder="main" value="main">
+            </div>
+            <div class="field">
+              <label for="gh-token">GitHub Token</label>
+              <input id="gh-token" name="token" type="password" placeholder="ghp_xxxxxxxxxxxx">
+            </div>
+          </div>
+          <p class="sub" style="margin-bottom:16px">
+            راهنمای ساخت توکن: گیت‌هاب → عکس پروفایل → <b>Settings</b> → پایین صفحه <b>Developer settings</b> → <b>Personal access tokens → Fine-grained tokens</b> → <b>Generate new token</b>. زیر «Repository access» فقط همین یک ریپو رو انتخاب کن، زیر «Permissions» بخش <b>Contents</b> رو روی <b>Read and write</b> بذار، بسازش و همون‌جا کپی کن (فقط یک‌بار نشونش می‌ده).
+          </p>
+          <div style="display:flex;gap:12px">
+            <button type="submit" class="btn btn-primary">ذخیره اطلاعات گیت‌هاب</button>
+            <button type="button" class="btn btn-outline" data-github-clear>پاک کردن</button>
+          </div>
+          <span data-github-form-status style="margin-right:12px;font-size:.85rem;color:var(--ink-soft)"></span>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h2>لوگوی سایت</h2>
+        <p class="sub">این عکس به‌جای دایره‌ی نارنجیِ حرف «پ»، کنار اسم PIBO در هدر همه‌ی صفحات نشون داده می‌شه. برای حذفش، فیلد رو خالی بذار و ذخیره کن.</p>
+        <form data-hero-form class="order-form">
+          <div class="field">
+            <label for="hero-image">آدرس تصویر لوگو</label>
+            <input id="hero-image" name="logoImage" type="text" placeholder="https://... یا assets/images/logo.png">
+          </div>
+          <button type="submit" class="btn btn-primary">ذخیره لوگو</button>
+          <span data-hero-status style="margin-right:12px;font-size:.85rem;color:var(--ink-soft)"></span>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h2>آمار فروش</h2>
+        <p class="sub">بر اساس سفارش‌های ثبت‌شده در پایگاه‌داده.</p>
+        <div data-stats-grid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px">
+          <div style="background:var(--cream);border-radius:14px;padding:18px;text-align:center">
+            <div style="font-size:1.5rem;font-weight:900;color:var(--orange-dark)" data-stat="today-count">—</div>
+            <div style="font-size:.8rem;color:var(--ink-soft)">سفارش امروز</div>
+          </div>
+          <div style="background:var(--cream);border-radius:14px;padding:18px;text-align:center">
+            <div style="font-size:1.5rem;font-weight:900;color:var(--orange-dark)" data-stat="today-total">—</div>
+            <div style="font-size:.8rem;color:var(--ink-soft)">فروش امروز</div>
+          </div>
+          <div style="background:var(--cream);border-radius:14px;padding:18px;text-align:center">
+            <div style="font-size:1.5rem;font-weight:900;color:var(--orange-dark)" data-stat="week-count">—</div>
+            <div style="font-size:.8rem;color:var(--ink-soft)">سفارش این هفته</div>
+          </div>
+          <div style="background:var(--cream);border-radius:14px;padding:18px;text-align:center">
+            <div style="font-size:1.5rem;font-weight:900;color:var(--orange-dark)" data-stat="week-total">—</div>
+            <div style="font-size:.8rem;color:var(--ink-soft)">فروش این هفته</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <h2>ساعات کاری</h2>
+        <p class="sub">خارج از این بازه، فرم سفارش روی سایت غیرفعال می‌شود و پیام «بسته‌ایم» نشان داده می‌شود. برای غیرفعال کردن این محدودیت، هر دو فیلد را خالی بگذارید و ذخیره کنید.</p>
+        <form data-hours-form class="order-form">
+          <div class="grid-2">
+            <div class="field">
+              <label for="open-time">ساعت باز شدن</label>
+              <input id="open-time" name="openTime" type="time">
+            </div>
+            <div class="field">
+              <label for="close-time">ساعت بسته شدن</label>
+              <input id="close-time" name="closeTime" type="time">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">ذخیره ساعات کاری</button>
+          <span data-hours-status style="margin-right:12px;font-size:.85rem;color:var(--ink-soft)"></span>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h2>دسته‌بندی‌های منو</h2>
+        <p class="sub">اینجا می‌تونی دسته‌بندی جدید اضافه کنی، حذف کنی، یا ترتیبشون رو (همون ترتیبی که توی سایت نشون داده می‌شن) عوض کنی.</p>
+        <div data-category-chips style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px"></div>
+        <form data-category-form style="display:flex;gap:10px;flex-wrap:wrap">
+          <input name="newCategory" type="text" placeholder="اسم دسته‌بندی جدید" style="flex:1;min-width:180px;padding:12px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--cream)">
+          <button type="submit" class="btn btn-primary">افزودن دسته‌بندی</button>
+        </form>
+      </div>
+
+      <div class="admin-panel">
+        <h2>مدیریت منو</h2>
+        <p class="sub">افزودن، ویرایش و حذف پیتزا، نوشیدنی، سیب‌زمینی و دسر — تغییرات فوراً روی سایت اعمال می‌شود.</p>
+
+        <form data-product-form class="order-form" style="margin-bottom:30px">
+          <h3 data-product-form-title style="font-size:1.05rem;font-weight:900;margin-bottom:16px">افزودن مورد جدید</h3>
+          <div class="grid-2">
+            <div class="field">
+              <label for="p-name">نام</label>
+              <input id="p-name" name="name" type="text" placeholder="مثلاً مارگاریتا" required>
+            </div>
+            <div class="field">
+              <label for="p-category">دسته‌بندی</label>
+              <select id="p-category" name="category" required data-category-select></select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="p-price">قیمت (تومان)</label>
+              <input id="p-price" name="price" type="number" min="0" step="1000" placeholder="185000" required>
+            </div>
+            <div class="field">
+              <label for="p-diameter">قطر (سانتی‌متر — اختیاری)</label>
+              <input id="p-diameter" name="diameter" type="number" min="0" step="1" placeholder="مثلاً 30">
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="p-emoji">آیکون (وقتی عکس نداری)</label>
+              <input id="p-emoji" name="emoji" type="text" placeholder="🍕" maxlength="4">
+            </div>
+            <div class="field"></div>
+          </div>
+          <div class="field">
+            <label for="p-image">آدرس تصویر (اختیاری — به‌جای آیکون نشون داده می‌شه)</label>
+            <input id="p-image" name="image" type="text" placeholder="https://... یا assets/images/margherita.jpg">
+          </div>
+          <div class="field">
+            <label for="p-desc">توضیحات</label>
+            <textarea id="p-desc" name="desc" placeholder="مواد اولیه و توضیح کوتاه"></textarea>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="p-glb">فایل GLB (اختیاری — فقط برای پیتزا با AR)</label>
+              <input id="p-glb" name="glb" type="text" placeholder="models/margherita.glb">
+            </div>
+            <div class="field">
+              <label for="p-usdz">فایل USDZ (اختیاری — فقط برای پیتزا با AR)</label>
+              <input id="p-usdz" name="usdz" type="text" placeholder="models/margherita.usdz">
+            </div>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button type="submit" class="btn btn-primary">ذخیره</button>
+            <button type="button" class="btn btn-outline" data-product-cancel hidden>لغو ویرایش</button>
+          </div>
+        </form>
+
+        <div class="table-scroll">
+          <table class="orders-table" style="margin-bottom:14px">
+            <thead>
+              <tr><th>نام</th><th>دسته</th><th>قیمت</th><th>قطر</th><th>عملیات</th></tr>
+            </thead>
+            <tbody data-products-body></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <h2>کد QR هر پیتزا</h2>
+        <p class="sub">این کدها را کنار هر پیتزا در منوی فیزیکی یا میز مشتری قرار دهید تا مستقیم به مشاهده سه‌بعدی همان پیتزا برسند.</p>
+        <div class="qr-grid" data-qr-grid></div>
+      </div>
+
+      <div class="admin-panel">
+        <h2>سفارش‌های اخیر</h2>
+        <p class="sub">همه سفارش‌هایی که مشتری‌ها از هر مرورگر یا دستگاهی ثبت کرده‌اند، اینجا نمایش داده می‌شود.</p>
+        <div class="table-scroll">
+          <table class="orders-table">
+            <thead>
+              <tr><th>نام</th><th>تماس</th><th>سفارش</th><th>مبلغ</th><th>تاریخ</th><th>پیام سریع</th></tr>
+            </thead>
+            <tbody data-orders-body></tbody>
+          </table>
+        </div>
+        <div class="orders-empty" data-orders-empty>هنوز سفارشی ثبت نشده است.</div>
+      </div>
+
+      <div class="admin-panel">
+        <h2>راهنمای اتصال مدل سه‌بعدی</h2>
+        <p class="sub">
+          ۱. پیتزا را در Luma AI اسکن کرده و خروجی GLB و USDZ بگیرید.<br>
+          ۲. فایل‌ها را داخل پوشه <code>models</code> پروژه قرار دهید.<br>
+          ۳. هنگام افزودن یا ویرایش پیتزا در همین پنل، نام فایل‌های glb و usdz را وارد کنید.<br>
+          ۴. پروژه را روی گیت‌هاب Push کنید — GitHub Pages به‌صورت خودکار سایت را به‌روزرسانی می‌کند.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/store.js"></script>
+<script src="js/products.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/products.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

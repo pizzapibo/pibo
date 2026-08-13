@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF5A1F">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="پیبو">
+<title>پیبو | پیتزای واقعی، تجربه سه‌بعدی</title>
+<meta name="description" content="پیبو — پیتزای دست‌پخت با امکان مشاهده سه‌بعدی و واقعیت افزوده پیش از سفارش. سفارش آنلاین و ارسال سریع.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="#" class="logo"><span class="mark site-logo-mark" id="site-logo-mark">پ</span> PIBO</a>
+    <nav class="nav-links">
+      <a href="#menu">منو</a>
+      <a href="#ar">واقعیت افزوده</a>
+      <a href="#order">سفارش</a>
+      <a href="#faq">سوالات</a>
+      <a href="#contact">تماس</a>
+      <a href="admin.html">پنل</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#faq" class="btn btn-outline">راهنما</a>
+      <a href="#order" class="btn btn-primary">سفارش آنلاین</a>
+      <button class="menu-toggle" aria-label="باز کردن منو"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <div class="mobile-nav-top">
+    <span class="logo"><span class="mark site-logo-mark">پ</span> PIBO</span>
+    <button class="close-mn" aria-label="بستن منو">✕</button>
+  </div>
+  <a href="#menu"><span class="mn-ic">🍕</span> منو</a>
+  <a href="#ar"><span class="mn-ic">✦</span> واقعیت افزوده</a>
+  <a href="#order"><span class="mn-ic">🛒</span> سفارش</a>
+  <a href="#faq"><span class="mn-ic">؟</span> سوالات</a>
+  <a href="#contact"><span class="mn-ic">☎</span> تماس</a>
+  <a href="admin.html"><span class="mn-ic">⚙</span> پنل</a>
+  <a href="#order" class="btn btn-primary mn-cta">سفارش آنلاین</a>
+</nav>
+
+<!-- ================= MENU ================= -->
+<section class="section" id="menu" style="padding-top:150px">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span> منوی پیبو</span>
+      <h2>پیتزا، نوشیدنی، سیب‌زمینی و دسر</h2>
+      <p>هر پیتزا با علامت AR قابل مشاهده سه‌بعدی است — دکمه «مشاهده سه‌بعدی» را بزنید.</p>
+    </div>
+    <div class="menu-tabs" data-menu-tabs></div>
+    <div class="menu-sections" data-menu-grid></div>
+  </div>
+</section>
+
+<!-- ================= AR SHOWCASE ================= -->
+<section class="section alt" id="ar">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">واقعیت افزوده</span>
+      <h2>پیتزا را با اندازه واقعی ببینید</h2>
+      <p>مدل‌های سه‌بعدی پیبو با اسکن واقعی هر پیتزا ساخته شده‌اند تا اندازه، رنگ و بافت را دقیقاً همان‌طور که هست ببینید.</p>
+    </div>
+    <div class="ar-showcase">
+      <div class="ar-steps reveal-right">
+        <div class="ar-step">
+          <div class="num">۱</div>
+          <div><h4>یک پیتزا از منو انتخاب کنید</h4><p>روی دکمه «مشاهده سه‌بعدی» کنار هر پیتزا بزنید.</p></div>
+        </div>
+        <div class="ar-step">
+          <div class="num">۲</div>
+          <div><h4>مدل را در فضای واقعی قرار دهید</h4><p>در آیفون از Quick Look و در اندروید از Scene Viewer به‌صورت خودکار استفاده می‌شود.</p></div>
+        </div>
+        <div class="ar-step">
+          <div class="num">۳</div>
+          <div><h4>با اندازه واقعی مقایسه کنید</h4><p>مدل با مقیاس دقیق قفل شده تا اندازه واقعی پیتزا را روی میز خود ببینید.</p></div>
+        </div>
+      </div>
+      <div class="ar-frame reveal-scale">
+        <div class="qr-box" id="home-qr"></div>
+        <span class="qr-hint">با گوشی اسکن کنید</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ORDER ================= -->
+<section class="section" id="order">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">سفارش آنلاین</span>
+      <h2>سفارش خودتان را کامل کنید</h2>
+      <p>پیتزاهای دلخواه را از منو اضافه کنید، اطلاعات ارسال را وارد کنید و سفارش مستقیم برای ما در واتس‌اپ ارسال می‌شود.</p>
+    </div>
+
+    <div class="order-wrap reveal">
+      <div class="order-form">
+        <h3 style="font-size:1.2rem;font-weight:900;margin-bottom:18px">سبد سفارش شما</h3>
+        <div class="cart-list" data-cart-list></div>
+        <div class="cart-summary" data-cart-summary style="display:none"></div>
+
+        <form data-order-form>
+          <div class="field">
+            <label for="name">نام و نام خانوادگی</label>
+            <input id="name" name="name" type="text" placeholder="مثلاً علی رضایی" required>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="phone">شماره تماس</label>
+              <input id="phone" name="phone" type="tel" placeholder="09xxxxxxxxx" required>
+            </div>
+            <div class="field">
+              <label for="address">آدرس</label>
+              <input id="address" name="address" type="text" placeholder="آدرس ارسال" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="notes">توضیحات (اختیاری)</label>
+            <textarea id="notes" name="notes" placeholder="مثلاً بدون قارچ، زنگ نزنید و..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">ثبت سفارش در واتس‌اپ</button>
+        </form>
+      </div>
+
+      <div class="order-side">
+        <h3>افزودن سریع</h3>
+        <p>روی هرکدام از پیتزاها بزنید تا مستقیم به سبد سفارش اضافه شود.</p>
+        <div class="pick-list" data-pick-list></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section alt" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">سوالات متداول</span>
+      <h2>هر چیزی که باید بدانید</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>مشاهده سه‌بعدی روی چه گوشی‌هایی کار می‌کند؟</summary>
+        <p>روی آیفون (سافاری) با Quick Look و روی اندروید (کروم) با Scene Viewer به‌صورت خودکار باز می‌شود، بدون نیاز به نصب اپلیکیشن.</p>
+      </details>
+      <details class="faq-item">
+        <summary>آیا اندازه پیتزا در مدل سه‌بعدی واقعی است؟</summary>
+        <p>بله، مدل‌ها از اسکن واقعی پیتزا گرفته شده و با مقیاس قفل‌شده نمایش داده می‌شوند تا اندازه دقیق را ببینید.</p>
+      </details>
+      <details class="faq-item">
+        <summary>هزینه ارسال چقدر است؟</summary>
+        <p>هزینه ارسال بسته به منطقه هنگام هماهنگی سفارش در واتس‌اپ اعلام می‌شود.</p>
+      </details>
+      <details class="faq-item">
+        <summary>چطور می‌توانم سفارش بدهم؟</summary>
+        <p>از بخش منو پیتزاهای موردنظر را انتخاب کنید، فرم سفارش را تکمیل کنید؛ سفارش شما به‌صورت آماده برای واتس‌اپ ارسال می‌شود.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-band reveal-scale">
+      <h2>گرسنه‌اید؟ همین حالا پیام بدهید</h2>
+      <p>تیم پیبو در واتس‌اپ پاسخگوی شماست</p>
+      <div class="contact-buttons">
+        <a href="#" data-whatsapp-link target="_blank" class="btn">واتس‌اپ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="logo" style="color:#fff;margin-bottom:14px"><span class="mark site-logo-mark">پ</span> PIBO</a>
+        <p style="color:#cbbfae;font-size:.9rem;line-height:1.9;max-width:280px">پیتزای دست‌پخت با تجربه مشاهده سه‌بعدی پیش از سفارش.</p>
+      </div>
+      <div>
+        <h4>دسترسی سریع</h4>
+        <ul>
+          <li><a href="#menu">منو</a></li>
+          <li><a href="#ar">واقعیت افزوده</a></li>
+          <li><a href="#order">سفارش</a></li>
+          <li><a href="#faq">سوالات</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>ارتباط با ما</h4>
+        <div class="footer-social">
+          <a href="#" data-whatsapp-link target="_blank">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.3 7.6L3 20l1-5.4A8.5 8.5 0 1121 11.5z"/><path d="M8.5 10.5c.3 2.5 2.5 4.7 5 5"/></svg></span>
+            واتس‌اپ: 09140909878
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© پیبو — تمامی حقوق محفوظ است</span>
+      <span>ساخته‌شده با ❤ برای عاشقان پیتزا</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#order" class="btn btn-primary quick-order-fab" data-quick-order>سفارش سریع 🍕</a>
+
+<script src="js/store.js"></script>
+<script src="js/products.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/main.js"></script>
+<script>
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>

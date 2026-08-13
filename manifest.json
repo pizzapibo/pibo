@@ -1,0 +1,19 @@
+{
+  "name": "پیبو | PIBO",
+  "short_name": "پیبو",
+  "description": "پیتزای دست‌پخت با پیش‌نمایش سه‌بعدی و واقعیت افزوده",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFDF8",
+  "theme_color": "#FF5A1F",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
