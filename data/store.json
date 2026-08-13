@@ -1,0 +1,26 @@
+{
+  "products": {
+    "مارگاریتا": {
+      "name": "مارگاریتا",
+      "category": "ناپولیتن",
+      "desc": "تست",
+      "price": 580000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": 24,
+      "glb": "models/textured_mesh_medpoly_glb.glb",
+      "usdz": "models/Untitled Object.usdz"
+    }
+  },
+  "settings": {
+    "categories": [
+      "نوشیدنی",
+      "سیب‌زمینی",
+      "دسر",
+      "ایتالیایی",
+      "ناپولیتن"
+    ],
+    "openTime": "12:00",
+    "closeTime": "00:00"
+  }
+}
