@@ -350,9 +350,33 @@ function fillPickListAndQr(){
     const firstPizza = availableProducts.find(p => p.arEnabled !== false);
     if(firstPizza){
       const url = location.href.replace(/index\.html.*$/, "").replace(/\/?$/, "/") + `ar.html?pizza=${firstPizza.id}`;
-      qrHolder.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=6&data=${encodeURIComponent(url)}" width="160" height="160" alt="کد QR مشاهده سه‌بعدی">`;
+      renderQrLocally(qrHolder, url);
     }else{
       qrHolder.innerHTML = `<span style="color:var(--ink-soft);font-size:.85rem;padding:20px">پس از افزودن یک پیتزا، کد QR اینجا نمایش داده می‌شود</span>`;
     }
+  }
+}
+
+// Generates the QR code fully client-side (no external service call).
+// The previous version fetched an image from api.qrserver.com — a
+// third-party domain that's often unreachable in Iran, so the QR box
+// spun forever whenever that domain was filtered. Rendering the code
+// ourselves with a bundled library removes that dependency entirely.
+function renderQrLocally(container, text){
+  try{
+    if(typeof qrcode === "undefined") throw new Error("qrcode lib missing");
+    const qr = qrcode(0, "M"); // type 0 = auto-detect smallest size
+    qr.addData(text);
+    qr.make();
+    container.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2 });
+    const svg = container.querySelector("svg");
+    if(svg){
+      svg.setAttribute("width", "160");
+      svg.setAttribute("height", "160");
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", "کد QR مشاهده سه‌بعدی");
+    }
+  }catch(e){
+    container.innerHTML = `<span style="color:var(--ink-soft);font-size:.8rem;padding:20px">ساخت کد QR ممکن نشد</span>`;
   }
 }
