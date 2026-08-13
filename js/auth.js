@@ -268,6 +268,7 @@ async function initProductManager(){
     const diameter = parseInt(form.querySelector("[name=diameter]").value, 10) || null;
     const emoji = form.querySelector("[name=emoji]").value.trim() || pibo_defaultEmoji(category);
     const image = form.querySelector("[name=image]").value.trim();
+    const arEnabled = form.querySelector("[name=arEnabled]").checked;
     const glbName = form.querySelector("[name=glb]").value.trim();
     const usdzName = form.querySelector("[name=usdz]").value.trim();
 
@@ -282,9 +283,9 @@ async function initProductManager(){
     try{
       const id = pibo_editingId || pibo_slugify(name);
       await pibo_saveProduct({
-        name, category, desc, price, emoji, image, diameter,
-        glb: glbName || (category === "پیتزا" ? `models/${id}.glb` : ""),
-        usdz: usdzName || (category === "پیتزا" ? `models/${id}.usdz` : "")
+        name, category, desc, price, emoji, image, diameter, arEnabled,
+        glb: glbName || (arEnabled ? `models/${id}.glb` : ""),
+        usdz: usdzName || (arEnabled ? `models/${id}.usdz` : "")
       }, pibo_editingId || id);
 
       pibo_markChanged();
@@ -334,7 +335,7 @@ function renderProductTable(products){
     const available = p.available !== false;
     return `
     <tr style="${available ? "" : "opacity:.55"}">
-      <td>${p.image ? `<img src="${p.image}" alt="" style="width:32px;height:32px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-left:8px">` : (p.emoji || "🍽️") + " "}${p.name}</td>
+      <td>${p.image ? `<img src="${p.image}" alt="" style="width:32px;height:32px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-left:8px">` : (p.emoji || "🍽️") + " "}${p.name}${p.arEnabled !== false ? ` <span style="font-size:.7rem;background:var(--green);color:#fff;padding:2px 8px;border-radius:100px;font-family:'Fredoka','Vazirmatn',sans-serif">AR</span>` : ""}</td>
       <td style="font-size:.8rem;color:var(--ink-soft)">${p.category || "پیتزا"}</td>
       <td>${pibo_formatPrice(p.price)}</td>
       <td style="font-size:.85rem;color:var(--ink-soft)">${p.diameter ? p.diameter + " سانتی‌متر" : "—"}</td>
@@ -391,6 +392,7 @@ function startEditProduct(id, products){
   form.querySelector("[name=diameter]").value = product.diameter || "";
   form.querySelector("[name=emoji]").value = product.emoji || "";
   form.querySelector("[name=image]").value = product.image || "";
+  form.querySelector("[name=arEnabled]").checked = product.arEnabled !== false;
   form.querySelector("[name=glb]").value = product.glb || "";
   form.querySelector("[name=usdz]").value = product.usdz || "";
 
@@ -417,7 +419,7 @@ function renderQrGrid(products){
   const grid = document.querySelector("[data-qr-grid]");
   if(!grid) return;
   const base = location.origin + location.pathname.replace(/[^/]*$/, "");
-  const pizzas = products.filter(p => (p.category || "پیتزا") === "پیتزا");
+  const pizzas = products.filter(p => p.arEnabled !== false);
 
   if(!pizzas.length){
     grid.innerHTML = `<p style="color:var(--ink-soft)">بعد از افزودن پیتزا، کد QR آن اینجا نمایش داده می‌شود.</p>`;

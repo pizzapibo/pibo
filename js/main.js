@@ -143,18 +143,18 @@ async function renderMenu(){
         <h3 class="menu-category-title reveal">${cat}</h3>
         <div class="menu-grid stagger">
           ${items.map((p, i) => {
-            const isPizza = (p.category || "پیتزا") === "پیتزا";
+            const hasAr = p.arEnabled !== false;
             return `
             <div class="pizza-card reveal" style="--i:${i % 6}">
               <div class="media" ${p.image ? `style="background-image:url('${p.image}');background-size:cover;background-position:center;"` : ""}>
-                ${isPizza ? `<span class="badge-ar">✦ مشاهده در AR</span>` : ""}
+                ${hasAr ? `<span class="badge-ar">✦ مشاهده در AR</span>` : ""}
                 ${p.image ? "" : `<span>${p.emoji || "🍽️"}</span>`}
               </div>
               <div class="body">
                 <h3>${p.name} <span class="price">${pibo_formatPrice(p.price)}</span></h3>
                 <p>${p.desc || ""}${p.diameter ? ` <span style="color:var(--ink-soft)">· قطر ${p.diameter} سانتی‌متر</span>` : ""}</p>
                 <div class="actions">
-                  ${isPizza ? `<a class="btn btn-outline" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
+                  ${hasAr ? `<a class="btn btn-outline" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
                   <button class="btn btn-primary" data-add="${p.id}">افزودن به سفارش</button>
                 </div>
               </div>
@@ -347,7 +347,7 @@ function fillPickListAndQr(){
 
   const qrHolder = document.getElementById("home-qr");
   if(qrHolder){
-    const firstPizza = availableProducts.find(p => (p.category || "پیتزا") === "پیتزا");
+    const firstPizza = availableProducts.find(p => p.arEnabled !== false);
     if(firstPizza){
       const url = location.href.replace(/index\.html.*$/, "").replace(/\/?$/, "/") + `ar.html?pizza=${firstPizza.id}`;
       qrHolder.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=6&data=${encodeURIComponent(url)}" width="160" height="160" alt="کد QR مشاهده سه‌بعدی">`;

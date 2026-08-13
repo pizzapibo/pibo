@@ -191,13 +191,17 @@
             <label for="p-desc">توضیحات</label>
             <textarea id="p-desc" name="desc" placeholder="مواد اولیه و توضیح کوتاه"></textarea>
           </div>
+          <div class="field" style="display:flex;align-items:center;gap:10px">
+            <input id="p-ar" name="arEnabled" type="checkbox" checked style="width:20px;height:20px">
+            <label for="p-ar" style="margin:0">این مورد مشاهده سه‌بعدی (AR) داره — مستقل از دسته‌بندیه، هر مورد (حتی توی دسته‌های شخصی‌سازی‌شده) می‌تونه AR داشته باشه</label>
+          </div>
           <div class="grid-2">
             <div class="field">
-              <label for="p-glb">فایل GLB (اختیاری — فقط برای پیتزا با AR)</label>
+              <label for="p-glb">فایل GLB (اختیاری)</label>
               <input id="p-glb" name="glb" type="text" placeholder="models/margherita.glb">
             </div>
             <div class="field">
-              <label for="p-usdz">فایل USDZ (اختیاری — فقط برای پیتزا با AR)</label>
+              <label for="p-usdz">فایل USDZ (اختیاری)</label>
               <input id="p-usdz" name="usdz" type="text" placeholder="models/margherita.usdz">
             </div>
           </div>
