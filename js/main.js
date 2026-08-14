@@ -261,6 +261,8 @@ function initOrderForm(){
   const form = document.querySelector("[data-order-form]");
   if(!form) return;
 
+  prefillCustomerInfo(form);
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const entries = Object.entries(PIBO_CART);
@@ -277,6 +279,8 @@ function initOrderForm(){
       alert("لطفاً نام، شماره تماس و آدرس را وارد کنید.");
       return;
     }
+
+    saveCustomerInfo({ name, phone, address });
 
     let total = 0;
     const lines = entries.map(([id, qty]) => {
@@ -313,6 +317,26 @@ function initOrderForm(){
     const url = `https://wa.me/${PIBO_WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   });
+}
+
+/* remember name/phone/address in this browser so returning customers
+   don't have to retype them on their next order */
+const PIBO_CUSTOMER_KEY = "pibo_customer_info";
+
+function prefillCustomerInfo(form){
+  try{
+    const saved = JSON.parse(localStorage.getItem(PIBO_CUSTOMER_KEY) || "null");
+    if(!saved) return;
+    if(saved.name) form.querySelector("[name=name]").value = saved.name;
+    if(saved.phone) form.querySelector("[name=phone]").value = saved.phone;
+    if(saved.address) form.querySelector("[name=address]").value = saved.address;
+  }catch(e){ /* storage unavailable, skip silently */ }
+}
+
+function saveCustomerInfo({ name, phone, address }){
+  try{
+    localStorage.setItem(PIBO_CUSTOMER_KEY, JSON.stringify({ name, phone, address }));
+  }catch(e){ /* storage unavailable, skip silently */ }
 }
 
 /* store the order in this browser only — WhatsApp (opened right after) is
