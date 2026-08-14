@@ -2,11 +2,13 @@
    PIBO — main.js
 =========================================================== */
 const PIBO_WHATSAPP = "989140909878";
+let PIBO_PRODUCTS = []; // populated on load — used by cart, order total, quick-add chips
 
 document.addEventListener("DOMContentLoaded", async () => {
   initHeader();
   initMobileNav();
   initReveal();
+  PIBO_PRODUCTS = await pibo_getProducts();
   await renderMenu();
   initOrderForm();
   initSocialLinks();
@@ -110,7 +112,7 @@ async function renderMenu(){
   if(!grid) return;
 
   grid.innerHTML = `<p style="color:var(--ink-soft);text-align:center">در حال دریافت منو…</p>`;
-  const allProducts = await pibo_getProducts();
+  const allProducts = PIBO_PRODUCTS.length ? PIBO_PRODUCTS : (PIBO_PRODUCTS = await pibo_getProducts());
   const products = allProducts.filter(p => p.available !== false);
 
   if(!products.length){
