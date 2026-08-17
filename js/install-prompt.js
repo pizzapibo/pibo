@@ -34,7 +34,7 @@
     deferredInstallEvent = e;
   });
 
-  function buildOverlay(){
+  async function buildOverlay(){
     const overlay = document.createElement("div");
     overlay.id = "pibo-install-overlay";
     overlay.style.cssText = [
@@ -61,9 +61,24 @@
 
     const stepsHtml = isIOS() ? iosSteps : androidSteps;
 
+    // reuse whatever logo is set from the admin panel (same source as
+    // the header's ".site-logo-mark"), so the icon shown here always
+    // matches the site's actual logo instead of a hardcoded "پ".
+    let logoStyle = `background:conic-gradient(from 90deg,var(--orange,#FF5A1F),var(--gold,#FFB400),var(--red,#E5483C),var(--orange,#FF5A1F))`;
+    let logoContent = "پ";
+    try{
+      if(typeof pibo_getSettings === "function"){
+        const settings = await pibo_getSettings();
+        if(settings && settings.logoImage){
+          logoStyle = `background:url('${settings.logoImage}') center/cover no-repeat`;
+          logoContent = "";
+        }
+      }
+    }catch(e){ /* fall back to default mark */ }
+
     overlay.innerHTML = `
       <div style="width:100%;max-width:460px;background:var(--white,#FFFDF8);border-radius:28px 28px 0 0;padding:30px 24px 26px;box-shadow:0 -10px 40px rgba(0,0,0,.25);animation:pibo-slide-up .35s var(--ease,ease) both">
-        <div style="width:78px;height:78px;border-radius:50%;margin:0 auto 18px;background:conic-gradient(from 90deg,var(--orange,#FF5A1F),var(--gold,#FFB400),var(--red,#E5483C),var(--orange,#FF5A1F));display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;font-weight:900;font-family:'Vazirmatn',sans-serif;box-shadow:var(--shadow-soft,0 10px 26px -16px rgba(36,22,8,.28))">پ</div>
+        <div style="width:78px;height:78px;border-radius:50%;margin:0 auto 18px;${logoStyle};display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;font-weight:900;font-family:'Vazirmatn',sans-serif;box-shadow:var(--shadow-soft,0 10px 26px -16px rgba(36,22,8,.28))">${logoContent}</div>
         <h2 style="text-align:center;font-size:1.15rem;font-weight:900;margin:0 0 6px;color:var(--ink,#241608)">نصب اپلیکیشن وب پیبو</h2>
         <p style="text-align:center;color:var(--ink-soft,#7C6750);font-size:.85rem;margin:0 0 20px">سریع‌تر سفارش بده — بدون نیاز به مرورگر</p>
         <div style="border-top:1px dashed var(--line,#F0DFC0);border-bottom:1px dashed var(--line,#F0DFC0);padding:18px 4px;margin-bottom:20px">
@@ -83,9 +98,9 @@
     return overlay;
   }
 
-  function showOverlay(){
+  async function showOverlay(){
     if(document.getElementById("pibo-install-overlay")) return;
-    const overlay = buildOverlay();
+    const overlay = await buildOverlay();
     document.body.appendChild(overlay);
 
     const close = () => {
