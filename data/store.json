@@ -10,12 +10,25 @@
       "diameter": 24,
       "glb": "models/textured_mesh_medpoly_glb.glb",
       "usdz": "models/Untitled Object.usdz"
+    },
+    "میت-لاورز": {
+      "name": "میت لاورز",
+      "category": "ایتالیایی",
+      "desc": "test",
+      "price": 890000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": 30,
+      "arEnabled": true,
+      "glb": "models/میت-لاورز.glb",
+      "usdz": "models/میت-لاورز.usdz",
+      "order": 0
     }
   },
   "settings": {
     "categories": [
-      "ایتالیایی",
       "ناپولیتن",
+      "ایتالیایی",
       "سیب‌زمینی",
       "امضای پیبو",
       "نوشیدنی"
