@@ -562,35 +562,58 @@ footer{padding:60px 0 30px;background:var(--glass-dark-strong);-webkit-backdrop-
 .table-actions{display:flex;gap:8px}
 
 /* ===========================================================
-   AR viewer page
+   AR viewer page — "Napoli Notte" redesign
+   Deep basil green + tomato red + warm gold, an Italian-flag
+   inspired palette instead of the old plain brown/black glass.
 =========================================================== */
-.ar-page{min-height:100vh;display:flex;flex-direction:column;background:#0d0a08}
-.ar-page-top{
-  padding:18px 24px;display:flex;align-items:center;justify-content:space-between;color:#fff;
-  background:var(--glass-dark);
-  -webkit-backdrop-filter:blur(20px) saturate(160%);
-  backdrop-filter:blur(20px) saturate(160%);
-  border-bottom:1px solid var(--glass-dark-border);
+:root{
+  --ar-green:#0B3D2E;
+  --ar-green-deep:#062218;
+  --ar-red:#C8341F;
+  --ar-red-bright:#E5483C;
+  --ar-gold:#F2B705;
+  --ar-cream:#FFF4E4;
 }
-.ar-page-top a{font-weight:800;display:flex;align-items:center;gap:8px}
+.ar-page{
+  min-height:100vh;display:flex;flex-direction:column;position:relative;color:var(--ar-cream);
+  background:
+    radial-gradient(120% 90% at 15% 0%, rgba(200,52,31,.35), transparent 60%),
+    radial-gradient(120% 90% at 100% 100%, rgba(242,183,5,.14), transparent 55%),
+    linear-gradient(180deg, var(--ar-green-deep) 0%, var(--ar-green) 55%, #08160F 100%);
+}
+.ar-page::before{
+  content:"";position:fixed;inset:0 0 auto 0;height:6px;z-index:5;
+  background:linear-gradient(90deg, var(--ar-green) 0 33%, var(--ar-cream) 33% 66%, var(--ar-red) 66% 100%);
+}
+.ar-page-top{
+  padding:22px 24px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--ar-cream);
+  background:linear-gradient(180deg, rgba(6,34,24,.85), rgba(6,34,24,0));
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  backdrop-filter:blur(16px) saturate(160%);
+}
+.ar-page-top a{font-weight:800;display:flex;align-items:center;gap:8px;color:var(--ar-gold)}
+#share-btn{color:var(--ar-cream) !important}
 .ar-viewer-wrap{flex:1;position:relative}
 model-viewer{width:100%;height:100%;--poster-color:transparent}
 .ar-page-info{
-  padding:22px 24px 36px;color:#fff;text-align:center;
-  background:var(--glass-dark);
-  -webkit-backdrop-filter:blur(20px) saturate(160%);
-  backdrop-filter:blur(20px) saturate(160%);
-  border-top:1px solid var(--glass-dark-border);
+  margin:0 18px 22px;padding:22px 24px 26px;color:var(--ar-cream);text-align:center;
+  background:linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  border:1px solid rgba(242,183,5,.35);
+  border-radius:28px;
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  backdrop-filter:blur(22px) saturate(170%);
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.12);
 }
-.ar-page-info h1{font-size:1.3rem;font-weight:900;margin-bottom:6px}
-.ar-page-info p{color:#cbbfae;font-size:.88rem;max-width:420px;margin:0 auto}
+.ar-page-info h1{font-size:1.35rem;font-weight:900;margin-bottom:8px;color:var(--ar-gold);letter-spacing:.2px}
+.ar-page-info p{color:rgba(255,244,228,.78);font-size:.88rem;max-width:420px;margin:0 auto}
 .ar-fallback{
   position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;
-  gap:14px;color:#fff;text-align:center;padding:30px;
-  background:var(--glass-dark-strong);
-  -webkit-backdrop-filter:blur(24px) saturate(160%);
-  backdrop-filter:blur(24px) saturate(160%);
+  gap:14px;color:var(--ar-cream);text-align:center;padding:30px;
+  background:linear-gradient(180deg, rgba(6,34,24,.72), rgba(6,20,14,.9));
+  -webkit-backdrop-filter:blur(26px) saturate(160%);
+  backdrop-filter:blur(26px) saturate(160%);
 }
+.ar-fallback #fallback-title{color:var(--ar-gold)}
 .ar-fallback.show{display:flex}
 
 /* ===========================================================
