@@ -43,7 +43,7 @@
     </model-viewer>
 
     <div class="ar-fallback" id="fallback">
-      <span style="font-size:3rem">🍕</span>
+      <span class="fallback-emoji">🍕</span>
       <h2 style="font-weight:900" id="fallback-title">در حال دریافت اطلاعات پیتزا…</h2>
       <p style="color:#cbbfae;max-width:340px;font-size:.9rem" id="fallback-text"></p>
       <a href="index.html" class="btn btn-outline" style="background:transparent;border-color:#fff;color:#fff">بازگشت به منو</a>
@@ -210,8 +210,7 @@
       function addArButton(href, label, needsPosterFirst){
         const arLink = document.createElement("a");
         arLink.href = href;
-        arLink.style.cssText = "position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:5;";
-        arLink.className = "btn btn-primary";
+        arLink.className = "ar-launch-btn";
 
         if(needsPosterFirst){
           // Apple requires the <img> to be the literal first child of the
@@ -222,6 +221,10 @@
           posterImg.style.cssText = "width:1px;height:1px;opacity:0;position:absolute;";
           arLink.appendChild(posterImg);
         }
+        const icon = document.createElement("span");
+        icon.className = "ar-launch-ic";
+        icon.textContent = "🍕";
+        arLink.appendChild(icon);
         const labelSpan = document.createElement("span");
         labelSpan.textContent = label;
         arLink.appendChild(labelSpan);
