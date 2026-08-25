@@ -68,9 +68,9 @@ body::before{
   content:'';
   position:fixed;inset:-5%;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(760px 520px at 8% -6%, rgba(255,90,31,.55), transparent 60%),
-    radial-gradient(680px 520px at 96% 6%, rgba(255,180,0,.5), transparent 62%),
-    radial-gradient(760px 620px at 50% 46%, rgba(229,72,60,.22), transparent 65%),
+    radial-gradient(760px 520px at 8% -6%, rgba(255,90,31,.38), transparent 58%),
+    radial-gradient(680px 520px at 96% 6%, rgba(255,180,0,.42), transparent 62%),
+    radial-gradient(760px 620px at 50% 46%, rgba(229,72,60,.2), transparent 65%),
     radial-gradient(640px 520px at 4% 78%, rgba(47,158,91,.16), transparent 60%),
     var(--white);
   filter:blur(50px);
@@ -211,16 +211,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   text-align:center;
 }
 .hero-slogan h1{
-  font-size:clamp(1.3rem,3.2vw,2rem);
-  font-weight:900;
-  letter-spacing:-.3px;
-  line-height:1.4;
+  font-family:'Vazirmatn', ui-serif, Georgia, serif;
+  font-size:clamp(1.35rem,3.4vw,2.1rem);
+  font-weight:700;
+  font-style:italic;
+  letter-spacing:.2px;
+  line-height:1.5;
   white-space:normal;
+  position:relative;
+  display:inline-block;
   background:linear-gradient(100deg,var(--orange-dark),var(--red) 55%,var(--orange-dark));
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
 }
+.hero-slogan h1::before,
+.hero-slogan h1::after{
+  content:'';
+  display:block;
+  width:44px;height:2px;margin:0 auto 14px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.hero-slogan h1::after{margin:14px auto 0}
 @media (max-width:560px){
   .hero-slogan{padding-top:calc(108px + env(safe-area-inset-top));padding-bottom:30px}
   .hero-slogan h1{font-size:1.08rem}
