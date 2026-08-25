@@ -9,22 +9,20 @@
   --white:#FFFDF8;
   --cream:#FFF3DE;
   --cream-2:#FFE4B0;
-  --paper:#FBEEDA;
   --orange:#FF5A1F;
   --orange-dark:#E0420C;
   --gold:#FFB400;
   --red:#E5483C;
   --green:#2F9E5B;
-  --basil:#3E5D42;
-  --basil-dark:#2C4530;
   --ink:#241608;
   --ink-soft:#7C6750;
   --line:#F0DFC0;
   --shadow: 0 18px 40px -22px rgba(36,22,8,.35);
   --shadow-lg: 0 28px 60px -24px rgba(36,22,8,.4);
   --shadow-soft: 0 10px 26px -16px rgba(36,22,8,.28);
-  --radius: 24px;
-  --ease: cubic-bezier(.19,1,.22,1);
+  --radius: 26px;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --ease-soft: cubic-bezier(.22,1,.36,1);
   --font-display:'Lalezar','Vazirmatn',sans-serif;
 }
 
@@ -39,19 +37,16 @@ body{
   -webkit-font-smoothing:antialiased;
   position:relative;
 }
-/* warm, contained glow behind the header — not a full-page gradient flood */
+/* warm orange-to-gold glow behind the header — the site's signature
+   color, kept bright, but shaped and contained instead of a flat block */
 body::before{
   content:'';
-  position:absolute;top:0;left:0;right:0;height:520px;
-  background:radial-gradient(60% 420px at 50% -8%, rgba(255,90,31,.30), rgba(255,180,0,.14) 46%, rgba(255,180,0,0) 72%);
-  z-index:-2;pointer-events:none;
-}
-/* faint kraft-paper grain across the whole page — the tactile cue that
-   ties every section back to a real pizzeria counter, not a screen */
-body::after{
-  content:'';
-  position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.95  0 0 0 0 0.89  0 0 0 0 0.76  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  position:absolute;top:0;left:0;right:0;height:640px;
+  background:
+    radial-gradient(60% 60% at 18% -10%, rgba(255,90,31,.55), rgba(255,90,31,0) 60%),
+    radial-gradient(55% 55% at 85% 5%, rgba(255,180,0,.45), rgba(255,180,0,0) 60%),
+    linear-gradient(180deg, rgba(255,180,0,.16), rgba(255,180,0,0) 85%);
+  z-index:-1;pointer-events:none;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -113,11 +108,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:13px 26px;border-radius:100px;font-weight:800;font-size:.95rem;
-  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .2s;
+  transition:transform .35s var(--ease-soft), box-shadow .35s var(--ease-soft), background .3s;
 }
-.btn-primary{background:var(--orange);color:#fff;box-shadow:var(--shadow)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.btn-primary:active{transform:translateY(0)}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;box-shadow:var(--shadow), 0 6px 16px -6px rgba(255,90,31,.55)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg), 0 10px 24px -8px rgba(255,90,31,.65)}
+.btn-primary:active{transform:translateY(-1px)}
 .btn-outline{background:#fff;color:var(--ink);border:1.5px solid var(--line);box-shadow:var(--shadow-soft)}
 .btn-outline:hover{border-color:var(--orange);color:var(--orange-dark);transform:translateY(-2px)}
 .btn-ghost{color:var(--ink);font-weight:700}
@@ -172,11 +167,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .dough-blob svg{width:100%;height:100%}
 .dough-blob-path{
   d:path("M100,26 C142,20 176,54 172,96 C168,138 138,172 96,174 C54,176 22,144 24,100 C26,58 58,32 100,26 Z");
-  animation:doughMorph 2.4s var(--ease) .2s 1 both;
+  animation:doughMorph 2.8s var(--ease-soft) .15s 1 both, doughFloat 7s ease-in-out 3s infinite;
+  transform-origin:center;
 }
 @keyframes doughMorph{
   0%{ d:path("M100,26 C142,20 176,54 172,96 C168,138 138,172 96,174 C54,176 22,144 24,100 C26,58 58,32 100,26 Z"); }
   100%{ d:path("M100,26 C140.9,26 174,59.1 174,100 C174,140.9 140.9,174 100,174 C59.1,174 26,140.9 26,100 C26,59.1 59.1,26 100,26 Z"); }
+}
+@keyframes doughFloat{
+  0%,100%{ transform:scale(1) rotate(0deg); }
+  50%{ transform:scale(1.025) rotate(1.5deg); }
 }
 
 .eyebrow{
@@ -188,9 +188,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* reveal-on-scroll */
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease), transform .8s var(--ease)}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease-soft), transform .9s var(--ease-soft)}
 .reveal.in{opacity:1;transform:translateY(0)}
-.reveal-scale{opacity:0;transform:scale(.88);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+.reveal-scale{opacity:0;transform:scale(.88);transition:opacity .8s var(--ease-soft), transform .8s var(--ease-soft)}
 .reveal-scale.in{opacity:1;transform:scale(1)}
 .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s var(--ease), transform .8s var(--ease)}
 [dir] .reveal-right{transform:translateX(-40px)}
@@ -198,9 +198,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .stagger > *{transition-delay:calc(var(--i,0) * 90ms)}
 
 /* ===========================================================
-   Menu / product cards — styled as pinned pizzeria order tickets
+   Menu / product cards — glossy 3D-tilt cards
 =========================================================== */
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:34px 28px}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:30px 28px}
 .menu-sections{display:flex;flex-direction:column;gap:64px}
 .menu-category-section{scroll-margin-top:150px}
 .menu-category-title{
@@ -208,8 +208,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:flex;align-items:center;gap:12px;
 }
 .menu-category-title::before{
-  content:'';width:10px;height:16px;flex-shrink:0;background:var(--basil);
-  border-radius:2px 10px 2px 10px;transform:rotate(-8deg);
+  content:'';width:34px;height:6px;flex-shrink:0;border-radius:100px;
+  background:linear-gradient(90deg,var(--orange),var(--gold));
 }
 .menu-tabs{
   display:flex;gap:10px;overflow-x:auto;flex-wrap:nowrap;margin-bottom:38px;
@@ -220,68 +220,64 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .menu-tabs::-webkit-scrollbar{display:none}
 .menu-tab{
   padding:10px 22px;border-radius:100px;font-weight:800;font-size:.88rem;
-  border:1.5px solid var(--line);color:var(--ink);background:#fff;transition:.2s;
+  border:1.5px solid var(--line);color:var(--ink);background:#fff;
+  transition:all .35s var(--ease-soft);
   flex-shrink:0;white-space:nowrap;
 }
-.menu-tab:hover{border-color:var(--orange);color:var(--orange-dark)}
-.menu-tab.active{background:var(--ink);border-color:var(--ink);color:var(--gold)}
+.menu-tab:hover{border-color:var(--orange);color:var(--orange-dark);transform:translateY(-2px)}
+.menu-tab.active{
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  border-color:transparent;color:#fff;
+  box-shadow:0 8px 20px -8px rgba(255,90,31,.6);
+}
 
+.pizza-card-frame{perspective:1200px}
 .pizza-card{
-  --tilt:0deg;
-  background:var(--paper);
-  border-radius:2px 2px var(--radius) var(--radius);
-  overflow:visible;position:relative;
+  background:#fff;border-radius:var(--radius);
+  overflow:hidden;position:relative;
   box-shadow:var(--shadow-soft);
-  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
-  transform:rotate(var(--tilt));
-  margin-top:10px;
+  transition:transform .16s ease-out, box-shadow .5s var(--ease-soft);
+  transform-style:preserve-3d;
+  will-change:transform;
 }
-.pizza-card:nth-child(3n+1){--tilt:-.5deg}
-.pizza-card:nth-child(3n+2){--tilt:.4deg}
-.pizza-card:nth-child(3n+3){--tilt:-.3deg}
-.pizza-card:hover{transform:rotate(0deg) translateY(-6px);box-shadow:var(--shadow-lg)}
+.pizza-card:hover{transform:translateY(-8px);box-shadow:0 32px 60px -20px rgba(255,90,31,.35), var(--shadow-lg)}
 
-/* torn-paper top edge instead of a rounded corner — the ticket has
-   been torn off a pad, not printed with clean corners */
-.pizza-card::before{
-  content:'';position:absolute;top:-9px;left:0;right:0;height:14px;z-index:2;
-  background:
-    linear-gradient(135deg, var(--white) 50%, transparent 50%) 0 0/14px 14px repeat-x,
-    linear-gradient(45deg, var(--white) 50%, transparent 50%) 0 0/14px 14px repeat-x;
-  filter:drop-shadow(0 -2px 3px rgba(36,22,8,.06));
+/* glossy highlight that sweeps across the card on hover — the "3D
+   sheen" cue, cheap to render, reads as a lacquered/glass surface */
+.pizza-card .sheen{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(115deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 30%);
+  opacity:0;transform:translateX(-30%);
+  transition:opacity .5s var(--ease-soft);
 }
-/* the "pin" holding the ticket up */
-.pizza-card::after{
-  content:'';position:absolute;top:-4px;right:26px;width:10px;height:10px;border-radius:50%;
-  background:var(--red);box-shadow:0 2px 3px rgba(36,22,8,.3), inset 0 -1px 2px rgba(0,0,0,.25);
-  z-index:3;
-}
+.pizza-card:hover .sheen{opacity:1}
 
 .pizza-card .media{
   aspect-ratio:4/3;position:relative;overflow:hidden;
   background:linear-gradient(135deg,var(--cream),var(--cream-2));
   display:flex;align-items:center;justify-content:center;font-size:5rem;
+  transform:translateZ(20px);
 }
-/* AR indicator as a wax-stamp instead of a pill badge */
+/* floating glossy AR badge */
 .pizza-card .media .badge-ar{
   position:absolute;top:14px;left:14px;
-  width:52px;height:52px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, var(--red), var(--orange-dark));
-  color:#fff;font-size:.62rem;font-weight:900;
-  display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;
-  transform:rotate(-9deg);
-  box-shadow:0 4px 10px rgba(36,22,8,.3), inset 0 0 0 2px rgba(255,255,255,.35);
+  padding:8px 14px 8px 10px;border-radius:100px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:#fff;font-size:.72rem;font-weight:800;
+  display:flex;align-items:center;gap:6px;
+  box-shadow:0 8px 18px -6px rgba(224,66,12,.6), inset 0 1px 0 rgba(255,255,255,.4);
   font-family:'Fredoka','Vazirmatn',sans-serif;
+  transform:translateZ(30px);
 }
-.pizza-card .body{padding:24px 22px 22px;border-top:1.5px dashed var(--line)}
+.pizza-card .media .badge-ar::before{content:'✦';font-size:.85rem}
+.pizza-card .body{padding:22px;transform:translateZ(14px)}
 .pizza-card h3{
   font-family:var(--font-display);font-weight:400;font-size:1.35rem;margin-bottom:8px;
   display:flex;justify-content:space-between;align-items:baseline;gap:10px;
 }
 .pizza-card h3 .price{
-  color:var(--orange-dark);font-size:1.02rem;white-space:nowrap;
+  color:var(--orange-dark);font-size:1.05rem;white-space:nowrap;
   font-family:'Fredoka','Vazirmatn',sans-serif;font-weight:700;
-  text-shadow:0 1px 0 rgba(255,255,255,.6);
 }
 .pizza-card p{color:var(--ink-soft);font-size:.92rem;line-height:1.8;margin-bottom:18px;min-height:48px}
 .pizza-card .actions{display:flex;gap:10px}
@@ -312,7 +308,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:flex;justify-content:space-between;align-items:center;
 }
 .faq-item summary::-webkit-details-marker{display:none}
-.faq-item summary::after{content:'+';font-size:1.4rem;color:var(--basil);transition:.3s}
+.faq-item summary::after{content:'+';font-size:1.4rem;color:var(--red);transition:.35s var(--ease-soft)}
 .faq-item[open] summary::after{transform:rotate(45deg)}
 .faq-item p{padding:0 22px 20px;color:var(--ink-soft);line-height:1.8;font-size:.92rem}
 

@@ -100,17 +100,20 @@ async function renderMenu(){
           ${items.map((p, i) => {
             const hasAr = p.arEnabled !== false;
             return `
-            <div class="pizza-card reveal" style="--i:${i % 6}">
-              <div class="media" ${p.image ? `style="background-image:url('${p.image}');background-size:cover;background-position:center;"` : ""}>
-                ${hasAr ? `<span class="badge-ar">AR<br>سه‌بعدی</span>` : ""}
-                ${p.image ? "" : `<span>${p.emoji || "🍽️"}</span>`}
-              </div>
-              <div class="body">
-                <h3>${p.name} <span class="price">${pibo_formatPrice(p.price)}</span></h3>
-                <p>${p.desc || ""}${p.diameter ? ` <span style="color:var(--ink-soft)">· قطر ${p.diameter} سانتی‌متر</span>` : ""}</p>
-                <div class="actions">
-                  ${hasAr ? `<a class="btn btn-primary" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
+            <div class="pizza-card-frame reveal" style="--i:${i % 6}">
+              <div class="pizza-card" data-tilt-card>
+                <div class="media" ${p.image ? `style="background-image:url('${p.image}');background-size:cover;background-position:center;"` : ""}>
+                  ${hasAr ? `<span class="badge-ar">مشاهده سه‌بعدی</span>` : ""}
+                  ${p.image ? "" : `<span>${p.emoji || "🍽️"}</span>`}
                 </div>
+                <div class="body">
+                  <h3>${p.name} <span class="price">${pibo_formatPrice(p.price)}</span></h3>
+                  <p>${p.desc || ""}${p.diameter ? ` <span style="color:var(--ink-soft)">· قطر ${p.diameter} سانتی‌متر</span>` : ""}</p>
+                  <div class="actions">
+                    ${hasAr ? `<a class="btn btn-primary" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
+                  </div>
+                </div>
+                <div class="sheen"></div>
               </div>
             </div>
           `;
@@ -129,6 +132,36 @@ async function renderMenu(){
 
   initCategoryScrollSpy();
   initReveal();
+  initCardTilt();
+}
+
+/* subtle, smooth mouse-tracked 3D tilt on each pizza card — skipped on
+   touch devices (no fine pointer) and when the user prefers less motion */
+function initCardTilt(){
+  const supportsFinePointer = window.matchMedia("(pointer: fine)").matches;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!supportsFinePointer || prefersReducedMotion) return;
+
+  document.querySelectorAll("[data-tilt-card]").forEach(card => {
+    let frame = null;
+
+    card.addEventListener("mousemove", (e) => {
+      if(frame) return;
+      frame = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;  // 0..1
+        const py = (e.clientY - rect.top) / rect.height;  // 0..1
+        const rotateY = (px - 0.5) * 14; // left/right tilt
+        const rotateX = (0.5 - py) * 10; // up/down tilt
+        card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        frame = null;
+      });
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
 }
 
 /* highlight the tab matching whichever category section is in view */
