@@ -101,9 +101,9 @@ async function renderMenu(){
             const hasAr = p.arEnabled !== false;
             return `
             <div class="pizza-card reveal" style="--i:${i % 6}">
-              <div class="media" ${p.image ? `style="background-image:url('${p.image}');background-size:cover;background-position:center;"` : ""}>
+              <div class="media">
                 ${hasAr ? `<span class="badge-ar">✦ مشاهده در AR</span>` : ""}
-                ${p.image ? "" : `<span>${p.emoji || "🍽️"}</span>`}
+                ${p.image ? `<img src="${p.image}" alt="${p.name || ""}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover">` : `<span>${p.emoji || "🍽️"}</span>`}
               </div>
               <div class="body">
                 <h3>${p.name} <span class="price">${pibo_formatPrice(p.price)}</span></h3>
