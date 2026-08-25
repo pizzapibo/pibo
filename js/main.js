@@ -1,8 +1,7 @@
 /* ===========================================================
    PIBO — main.js
 =========================================================== */
-const PIBO_WHATSAPP = "989140909878";
-let PIBO_PRODUCTS = []; // populated on load — used by cart, order total, quick-add chips
+let PIBO_PRODUCTS = []; // populated on load — used to render the menu
 
 document.addEventListener("DOMContentLoaded", async () => {
   initHeader();
@@ -10,54 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initReveal();
   PIBO_PRODUCTS = await pibo_getProducts();
   await renderMenu();
-  initOrderForm();
-  initSocialLinks();
-  fillPickListAndQr();
   applySiteLogo();
-  initQuickOrderFab();
-  checkWorkingHours();
 });
-
-/* ---------- working hours (set from admin panel) ---------- */
-async function checkWorkingHours(){
-  if(typeof pibo_getSettings === "undefined") return;
-  const settings = await pibo_getSettings();
-  if(!settings.openTime || !settings.closeTime) return;
-
-  const now = new Date();
-  const current = now.getHours() * 60 + now.getMinutes();
-  const [oh, om] = settings.openTime.split(":").map(Number);
-  const [ch, cm] = settings.closeTime.split(":").map(Number);
-  const openMin = oh * 60 + om, closeMin = ch * 60 + cm;
-  const isOpen = openMin <= closeMin
-    ? (current >= openMin && current < closeMin)
-    : (current >= openMin || current < closeMin);
-
-  if(isOpen) return;
-
-  const wrap = document.querySelector(".order-form");
-  if(!wrap) return;
-  const banner = document.createElement("div");
-  banner.style.cssText = "background:var(--red);color:#fff;padding:14px 18px;border-radius:14px;text-align:center;font-weight:800;margin-bottom:18px";
-  banner.textContent = `الان بسته‌ایم — ساعات کاری: ${settings.openTime} تا ${settings.closeTime}`;
-  wrap.insertBefore(banner, wrap.firstChild);
-  wrap.querySelectorAll("input, textarea, select, button").forEach(el => el.disabled = true);
-}
-
-/* ---------- floating quick-order button ---------- */
-function initQuickOrderFab(){
-  const fab = document.querySelector("[data-quick-order]");
-  const orderSection = document.getElementById("order");
-  if(!fab || !orderSection) return;
-
-  const onScroll = () => {
-    const past = window.scrollY > window.innerHeight * .8;
-    const reached = orderSection.getBoundingClientRect().top < window.innerHeight;
-    fab.classList.toggle("show", past && !reached);
-  };
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive:true });
-}
 
 /* ---------- site logo (set from admin panel) ---------- */
 async function applySiteLogo(){
@@ -156,8 +109,7 @@ async function renderMenu(){
                 <h3>${p.name} <span class="price">${pibo_formatPrice(p.price)}</span></h3>
                 <p>${p.desc || ""}${p.diameter ? ` <span style="color:var(--ink-soft)">· قطر ${p.diameter} سانتی‌متر</span>` : ""}</p>
                 <div class="actions">
-                  ${hasAr ? `<a class="btn btn-outline" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
-                  <button class="btn btn-primary" data-add="${p.id}">افزودن به سفارش</button>
+                  ${hasAr ? `<a class="btn btn-primary" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
                 </div>
               </div>
             </div>
@@ -167,10 +119,6 @@ async function renderMenu(){
       </div>
     `;
   }).join("");
-
-  grid.querySelectorAll("[data-add]").forEach(btn => {
-    btn.addEventListener("click", () => addToCart(btn.dataset.add));
-  });
 
   tabsWrap.querySelectorAll("[data-tab]").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -198,176 +146,4 @@ function initCategoryScrollSpy(){
   }, { rootMargin: "-150px 0px -65% 0px", threshold: 0 });
 
   sections.forEach(s => io.observe(s));
-}
-
-/* ---------- cart ---------- */
-let PIBO_CART = {};
-
-function addToCart(id){
-  PIBO_CART[id] = (PIBO_CART[id] || 0) + 1;
-  renderCart();
-  document.getElementById("order")?.scrollIntoView({ behavior:"smooth", block:"start" });
-}
-
-function changeQty(id, delta){
-  if(!PIBO_CART[id]) return;
-  PIBO_CART[id] += delta;
-  if(PIBO_CART[id] <= 0) delete PIBO_CART[id];
-  renderCart();
-}
-
-function renderCart(){
-  const list = document.querySelector("[data-cart-list]");
-  const summary = document.querySelector("[data-cart-summary]");
-  if(!list) return;
-
-  const entries = Object.entries(PIBO_CART);
-  if(!entries.length){
-    list.innerHTML = `<div class="empty-cart">هنوز پیتزایی به سفارش اضافه نکرده‌اید — از بخش منو انتخاب کنید 🍕</div>`;
-    if(summary) summary.style.display = "none";
-    return;
-  }
-
-  let total = 0;
-  list.innerHTML = entries.map(([id, qty]) => {
-    const p = PIBO_PRODUCTS.find(x => x.id === id);
-    if(!p) return "";
-    total += p.price * qty;
-    return `
-      <div class="cart-item">
-        <span class="name">${p.name}</span>
-        <div class="qty">
-          <button type="button" data-dec="${id}">−</button>
-          <span>${qty}</span>
-          <button type="button" data-inc="${id}">+</button>
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  if(summary){
-    summary.style.display = "flex";
-    summary.innerHTML = `<span>مبلغ کل</span><span>${pibo_formatPrice(total)}</span>`;
-  }
-
-  list.querySelectorAll("[data-inc]").forEach(b => b.addEventListener("click", () => changeQty(b.dataset.inc, 1)));
-  list.querySelectorAll("[data-dec]").forEach(b => b.addEventListener("click", () => changeQty(b.dataset.dec, -1)));
-}
-
-/* ---------- order form -> WhatsApp + shared order log ---------- */
-function initOrderForm(){
-  renderCart();
-
-  const form = document.querySelector("[data-order-form]");
-  if(!form) return;
-
-  prefillCustomerInfo(form);
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const entries = Object.entries(PIBO_CART);
-    const name = form.querySelector("[name=name]").value.trim();
-    const phone = form.querySelector("[name=phone]").value.trim();
-    const address = form.querySelector("[name=address]").value.trim();
-    const notes = form.querySelector("[name=notes]").value.trim();
-
-    if(!entries.length){
-      alert("لطفاً حداقل یک پیتزا از منو به سفارش اضافه کنید.");
-      return;
-    }
-    if(!name || !phone || !address){
-      alert("لطفاً نام، شماره تماس و آدرس را وارد کنید.");
-      return;
-    }
-
-    saveCustomerInfo({ name, phone, address });
-
-    let total = 0;
-    const lines = entries.map(([id, qty]) => {
-      const p = PIBO_PRODUCTS.find(x => x.id === id);
-      total += p.price * qty;
-      return `• ${p.name} × ${qty} — ${pibo_formatPrice(p.price * qty)}`;
-    });
-
-    const message = [
-      "سلام پیبو 👋 سفارش جدید:",
-      "",
-      ...lines,
-      "",
-      `مبلغ کل: ${pibo_formatPrice(total)}`,
-      "",
-      `نام: ${name}`,
-      `تماس: ${phone}`,
-      `آدرس: ${address}`,
-      notes ? `توضیحات: ${notes}` : ""
-    ].filter(Boolean).join("\n");
-
-    const submitBtn = form.querySelector("button[type=submit]");
-    if(submitBtn) submitBtn.disabled = true;
-
-    saveOrderLocally({
-      name, phone, address, notes,
-      items: entries.map(([id, qty]) => ({ id, qty })),
-      total,
-      date: new Date().toISOString()
-    });
-
-    if(submitBtn) submitBtn.disabled = false;
-
-    const url = `https://wa.me/${PIBO_WHATSAPP}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
-  });
-}
-
-/* remember name/phone/address in this browser so returning customers
-   don't have to retype them on their next order */
-const PIBO_CUSTOMER_KEY = "pibo_customer_info";
-
-function prefillCustomerInfo(form){
-  try{
-    const saved = JSON.parse(localStorage.getItem(PIBO_CUSTOMER_KEY) || "null");
-    if(!saved) return;
-    if(saved.name) form.querySelector("[name=name]").value = saved.name;
-    if(saved.phone) form.querySelector("[name=phone]").value = saved.phone;
-    if(saved.address) form.querySelector("[name=address]").value = saved.address;
-  }catch(e){ /* storage unavailable, skip silently */ }
-}
-
-function saveCustomerInfo({ name, phone, address }){
-  try{
-    localStorage.setItem(PIBO_CUSTOMER_KEY, JSON.stringify({ name, phone, address }));
-  }catch(e){ /* storage unavailable, skip silently */ }
-}
-
-/* store the order in this browser only — WhatsApp (opened right after) is
-   the real, guaranteed-to-arrive order channel; this local copy just lets
-   you glance back at recent orders placed from this specific device. */
-function saveOrderLocally(order){
-  try{
-    const key = "pibo_orders";
-    const list = JSON.parse(localStorage.getItem(key) || "[]");
-    list.unshift(order);
-    localStorage.setItem(key, JSON.stringify(list.slice(0, 50)));
-  }catch(e){ /* storage unavailable, skip silently */ }
-}
-
-/* ---------- social links ---------- */
-function initSocialLinks(){
-  document.querySelectorAll("[data-whatsapp-link]").forEach(a => {
-    a.href = `https://wa.me/${PIBO_WHATSAPP}?text=${encodeURIComponent("سلام پیبو 👋")}`;
-  });
-}
-
-/* ---------- quick-add chips (index.html only) ---------- */
-function fillPickListAndQr(){
-  const availableProducts = PIBO_PRODUCTS.filter(p => p.available !== false);
-  const pickList = document.querySelector("[data-pick-list]");
-  if(pickList){
-    if(availableProducts.length){
-      pickList.innerHTML = availableProducts.map(p => `<button type="button" class="pick-chip" data-pick="${p.id}">${p.name}</button>`).join("");
-      pickList.querySelectorAll("[data-pick]").forEach(chip => chip.addEventListener("click", () => addToCart(chip.dataset.pick)));
-    }else{
-      pickList.innerHTML = `<span style="color:var(--ink-soft);font-size:.85rem">هنوز پیتزایی اضافه نشده</span>`;
-    }
-  }
 }
