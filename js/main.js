@@ -102,7 +102,7 @@ async function renderMenu(){
             return `
             <div class="pizza-card reveal" style="--i:${i % 6}">
               <div class="media" ${p.image ? `style="background-image:url('${p.image}');background-size:cover;background-position:center;"` : ""}>
-                ${hasAr ? `<span class="badge-ar">✦ مشاهده در AR</span>` : ""}
+                ${hasAr ? `<span class="badge-ar">AR<br>سه‌بعدی</span>` : ""}
                 ${p.image ? "" : `<span>${p.emoji || "🍽️"}</span>`}
               </div>
               <div class="body">
