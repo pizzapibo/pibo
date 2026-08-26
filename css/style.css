@@ -104,7 +104,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    Tactile "press" feedback — applied via JS (ios-glass.js) to
    buttons, tabs, chips, cards: mirrors iOS 26's spring squeeze.
 =========================================================== */
-.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.qty button,.btn-sm{
+.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.qty button,.btn-sm,.ar-launch-btn,.sticky-cart-summary,[data-qty-btn],.ios-switch{
   transition:transform .5s var(--spring), box-shadow .35s var(--ease), background .25s var(--ease), border-color .25s var(--ease), opacity .25s;
 }
 .btn:hover,.menu-tab:hover,.pick-chip:hover,.pizza-card:hover,.is-pressed{
@@ -114,6 +114,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   transform:scale(var(--press-scale)) !important;
   transition:transform .12s cubic-bezier(.4,0,.2,1) !important;
 }
+/* elements that already carry a translateX(-50%) for centering need the
+   scale combined, not replaced, or press-feedback would un-center them */
+.ar-launch-btn.is-pressed{transform:translateX(-50%) scale(var(--press-scale)) !important}
+.sticky-cart-summary.is-pressed{transform:scale(var(--press-scale)) !important}
 
 /* ===========================================================
    Header — floating glass capsule (Dynamic Island style)
@@ -690,6 +694,25 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 @media (max-width:480px){
   .sticky-cart{bottom:12px;width:94vw}
 }
+
+/* ===========================================================
+   iOS 26 switch (toggle) — spring thumb slide, like Settings.app
+=========================================================== */
+.ios-switch{position:relative;display:inline-flex;width:51px;height:31px;flex-shrink:0;cursor:pointer}
+.ios-switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.ios-switch-track{
+  position:absolute;inset:0;border-radius:100px;
+  background:rgba(124,103,80,.28);
+  transition:background .3s var(--ease);
+}
+.ios-switch-track::before{
+  content:"";position:absolute;top:2px;right:2px;width:27px;height:27px;border-radius:50%;
+  background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.25);
+  transition:transform .35s var(--spring);
+}
+.ios-switch input:checked + .ios-switch-track{background:var(--green)}
+.ios-switch input:checked + .ios-switch-track::before{transform:translateX(-20px)}
+.ios-switch input:active + .ios-switch-track::before{width:31px}
 
 /* ===========================================================
    Responsive
