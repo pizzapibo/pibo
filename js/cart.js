@@ -15,8 +15,8 @@ function pibo_cartAdd(item){
   const cart = pibo_cartGet();
   if(cart[item.id]) cart[item.id].qty += 1;
   else cart[item.id] = { name:item.name, price:item.price, qty:1 };
+  cart[item.id]._justAdded = true;
   pibo_cartSave(cart);
-  pibo_bounceCartBar();
 }
 function pibo_cartSetQty(id, qty){
   const cart = pibo_cartGet();
@@ -38,6 +38,18 @@ function pibo_bounceCartBar(){
   bar.classList.remove("bounce");
   void bar.offsetWidth; // restart animation
   bar.classList.add("bounce");
+}
+
+/* briefly peek the cart panel open so the user sees the item drop into
+   the list (feed-style), then auto-close if they don't interact */
+function pibo_flashNewestCartItem(){
+  const bar = document.querySelector(".sticky-cart");
+  if(!bar || bar.classList.contains("open")) return;
+  bar.classList.add("open", "peek");
+  clearTimeout(pibo_flashNewestCartItem._t);
+  pibo_flashNewestCartItem._t = setTimeout(() => {
+    bar.classList.remove("open", "peek");
+  }, 1400);
 }
 
 function pibo_ensureStickyCartMounted(){
@@ -103,7 +115,7 @@ function pibo_renderStickyCart(){
     return;
   }
   itemsWrap.innerHTML = entries.map(([id, it]) => `
-    <div class="cart-item">
+    <div class="cart-item ${it._justAdded ? "just-added" : ""}" data-cart-item="${id}">
       <span class="name">${it.name}</span>
       <div class="qty">
         <button type="button" data-qty-btn data-id="${id}" data-delta="-1">−</button>
@@ -112,6 +124,12 @@ function pibo_renderStickyCart(){
       </div>
     </div>
   `).join("");
+
+  // clear the one-shot "just added" flag once rendered, so it doesn't
+  // replay the entrance animation on unrelated re-renders
+  let dirty = false;
+  Object.values(cart).forEach(it => { if(it._justAdded){ delete it._justAdded; dirty = true; } });
+  if(dirty) localStorage.setItem(PIBO_CART_KEY, JSON.stringify(cart));
 
   itemsWrap.querySelectorAll("[data-qty-btn]").forEach(b => {
     b.addEventListener("click", () => {

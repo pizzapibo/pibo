@@ -163,30 +163,42 @@ function setActiveMenuTab(btn){
   moveTabIndicator(btn);
 }
 
-/* clone a small pizza icon and animate it flying from the clicked
-   button toward the sticky cart bar (or top-right if cart not visible) */
+/* clone the product's own thumbnail (photo, once you upload one — or
+   the emoji placeholder until then) and animate it flying, shrinking,
+   from the clicked card toward the sticky cart bar */
 function pibo_flyToCart(fromEl){
+  const card = fromEl.closest(".pizza-card");
+  const mediaEl = card ? card.querySelector(".media") : null;
   const cartBar = document.querySelector(".sticky-cart");
-  const fromRect = fromEl.getBoundingClientRect();
+  const fromRect = (mediaEl || fromEl).getBoundingClientRect();
   const toRect = cartBar ? cartBar.getBoundingClientRect() : { left: window.innerWidth - 60, top: 20, width: 40, height: 40 };
 
-  const fly = document.createElement("span");
+  const fly = document.createElement("div");
   fly.className = "pibo-fly-icon";
-  fly.textContent = "🍕";
-  fly.style.left = (fromRect.left + fromRect.width / 2 - 12) + "px";
-  fly.style.top = (fromRect.top + fromRect.height / 2 - 12) + "px";
+  fly.innerHTML = mediaEl ? mediaEl.innerHTML : "🍕";
+  fly.style.width = fromRect.width + "px";
+  fly.style.height = fromRect.height + "px";
+  fly.style.left = fromRect.left + "px";
+  fly.style.top = fromRect.top + "px";
   fly.style.transform = "translate(0,0) scale(1)";
   fly.style.opacity = "1";
   document.body.appendChild(fly);
 
+  const targetSize = 46; // shrink down to roughly the cart icon's size
+  const scale = targetSize / fromRect.width;
   const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
   const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
 
   requestAnimationFrame(() => {
-    fly.style.transform = `translate(${dx}px, ${dy}px) scale(.35)`;
+    fly.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
     fly.style.opacity = "0";
+    fly.style.borderRadius = "50%";
   });
-  setTimeout(() => fly.remove(), 700);
+  setTimeout(() => {
+    fly.remove();
+    pibo_bounceCartBar();
+    pibo_flashNewestCartItem();
+  }, 700);
 }
 
 /* bind "add to cart" buttons rendered inside the menu */
