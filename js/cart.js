@@ -65,6 +65,19 @@ function pibo_ensureStickyCartMounted(){
   });
 }
 
+function pibo_animateNumber(el, from, to, formatter, duration = 450){
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+    const value = Math.round(from + (to - from) * eased);
+    el.textContent = formatter(value);
+    if(p < 1) requestAnimationFrame(tick);
+    else el.textContent = formatter(to);
+  }
+  requestAnimationFrame(tick);
+}
+
 function pibo_renderStickyCart(){
   pibo_ensureStickyCartMounted();
   const cart = pibo_cartGet();
@@ -73,9 +86,15 @@ function pibo_renderStickyCart(){
   const bar = document.querySelector(".sticky-cart");
   bar.classList.toggle("has-items", count > 0);
 
-  bar.querySelector("[data-cart-count]").textContent = count.toLocaleString("fa-IR");
-  bar.querySelector("[data-cart-total]").textContent = pibo_formatPrice(total);
-  bar.querySelector("[data-cart-panel-total]").textContent = pibo_formatPrice(total);
+  const countEl = bar.querySelector("[data-cart-count]");
+  const totalEl = bar.querySelector("[data-cart-total]");
+  const panelTotalEl = bar.querySelector("[data-cart-panel-total]");
+
+  const prevTotal = Number(bar.dataset.prevTotal || 0);
+  pibo_animateNumber(totalEl, prevTotal, total, n => pibo_formatPrice(n));
+  pibo_animateNumber(panelTotalEl, prevTotal, total, n => pibo_formatPrice(n));
+  bar.dataset.prevTotal = total;
+  countEl.textContent = count.toLocaleString("fa-IR");
 
   const itemsWrap = bar.querySelector("[data-cart-items]");
   const entries = Object.entries(cart);

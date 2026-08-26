@@ -660,6 +660,19 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 }
 .ar-launch-btn:active{transform:translateX(-50%) translateY(1px)}
 .ar-launch-btn .ar-launch-ic{font-size:1.15rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+.ar-launch-btn{animation:ar-invite 2.4s ease-in-out infinite}
+@keyframes ar-invite{
+  0%,100%{box-shadow:0 16px 34px -12px rgba(255,90,31,.55), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 0 rgba(255,90,31,.5)}
+  50%{box-shadow:0 16px 34px -12px rgba(255,90,31,.7), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,90,31,0)}
+}
+
+/* "fly to cart" — a cloned pizza icon that arcs from the add-to-cart
+   button into the sticky cart bar, mirroring iOS's "add to bag" burst */
+.pibo-fly-icon{
+  position:fixed;z-index:200;font-size:1.4rem;pointer-events:none;
+  transition:transform .65s cubic-bezier(.2,.8,.2,1), opacity .65s ease-in;
+  will-change:transform, opacity;
+}
 
 /* ===========================================================
    Sticky cart

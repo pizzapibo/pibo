@@ -163,10 +163,37 @@ function setActiveMenuTab(btn){
   moveTabIndicator(btn);
 }
 
+/* clone a small pizza icon and animate it flying from the clicked
+   button toward the sticky cart bar (or top-right if cart not visible) */
+function pibo_flyToCart(fromEl){
+  const cartBar = document.querySelector(".sticky-cart");
+  const fromRect = fromEl.getBoundingClientRect();
+  const toRect = cartBar ? cartBar.getBoundingClientRect() : { left: window.innerWidth - 60, top: 20, width: 40, height: 40 };
+
+  const fly = document.createElement("span");
+  fly.className = "pibo-fly-icon";
+  fly.textContent = "🍕";
+  fly.style.left = (fromRect.left + fromRect.width / 2 - 12) + "px";
+  fly.style.top = (fromRect.top + fromRect.height / 2 - 12) + "px";
+  fly.style.transform = "translate(0,0) scale(1)";
+  fly.style.opacity = "1";
+  document.body.appendChild(fly);
+
+  const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
+  const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
+
+  requestAnimationFrame(() => {
+    fly.style.transform = `translate(${dx}px, ${dy}px) scale(.35)`;
+    fly.style.opacity = "0";
+  });
+  setTimeout(() => fly.remove(), 700);
+}
+
 /* bind "add to cart" buttons rendered inside the menu */
 function bindAddToCartButtons(){
   document.querySelectorAll("[data-add-cart]").forEach(btn => {
     btn.addEventListener("click", () => {
+      pibo_flyToCart(btn);
       pibo_cartAdd({ id: btn.dataset.id, name: btn.dataset.name, price: Number(btn.dataset.price || 0) });
       const original = btn.textContent;
       btn.textContent = "اضافه شد ✓";
