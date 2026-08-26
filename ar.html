@@ -214,14 +214,11 @@
 
         if(needsPosterFirst){
           // Apple requires the <img> to be the literal first child of the
-          // rel="ar" link AND to be a real, visibly-sized poster — a
-          // hidden/1px image makes Safari treat this as a normal link
-          // (full navigation) instead of triggering the Quick Look AR
-          // overlay in place.
+          // rel="ar" link, otherwise Quick Look shows an extra "Object"
+          // preview step instead of jumping straight into the AR camera.
           const posterImg = document.createElement("img");
-          posterImg.src = "assets/icons/apple-touch-icon.png";
-          posterImg.alt = "";
-          posterImg.style.cssText = "width:34px;height:34px;border-radius:9px;object-fit:cover;display:block;";
+          posterImg.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E";
+          posterImg.style.cssText = "width:1px;height:1px;opacity:0;position:absolute;";
           arLink.appendChild(posterImg);
         }
         const icon = document.createElement("span");
@@ -261,14 +258,9 @@
 
       if(!glbOk){
         if(arButtonReady){
-          // GLB missing/unreachable but USDZ present (iOS): AR still works
-          // via the native link above — don't leave the page visually
-          // empty though, show a friendly "AR only" state instead.
-          fallbackTitle.textContent = product.name || "پیش‌نمایش سه‌بعدی این‌جا در دسترس نیست";
-          fallbackText.textContent = "برای دیدن مدل سه‌بعدی، روی دکمه «مشاهده در فضای واقعی (AR)» بزن.";
-          fallback.querySelector(".fallback-emoji").style.display = "";
-          fallback.querySelector("a.btn-outline").style.display = "none";
-          fallback.classList.add("show");
+          // GLB missing but USDZ present (iOS): AR still works via the
+          // native link above — just skip the in-page WebGL preview.
+          fallback.classList.remove("show");
           return;
         }
         fallbackTitle.textContent = "فایل مدل سه‌بعدی (GLB) پیدا نشد";
@@ -290,12 +282,8 @@
         viewer.style.display = "none";
         if(arButtonReady){
           // in-page preview failed on this device, but the native AR
-          // launcher above works independently of it — show a friendly
-          // "AR only" state instead of leaving the canvas blank.
-          fallbackTitle.textContent = product.name || "پیش‌نمایش سه‌بعدی این‌جا در دسترس نیست";
-          fallbackText.textContent = "برای دیدن مدل سه‌بعدی، روی دکمه «مشاهده در فضای واقعی (AR)» بزن.";
-          fallback.querySelector("a.btn-outline").style.display = "none";
-          fallback.classList.add("show");
+          // launcher above works independently of it — don't block on this.
+          fallback.classList.remove("show");
           return;
         }
         fallbackTitle.textContent = "فایل پیدا شد ولی رندر نشد";
