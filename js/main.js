@@ -64,7 +64,16 @@ async function renderMenu(){
   const tabsWrap = document.querySelector("[data-menu-tabs]");
   if(!grid) return;
 
-  grid.innerHTML = `<p style="color:var(--ink-soft);text-align:center">در حال دریافت منو…</p>`;
+  grid.innerHTML = `<div class="skeleton-grid">${Array.from({length:6}).map(() => `
+    <div class="skeleton-card">
+      <div class="sk-media"></div>
+      <div class="sk-body">
+        <div class="sk-line w-60"></div>
+        <div class="sk-line w-90"></div>
+        <div class="sk-line w-40"></div>
+      </div>
+    </div>
+  `).join("")}</div>`;
   const allProducts = PIBO_PRODUCTS.length ? PIBO_PRODUCTS : (PIBO_PRODUCTS = await pibo_getProducts());
   const products = allProducts.filter(p => p.available !== false);
 
@@ -110,6 +119,7 @@ async function renderMenu(){
                 <p>${p.desc || ""}${p.diameter ? ` <span style="color:var(--ink-soft)">· قطر ${p.diameter} سانتی‌متر</span>` : ""}</p>
                 <div class="actions">
                   ${hasAr ? `<a class="btn btn-primary" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
+                  <button type="button" class="btn btn-outline" data-add-cart data-id="${p.id}" data-name="${(p.name||"").replace(/"/g,'&quot;')}" data-price="${p.price||0}">افزودن +</button>
                 </div>
               </div>
             </div>
@@ -129,6 +139,20 @@ async function renderMenu(){
 
   initCategoryScrollSpy();
   initReveal();
+  bindAddToCartButtons();
+}
+
+/* bind "add to cart" buttons rendered inside the menu */
+function bindAddToCartButtons(){
+  document.querySelectorAll("[data-add-cart]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      pibo_cartAdd({ id: btn.dataset.id, name: btn.dataset.name, price: Number(btn.dataset.price || 0) });
+      const original = btn.textContent;
+      btn.textContent = "اضافه شد ✓";
+      btn.classList.add("added");
+      setTimeout(() => { btn.textContent = original; btn.classList.remove("added"); }, 900);
+    });
+  });
 }
 
 /* highlight the tab matching whichever category section is in view */
