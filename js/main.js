@@ -96,7 +96,7 @@ async function renderMenu(){
     ...present.filter(c => !definedOrder.includes(c))
   ];
 
-  tabsWrap.innerHTML = categories.map((c, i) =>
+  tabsWrap.innerHTML = `<div class="menu-tabs-indicator"></div>` + categories.map((c, i) =>
     `<button type="button" class="menu-tab ${i === 0 ? "active" : ""}" data-tab="menu-cat-${pibo_slugify(c)}">${c}</button>`
   ).join("");
 
@@ -134,12 +134,33 @@ async function renderMenu(){
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.tab);
       if(target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveMenuTab(btn);
     });
   });
+
+  requestAnimationFrame(() => moveTabIndicator(tabsWrap.querySelector(".menu-tab.active")));
+  window.addEventListener("resize", () => moveTabIndicator(tabsWrap.querySelector(".menu-tab.active")));
 
   initCategoryScrollSpy();
   initReveal();
   bindAddToCartButtons();
+}
+
+/* slide the segmented-control indicator behind the active tab,
+   like iOS 26's spring-animated segmented control */
+function moveTabIndicator(activeTab){
+  const wrap = document.querySelector("[data-menu-tabs]");
+  const indicator = wrap?.querySelector(".menu-tabs-indicator");
+  if(!wrap || !indicator || !activeTab) return;
+  indicator.style.width = activeTab.offsetWidth + "px";
+  indicator.style.transform = `translateX(${activeTab.offsetLeft}px)`;
+}
+
+function setActiveMenuTab(btn){
+  const wrap = document.querySelector("[data-menu-tabs]");
+  wrap.querySelectorAll(".menu-tab").forEach(t => t.classList.remove("active"));
+  btn.classList.add("active");
+  moveTabIndicator(btn);
 }
 
 /* bind "add to cart" buttons rendered inside the menu */
@@ -165,6 +186,8 @@ function initCategoryScrollSpy(){
     entries.forEach(entry => {
       if(entry.isIntersecting){
         tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === entry.target.id));
+        const activeTab = Array.from(tabs).find(t => t.dataset.tab === entry.target.id);
+        if(activeTab) moveTabIndicator(activeTab);
       }
     });
   }, { rootMargin: "-150px 0px -65% 0px", threshold: 0 });

@@ -311,17 +311,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   -ms-overflow-style:none;scrollbar-width:none;
 }
 .menu-tabs::-webkit-scrollbar{display:none}
+.menu-tabs-indicator{
+  position:absolute;top:8px;bottom:8px;left:0;border-radius:var(--radius-pill);
+  background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)), var(--red);
+  box-shadow:0 6px 18px -8px rgba(229,72,60,.65), var(--glass-highlight);
+  transition:transform .45s var(--spring), width .45s var(--spring);
+  z-index:0;pointer-events:none;
+}
 .menu-tab{
   padding:10px 22px;border-radius:var(--radius-pill);font-weight:800;font-size:.88rem;
   border:1px solid transparent;color:var(--ink);background:transparent;
-  flex-shrink:0;white-space:nowrap;
+  flex-shrink:0;white-space:nowrap;position:relative;z-index:1;
+  transition:color .35s var(--ease), transform .5s var(--spring);
 }
 .menu-tab:hover{color:var(--orange-dark)}
 .menu-tab.active{
-  background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)), var(--red);
-  border-color:rgba(255,255,255,.4);
   color:#fff;
-  box-shadow:0 6px 18px -8px rgba(229,72,60,.65), var(--glass-highlight);
+  border-color:rgba(255,255,255,.4);
 }
 .pizza-card{
   background:var(--glass-light);
