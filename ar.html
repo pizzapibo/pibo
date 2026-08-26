@@ -255,8 +255,11 @@
       if(!glbOk){
         if(arButtonReady){
           // GLB missing but USDZ present (iOS): AR still works via the
-          // native link above — just skip the in-page WebGL preview.
-          fallback.classList.remove("show");
+          // native link above — just show a friendly filler in place of
+          // the (otherwise empty) in-page preview area, purely visual.
+          fallbackTitle.textContent = product.name || "پیبو";
+          fallbackText.textContent = "برای دیدن مدل سه‌بعدی، دکمه‌ی زیر رو بزن.";
+          fallback.classList.add("show");
           return;
         }
         fallbackTitle.textContent = "فایل مدل سه‌بعدی (GLB) پیدا نشد";
@@ -278,8 +281,11 @@
         viewer.style.display = "none";
         if(arButtonReady){
           // in-page preview failed on this device, but the native AR
-          // launcher above works independently of it — don't block on this.
-          fallback.classList.remove("show");
+          // launcher above works independently of it — show a friendly
+          // filler instead of leaving the area empty (purely visual).
+          fallbackTitle.textContent = product.name || "پیبو";
+          fallbackText.textContent = "برای دیدن مدل سه‌بعدی، دکمه‌ی زیر رو بزن.";
+          fallback.classList.add("show");
           return;
         }
         fallbackTitle.textContent = "فایل پیدا شد ولی رندر نشد";
