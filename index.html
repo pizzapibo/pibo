@@ -13,6 +13,15 @@
 <title>پیبو | پیتزای واقعی، تجربه سه‌بعدی</title>
 <meta name="description" content="پیبو — پیتزای دست‌پخت با امکان مشاهده سه‌بعدی و واقعیت افزوده پیش از سفارش. سفارش آنلاین و ارسال سریع.">
 <link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://unpkg.com">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -43,11 +52,63 @@
   <a href="admin.html"><span class="mn-ic">⚙</span> پنل</a>
 </nav>
 
-<!-- ================= HERO SLOGAN ================= -->
-<section class="hero-slogan">
-  <div class="container">
-    <h1>Italian Heart, Napolitan Soul</h1>
+<!-- ================= 3D PIZZA SCROLL JOURNEY ================= -->
+<section id="pizza-journey" class="pizza-journey">
+
+  <div class="pizza-stage" id="pizza-stage">
+
+    <canvas id="pizza-canvas" aria-hidden="true"></canvas>
+
+    <div class="pizza-stage-veil"></div>
+
+    <!-- state 0: opening hero copy -->
+    <div class="pz-layer pz-hero" data-pz="hero">
+      <span class="pz-eyebrow">PIBO · Wood-fired since day one</span>
+      <h1 class="pz-title">Italian Heart,<br>Napolitan Soul</h1>
+      <p class="pz-sub">پیتزایی که برای دیدنش هم ارزش دارد Scroll کنید — پیش از سفارش، هر لایه‌ی آن را کشف کنید.</p>
+      <div class="pz-scroll-cue"><span></span>اسکرول کنید</div>
+    </div>
+
+    <!-- state 1..N: ingredient callouts, filled/positioned by pizza3d.js -->
+    <div class="pz-ingredient-labels" id="pz-ingredient-labels">
+      <div class="pz-ing" data-ing="dough">
+        <span class="pz-ing-index">01</span>
+        <h3>Dough</h3>
+        <p>Slow-Fermented Neapolitan Dough</p>
+      </div>
+      <div class="pz-ing" data-ing="sauce">
+        <span class="pz-ing-index">02</span>
+        <h3>Sauce</h3>
+        <p>Fresh Tomato Sauce</p>
+      </div>
+      <div class="pz-ing" data-ing="cheese">
+        <span class="pz-ing-index">03</span>
+        <h3>Cheese</h3>
+        <p>Premium Melted Mozzarella</p>
+      </div>
+      <div class="pz-ing" data-ing="pepperoni">
+        <span class="pz-ing-index">04</span>
+        <h3>Pepperoni</h3>
+        <p>Our Signature Pepperoni</p>
+      </div>
+      <div class="pz-ing" data-ing="vegetables">
+        <span class="pz-ing-index">05</span>
+        <h3>Vegetables</h3>
+        <p>Garden-Fresh Peppers &amp; Herbs</p>
+      </div>
+    </div>
+
+    <!-- state final: transition copy into the menu -->
+    <div class="pz-layer pz-outro" data-pz="outro">
+      <span class="pz-eyebrow">دستور واقعی، بدون سرهم‌بندی</span>
+      <h2 class="pz-title pz-title-sm">هر لایه سرجای خودش<br>حالا نوبت انتخاب شماست</h2>
+      <a href="#menu" class="btn btn-primary pz-cta">مشاهده منو</a>
+    </div>
+
   </div>
+
+  <!-- tall scroll track — its height sets how much scroll drives the animation -->
+  <div class="pizza-scroll-track" aria-hidden="true"></div>
 </section>
 
 <!-- ================= MENU ================= -->
@@ -104,6 +165,9 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script type="module" src="js/pizza3d.js"></script>
 <script src="js/ios-glass.js"></script>
 <script src="js/vendor/qrcode.js"></script>
 <script src="js/vendor/qrcode_utf8.js"></script>
