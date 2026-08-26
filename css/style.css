@@ -638,10 +638,10 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
   position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:6;
   display:flex;align-items:center;gap:10px;
   padding:15px 30px;border-radius:100px;
-  background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0)), linear-gradient(135deg, var(--ar-red-bright), var(--ar-red));
+  background:linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0)), var(--orange);
   color:#fff;font-weight:800;font-size:.95rem;
-  border:1px solid rgba(255,255,255,.4);
-  box-shadow:0 16px 34px -12px rgba(200,52,31,.55), inset 0 1px 0 rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 16px 34px -12px rgba(255,90,31,.55), inset 0 1px 0 rgba(255,255,255,.4);
 }
 .ar-launch-btn:active{transform:translateX(-50%) translateY(1px)}
 .ar-launch-btn .ar-launch-ic{font-size:1.15rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
