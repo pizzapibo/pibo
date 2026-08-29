@@ -34,3 +34,11 @@
     });
   });
 })();
+
+/* (9) shared "shake" helper — used for wrong-password, blocked actions, etc. */
+function pibo_shake(el){
+  if(!el) return;
+  el.classList.remove("shake-x");
+  void el.offsetWidth; // restart animation
+  el.classList.add("shake-x");
+}

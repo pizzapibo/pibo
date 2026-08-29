@@ -10,7 +10,30 @@ document.addEventListener("DOMContentLoaded", async () => {
   PIBO_PRODUCTS = await pibo_getProducts();
   await renderMenu();
   applySiteLogo();
+  initCardImageParallax();
 });
+
+/* ---------- (5) subtle parallax on card images while scrolling ---------- */
+function initCardImageParallax(){
+  let ticking = false;
+  function update(){
+    const vh = window.innerHeight;
+    document.querySelectorAll(".pizza-card .media img").forEach(img => {
+      const rect = img.getBoundingClientRect();
+      const centerOffset = (rect.top + rect.height / 2) - vh / 2;
+      const y = Math.max(-14, Math.min(14, centerOffset * 0.06));
+      img.style.setProperty("--parallax-y", y.toFixed(1) + "px");
+    });
+    ticking = false;
+  }
+  window.addEventListener("scroll", () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  // recalc after menu (re)renders images
+  new MutationObserver(() => requestAnimationFrame(update))
+    .observe(document.querySelector("[data-menu-grid]") || document.body, { childList: true, subtree: true });
+  update();
+}
 
 /* ---------- site logo (set from admin panel) ---------- */
 async function applySiteLogo(){

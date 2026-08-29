@@ -338,8 +338,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   overflow:hidden;position:relative;box-shadow:var(--shadow-glass);
 }
 .pizza-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-glass-lg)}
-.pizza-card .media img{transition:transform .6s var(--ease)}
-.pizza-card:hover .media img{transform:scale(1.06)}
+.pizza-card .media img{
+  transition:transform .6s var(--ease);will-change:transform;
+  transform:translateY(var(--parallax-y, 0px)) scale(var(--img-scale, 1));
+}
+.pizza-card:hover .media img{--img-scale:1.06}
+.pizza-card .media{overflow:hidden}
 .pizza-card .media{
   aspect-ratio:4/3;position:relative;overflow:hidden;
   background:linear-gradient(135deg,var(--cream),var(--cream-2));
@@ -709,7 +713,14 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
   width:100%;display:flex;align-items:center;gap:12px;padding:14px 20px;
   background:transparent;border:none;font-family:inherit;cursor:pointer;text-align:right;
 }
-.sticky-cart-icon{font-size:1.2rem}
+.sticky-cart-icon{font-size:1.2rem;display:inline-block;transition:transform .3s var(--ease)}
+.sticky-cart-icon.morph{animation:cart-icon-morph .6s var(--spring)}
+@keyframes cart-icon-morph{
+  0%{transform:scale(1) rotate(0)}
+  30%{transform:scale(1.35) rotate(-12deg)}
+  60%{transform:scale(.92) rotate(6deg)}
+  100%{transform:scale(1) rotate(0)}
+}
 .sticky-cart-count{
   background:var(--orange);color:#fff;font-weight:900;font-size:.78rem;
   min-width:22px;height:22px;border-radius:100px;display:flex;align-items:center;justify-content:center;padding:0 6px;
@@ -717,13 +728,45 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 .sticky-cart-total{flex:1;font-weight:900;color:var(--ink)}
 .sticky-cart-chevron{transition:transform .3s var(--ease);color:var(--ink-soft)}
 .sticky-cart.open .sticky-cart-chevron{transform:rotate(-90deg)}
-.sticky-cart-panel{max-height:0;overflow:hidden;transition:max-height .4s var(--ease);border-top:1px solid var(--line)}
-.sticky-cart.open .sticky-cart-panel{max-height:340px;overflow-y:auto}
+.sticky-cart-panel{
+  max-height:0;overflow:hidden;border-top:1px solid var(--line);
+  transform:translateY(-8px);opacity:0;
+  transition:max-height .55s var(--spring), transform .55s var(--spring), opacity .35s var(--ease);
+}
+.sticky-cart.open .sticky-cart-panel{max-height:340px;overflow-y:auto;transform:translateY(0);opacity:1}
+
+/* Apple Pay-sheet style dim + blur behind the cart when it's open */
+.sticky-cart-scrim{
+  position:fixed;inset:0;z-index:75;background:rgba(20,12,4,.28);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+}
+.sticky-cart-scrim.show{opacity:1;pointer-events:auto}
 .sticky-cart-items{padding:14px 20px;display:flex;flex-direction:column;gap:10px}
 .sticky-cart-footer{display:flex;justify-content:space-between;padding:14px 20px;border-top:2px dashed var(--line);font-size:.95rem}
 .sticky-cart-footer strong{color:var(--orange-dark)}
+
+/* (10) odometer-style per-digit reveal for the price total */
+.odo-digit{display:inline-block}
+.odo-digit.odo-in{animation:odo-slide .38s var(--ease)}
+@keyframes odo-slide{
+  from{transform:translateY(55%);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
 @media (max-width:480px){
   .sticky-cart{bottom:12px;width:94vw}
+}
+
+/* ===========================================================
+   (9) generic gentle "shake" for invalid/blocked actions — reused
+   anywhere a click can't proceed (wrong password, disabled action, …)
+=========================================================== */
+.shake-x{animation:shake-x .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes shake-x{
+  10%,90%{transform:translateX(-1px)}
+  20%,80%{transform:translateX(2px)}
+  30%,50%,70%{transform:translateX(-5px)}
+  40%,60%{transform:translateX(5px)}
 }
 
 /* ===========================================================

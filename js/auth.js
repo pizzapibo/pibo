@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }else{
       errorBox.textContent = "رمز عبور اشتباه است.";
       form.querySelector("input[name=password]").value = "";
+      pibo_shake(form);
     }
   });
 

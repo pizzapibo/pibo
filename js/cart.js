@@ -54,11 +54,16 @@ function pibo_flashNewestCartItem(){
 
 function pibo_ensureStickyCartMounted(){
   if(document.querySelector(".sticky-cart")) return;
+
+  const scrim = document.createElement("div");
+  scrim.className = "sticky-cart-scrim";
+  document.body.appendChild(scrim);
+
   const bar = document.createElement("div");
   bar.className = "sticky-cart";
   bar.innerHTML = `
     <button type="button" class="sticky-cart-summary" data-cart-toggle>
-      <span class="sticky-cart-icon">🛒</span>
+      <span class="sticky-cart-icon" data-cart-icon>🛒</span>
       <span class="sticky-cart-count" data-cart-count>0</span>
       <span class="sticky-cart-total" data-cart-total></span>
       <span class="sticky-cart-chevron">‹</span>
@@ -72,9 +77,15 @@ function pibo_ensureStickyCartMounted(){
     </div>
   `;
   document.body.appendChild(bar);
+
+  function setOpen(open){
+    bar.classList.toggle("open", open);
+    scrim.classList.toggle("show", open);
+  }
   bar.querySelector("[data-cart-toggle]").addEventListener("click", () => {
-    bar.classList.toggle("open");
+    setOpen(!bar.classList.contains("open"));
   });
+  scrim.addEventListener("click", () => setOpen(false));
 }
 
 function pibo_animateNumber(el, from, to, formatter, duration = 450){
@@ -83,11 +94,29 @@ function pibo_animateNumber(el, from, to, formatter, duration = 450){
     const p = Math.min(1, (now - start) / duration);
     const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
     const value = Math.round(from + (to - from) * eased);
-    el.textContent = formatter(value);
-    if(p < 1) requestAnimationFrame(tick);
-    else el.textContent = formatter(to);
+    if(p < 1){
+      el.textContent = formatter(value);
+      requestAnimationFrame(tick);
+    }else{
+      // land on the final value with a per-digit odometer reveal
+      // instead of just snapping the text in place
+      pibo_renderOdometer(el, formatter(to));
+    }
   }
   requestAnimationFrame(tick);
+}
+
+/* (10) diff the new text against what's currently shown and only
+   slide-in the characters that actually changed — like a price
+   odometer, more premium than a flat text swap */
+function pibo_renderOdometer(el, text){
+  const prevChars = (el.dataset.odoChars || "").split("");
+  const chars = text.split("");
+  el.innerHTML = chars.map((ch, i) => {
+    const changed = prevChars[i] !== ch;
+    return `<span class="odo-digit${changed ? " odo-in" : ""}">${ch}</span>`;
+  }).join("");
+  el.dataset.odoChars = text;
 }
 
 function pibo_renderStickyCart(){
@@ -96,7 +125,15 @@ function pibo_renderStickyCart(){
   const count = pibo_cartCount(cart);
   const total = pibo_cartTotal(cart);
   const bar = document.querySelector(".sticky-cart");
+  const wasEmpty = !bar.classList.contains("has-items");
   bar.classList.toggle("has-items", count > 0);
+
+  const iconEl = bar.querySelector("[data-cart-icon]");
+  if(wasEmpty && count > 0 && iconEl){
+    iconEl.classList.remove("morph");
+    void iconEl.offsetWidth;
+    iconEl.classList.add("morph");
+  }
 
   const countEl = bar.querySelector("[data-cart-count]");
   const totalEl = bar.querySelector("[data-cart-total]");
