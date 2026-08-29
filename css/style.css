@@ -747,6 +747,7 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 .sticky-cart-footer strong{color:var(--orange-dark)}
 
 /* (10) odometer-style per-digit reveal for the price total */
+.odo-number{unicode-bidi:isolate;direction:ltr;display:inline-block}
 .odo-digit{display:inline-block}
 .odo-digit.odo-in{animation:odo-slide .38s var(--ease)}
 @keyframes odo-slide{

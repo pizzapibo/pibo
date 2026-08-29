@@ -108,15 +108,25 @@ function pibo_animateNumber(el, from, to, formatter, duration = 450){
 
 /* (10) diff the new text against what's currently shown and only
    slide-in the characters that actually changed — like a price
-   odometer, more premium than a flat text swap */
+   odometer, more premium than a flat text swap.
+   Only the numeric portion is split into per-character spans; the
+   " تومان" suffix is left as plain text so Persian/RTL bidi ordering
+   isn't broken by wrapping every character (which reversed the digits
+   and jumbled "تومان" before this fix). */
 function pibo_renderOdometer(el, text){
+  const spaceIdx = text.lastIndexOf(" ");
+  const numberPart = spaceIdx === -1 ? text : text.slice(0, spaceIdx);
+  const suffix = spaceIdx === -1 ? "" : text.slice(spaceIdx);
+
   const prevChars = (el.dataset.odoChars || "").split("");
-  const chars = text.split("");
-  el.innerHTML = chars.map((ch, i) => {
+  const chars = numberPart.split("");
+  const digitsHtml = chars.map((ch, i) => {
     const changed = prevChars[i] !== ch;
     return `<span class="odo-digit${changed ? " odo-in" : ""}">${ch}</span>`;
   }).join("");
-  el.dataset.odoChars = text;
+
+  el.innerHTML = `<bdi class="odo-number">${digitsHtml}</bdi>${suffix}`;
+  el.dataset.odoChars = numberPart;
 }
 
 function pibo_renderStickyCart(){
