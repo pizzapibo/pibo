@@ -139,7 +139,6 @@ async function renderMenu(){
                   : `<span class="media-emoji">${p.emoji || "🍽️"}</span>`}
                 ${hasAr ? `<a class="badge-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
                 <div class="card-overlay">
-                  ${p.diameter ? `<div class="overlay-top-row"><span class="overlay-chip">قطر ${p.diameter} سانتی‌متر</span></div>` : ""}
                   <h3 class="overlay-name">${p.name}</h3>
                   ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
                   <div class="overlay-bottom-row">
