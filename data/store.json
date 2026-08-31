@@ -6,10 +6,12 @@
       "desc": "تست",
       "price": 580000,
       "emoji": "🍽️",
-      "image": "",
+      "image": "assets/images/pizza.jpg",
       "diameter": 24,
+      "arEnabled": true,
       "glb": "models/textured_mesh_medpoly_glb.glb",
-      "usdz": "models/Untitled Object.usdz"
+      "usdz": "models/Untitled Object.usdz",
+      "order": 0
     },
     "میت-لاورز": {
       "name": "میت لاورز",
