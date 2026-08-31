@@ -6,7 +6,7 @@
    iOS control buttons.
 =========================================================== */
 (function () {
-  const SELECTOR = ".btn, .menu-tab, .pick-chip, .pizza-card, .faq-item summary, .mobile-nav a, .qty button, .btn-sm, .close-mn, .menu-toggle, .ar-launch-btn, .sticky-cart-summary, [data-qty-btn], .ios-switch";
+  const SELECTOR = ".btn, .menu-tab, .pick-chip, .pizza-card, .faq-item summary, .mobile-nav a, .qty button, .btn-sm, .close-mn, .menu-toggle, .ar-launch-btn, .sticky-cart-summary, [data-qty-btn], .ios-switch, .btn-add-overlay, .overlay-chip-ar";
 
   function press(el) {
     el.classList.add("is-pressed");

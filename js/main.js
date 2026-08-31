@@ -134,15 +134,20 @@ async function renderMenu(){
             return `
             <div class="pizza-card reveal" style="--i:${i % 6}">
               <div class="media">
-                ${hasAr ? `<span class="badge-ar">✦ مشاهده در AR</span>` : ""}
-                ${p.image ? `<img src="${p.image}" alt="${p.name || ""}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover">` : `<span>${p.emoji || "🍽️"}</span>`}
-              </div>
-              <div class="body">
-                <h3>${p.name} <span class="price">${pibo_formatPrice(p.price)}</span></h3>
-                <p>${p.desc || ""}${p.diameter ? ` <span style="color:var(--ink-soft)">· قطر ${p.diameter} سانتی‌متر</span>` : ""}</p>
-                <div class="actions">
-                  ${hasAr ? `<a class="btn btn-primary" href="ar.html?pizza=${p.id}">مشاهده سه‌بعدی</a>` : ""}
-                  <button type="button" class="btn btn-outline" data-add-cart data-id="${p.id}" data-name="${(p.name||"").replace(/"/g,'&quot;')}" data-price="${p.price||0}">افزودن +</button>
+                ${p.image
+                  ? `<img src="${p.image}" alt="${p.name || ""}" loading="lazy" decoding="async">`
+                  : `<span class="media-emoji">${p.emoji || "🍽️"}</span>`}
+                <div class="card-overlay">
+                  <div class="overlay-top-row">
+                    ${p.diameter ? `<span class="overlay-chip">قطر ${p.diameter} سانتی‌متر</span>` : "<span></span>"}
+                    ${hasAr ? `<a class="overlay-chip overlay-chip-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
+                  </div>
+                  <h3 class="overlay-name">${p.name}</h3>
+                  ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
+                  <div class="overlay-bottom-row">
+                    <span class="overlay-price">${pibo_formatPrice(p.price)}</span>
+                    <button type="button" class="btn-add-overlay" data-add-cart data-id="${p.id}" data-name="${(p.name||"").replace(/"/g,'&quot;')}" data-price="${p.price||0}">افزودن +</button>
+                  </div>
                 </div>
               </div>
             </div>
