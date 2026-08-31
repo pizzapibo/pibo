@@ -104,7 +104,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    Tactile "press" feedback — applied via JS (ios-glass.js) to
    buttons, tabs, chips, cards: mirrors iOS 26's spring squeeze.
 =========================================================== */
-.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.qty button,.btn-sm,.ar-launch-btn,.sticky-cart-summary,[data-qty-btn],.ios-switch,.btn-add-overlay,.overlay-chip-ar{
+.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.qty button,.btn-sm,.ar-launch-btn,.sticky-cart-summary,[data-qty-btn],.ios-switch,.btn-add-overlay,.badge-ar{
   transition:transform .5s var(--spring), box-shadow .35s var(--ease), background .25s var(--ease), border-color .25s var(--ease), opacity .25s;
 }
 .btn:hover,.menu-tab:hover,.pick-chip:hover,.pizza-card:hover,.is-pressed{
@@ -362,6 +362,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   box-shadow:0 14px 34px -14px rgba(0,0,0,.55);
   color:#fff;
 }
+
+/* floating AR badge — a prominent standalone pill sitting on the photo
+   itself (not tucked inside the bottom info panel), so it reads as its
+   own call-to-action rather than a small metadata chip */
+.badge-ar{
+  position:absolute;top:14px;left:14px;z-index:3;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:11px 20px;border-radius:100px;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)), var(--green);
+  color:#fff;font-weight:800;font-size:.88rem;
+  border:1px solid rgba(255,255,255,.45);
+  box-shadow:0 10px 26px -8px rgba(47,158,91,.65), inset 0 1px 0 rgba(255,255,255,.4);
+}
+
 .overlay-top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
 .overlay-chip{
   display:inline-flex;align-items:center;gap:5px;
@@ -369,7 +383,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   color:#fff;font-size:.68rem;font-weight:700;padding:5px 11px;border-radius:100px;
   white-space:nowrap;
 }
-.overlay-chip-ar{background:rgba(47,158,91,.55);border-color:rgba(255,255,255,.4)}
 .overlay-name{font-size:1.15rem;font-weight:900;margin-bottom:6px;color:#fff}
 .overlay-desc{
   color:rgba(255,255,255,.72);font-size:.82rem;line-height:1.6;

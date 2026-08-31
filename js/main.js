@@ -137,11 +137,9 @@ async function renderMenu(){
                 ${p.image
                   ? `<img src="${p.image}" alt="${p.name || ""}" loading="lazy" decoding="async">`
                   : `<span class="media-emoji">${p.emoji || "🍽️"}</span>`}
+                ${hasAr ? `<a class="badge-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
                 <div class="card-overlay">
-                  <div class="overlay-top-row">
-                    ${p.diameter ? `<span class="overlay-chip">قطر ${p.diameter} سانتی‌متر</span>` : "<span></span>"}
-                    ${hasAr ? `<a class="overlay-chip overlay-chip-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
-                  </div>
+                  ${p.diameter ? `<div class="overlay-top-row"><span class="overlay-chip">قطر ${p.diameter} سانتی‌متر</span></div>` : ""}
                   <h3 class="overlay-name">${p.name}</h3>
                   ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
                   <div class="overlay-bottom-row">
