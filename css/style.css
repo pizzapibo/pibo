@@ -367,10 +367,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    itself (not tucked inside the bottom info panel), so it reads as its
    own call-to-action rather than a small metadata chip */
 .badge-ar{
-  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  padding:12px 16px;border-radius:100px;
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px 10px;border-radius:100px;
   background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)), var(--green);
-  color:#fff;font-weight:800;font-size:.88rem;text-align:center;
+  color:#fff;font-weight:800;font-size:.8rem;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   border:1px solid rgba(255,255,255,.45);
   box-shadow:0 10px 26px -8px rgba(47,158,91,.65), inset 0 1px 0 rgba(255,255,255,.4);
 }
@@ -392,7 +393,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   color:var(--gold);font-weight:900;font-size:1.05rem;white-space:nowrap;
   font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
 }
-.overlay-bottom-row{display:flex;align-items:center;gap:10px}
+.overlay-bottom-row{display:flex;align-items:stretch;gap:10px}
 .badge-ar,.btn-add-overlay{flex:1 1 50%;min-width:0}
 .btn-add-overlay{
   padding:12px 16px;border-radius:100px;border:none;cursor:pointer;
