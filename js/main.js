@@ -137,12 +137,14 @@ async function renderMenu(){
                 ${p.image
                   ? `<img src="${p.image}" alt="${p.name || ""}" loading="lazy" decoding="async">`
                   : `<span class="media-emoji">${p.emoji || "🍽️"}</span>`}
-                ${hasAr ? `<a class="badge-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
                 <div class="card-overlay">
-                  <h3 class="overlay-name">${p.name}</h3>
+                  <div class="overlay-top-row">
+                    <h3 class="overlay-name">${p.name}</h3>
+                    <span class="overlay-price">${pibo_formatPrice(p.price)}</span>
+                  </div>
                   ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
                   <div class="overlay-bottom-row">
-                    <span class="overlay-price">${pibo_formatPrice(p.price)}</span>
+                    ${hasAr ? `<a class="badge-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
                     <button type="button" class="btn-add-overlay" data-add-cart data-id="${p.id}" data-name="${(p.name||"").replace(/"/g,'&quot;')}" data-price="${p.price||0}">افزودن +</button>
                   </div>
                 </div>
