@@ -6,7 +6,7 @@
       "desc": "تست",
       "price": 580000,
       "emoji": "🍽️",
-      "image": "assets/images/pizza.jpg",
+      "image": "assets/images/pizza.jpeg",
       "diameter": 24,
       "arEnabled": true,
       "glb": "models/textured_mesh_medpoly_glb.glb",
