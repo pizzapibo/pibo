@@ -888,8 +888,9 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 .mn-cta{margin-top:18px}
 
 /* ===========================================================
-   Preloader — the پیبو wordmark, built from real letters
-   (no logo image, no ray burst) that spring in one by one
+   Preloader — the پیبو logo mark, sliced into 4 vertical
+   strips of the real logo image so it springs in "letter by
+   letter" (right→left) while looking exactly like our logo
 =========================================================== */
 .preloader{
   position:fixed;inset:0;z-index:9999;
@@ -902,17 +903,15 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 
 .preloader-wordmark{
   position:relative;z-index:2;
-  display:inline-flex;align-items:baseline;
-  font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
-  font-weight:900;
-  font-size:clamp(3.2rem,14vw,5.5rem);
-  line-height:1;
-  letter-spacing:-.06em;
-  color:#fff;
-  transform:skewY(-10deg) skewX(-4deg);
+  width:clamp(220px,52vw,340px);
+  height:clamp(220px,52vw,340px);
 }
+.pw-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0}
 .pw-letter{
-  display:inline-block;
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:contain;
+  clip-path:polygon(var(--l) 0, var(--r) 0, var(--r) 100%, var(--l) 100%);
   transform:translateY(70px) scale(.4) rotate(8deg);
   opacity:0;
   filter:blur(6px);
