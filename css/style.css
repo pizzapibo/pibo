@@ -907,8 +907,9 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
   font-weight:900;
   font-size:clamp(3.2rem,14vw,5.5rem);
   line-height:1;
+  letter-spacing:-.06em;
   color:#fff;
-  transform:skewY(-6deg);
+  transform:skewY(-10deg) skewX(-4deg);
 }
 .pw-letter{
   display:inline-block;
