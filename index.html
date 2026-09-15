@@ -16,6 +16,34 @@
 </head>
 <body>
 
+<div id="preloader" class="preloader" aria-hidden="true">
+  <span class="preloader-rays"></span>
+  <span class="preloader-logo-wrap">
+    <img src="assets/images/logo.jpg" alt="">
+  </span>
+</div>
+<script>
+  // Hide the preloader once the page has fully loaded, but keep it
+  // on screen for a small minimum time so the spring/sunburst
+  // animation is actually seen rather than flashing by instantly
+  // on a fast connection.
+  (function(){
+    var MIN_MS = 1500;
+    var start = performance.now();
+    function reveal(){
+      var el = document.getElementById("preloader");
+      if(!el) return;
+      var wait = Math.max(0, MIN_MS - (performance.now() - start));
+      setTimeout(function(){
+        el.classList.add("hide");
+        setTimeout(function(){ el.remove(); }, 650);
+      }, wait);
+    }
+    if(document.readyState === "complete") reveal();
+    else window.addEventListener("load", reveal);
+  })();
+</script>
+
 <header class="site-header">
   <div class="container">
     <a href="#" class="logo"><span class="mark site-logo-mark" id="site-logo-mark">پ</span> PIBO</a>

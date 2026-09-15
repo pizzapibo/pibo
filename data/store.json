@@ -1,42 +1,7 @@
 {
-  "products": {
-    "مارگاریتا": {
-      "name": "مارگاریتا",
-      "category": "ناپولیتن",
-      "desc": "تست",
-      "price": 580000,
-      "emoji": "🍽️",
-      "image": "assets/images/pizza.jpeg",
-      "diameter": 24,
-      "arEnabled": true,
-      "glb": "models/textured_mesh_medpoly_glb.glb",
-      "usdz": "models/Untitled Object.usdz",
-      "order": 0
-    },
-    "میت-لاورز": {
-      "name": "میت لاورز",
-      "category": "ایتالیایی",
-      "desc": "test",
-      "price": 890000,
-      "emoji": "🍽️",
-      "image": "",
-      "diameter": 30,
-      "arEnabled": true,
-      "glb": "models/میت-لاورز.glb",
-      "usdz": "models/میت-لاورز.usdz",
-      "order": 0
-    }
-  },
+  "products": {},
   "settings": {
-    "categories": [
-      "ناپولیتن",
-      "ایتالیایی",
-      "سیب‌زمینی",
-      "امضای پیبو",
-      "نوشیدنی"
-    ],
-    "openTime": "03:00",
-    "closeTime": "00:00",
-    "logoImage": "assets/images/IMG_8423.jpeg"
+    "categories": ["پیتزا", "نوشیدنی", "سیب‌زمینی", "دسر"],
+    "logoImage": "assets/images/logo.jpg"
   }
 }
