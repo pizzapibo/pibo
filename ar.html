@@ -144,6 +144,7 @@
       }
 
       fallbackTitle.textContent = "در حال بارگذاری کتابخانه سه‌بعدی…";
+      if(typeof pibo_loadDoughColors === "function") await pibo_loadDoughColors();
       const libraryReady = Promise.race([
         customElements.whenDefined("model-viewer"),
         new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 8000))
@@ -171,6 +172,20 @@
 
       nameEl.textContent = product.name;
 
+      // if a specific size (and therefore dough color) was picked on the
+      // menu card, prefer that size's own glb/usdz — each dough color can
+      // have its own 3D model. falls back to the product-level files.
+      const sizeIndex = params.get("size");
+      let activeSize = null;
+      if(sizeIndex !== null && Array.isArray(product.sizes)){
+        activeSize = product.sizes[parseInt(sizeIndex, 10)] || null;
+      }
+      const effectiveGlb = (activeSize && activeSize.glb) ? activeSize.glb : product.glb;
+      const effectiveUsdz = (activeSize && activeSize.usdz) ? activeSize.usdz : product.usdz;
+      if(activeSize && typeof pibo_doughMeta === "function"){
+        nameEl.textContent = `${product.name} (خمیر ${pibo_doughMeta(activeSize.doughColor).label})`;
+      }
+
       const shareBtn = document.getElementById("share-btn");
       if(shareBtn){
         shareBtn.addEventListener("click", async () => {
@@ -193,8 +208,8 @@
       fallbackTitle.textContent = "در حال بررسی فایل مدل سه‌بعدی…";
 
       const base = location.href.replace(/ar\.html.*$/, "");
-      const glbUrl = encodeURI(base + product.glb);
-      const usdzUrl = product.usdz ? encodeURI(base + product.usdz) : null;
+      const glbUrl = encodeURI(base + effectiveGlb);
+      const usdzUrl = effectiveUsdz ? encodeURI(base + effectiveUsdz) : null;
 
       const glbOk = await pibo_fileExists(glbUrl);
       const usdzOk = usdzUrl ? await pibo_fileExists(usdzUrl) : false;
@@ -268,8 +283,8 @@
       }
 
       fallbackTitle.textContent = "در حال رندر مدل سه‌بعدی…";
-      viewer.setAttribute("src", product.glb);
-      if(usdzOk) viewer.setAttribute("ios-src", product.usdz + "#allowsContentScaling=0");
+      viewer.setAttribute("src", effectiveGlb);
+      if(usdzOk) viewer.setAttribute("ios-src", effectiveUsdz + "#allowsContentScaling=0");
       viewer.style.display = "block";
 
       const renderedOk = await Promise.race([

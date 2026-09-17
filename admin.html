@@ -150,6 +150,17 @@
       </div>
 
       <div class="admin-panel">
+        <h2>رنگ‌های اصلی خمیر</h2>
+        <p class="sub">این لیست، رنگ‌های قابل انتخاب برای خمیر هر سایز پیتزا را تعیین می‌کند — هم در همین پنل (هنگام افزودن/ویرایش پیتزا) و هم در منوی مشتری نمایش داده می‌شود. رنگ و اسم هرکدام را می‌توانی تغییر بدهی، حذف کنی یا مورد جدید اضافه کنی.</p>
+        <div class="dough-manage-list" data-dough-manage-list></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button type="button" class="btn btn-outline" data-dough-add>+ افزودن رنگ جدید</button>
+          <button type="button" class="btn btn-primary" data-dough-save>ذخیره رنگ‌های خمیر</button>
+          <span data-dough-status style="font-size:.85rem;color:var(--ink-soft)"></span>
+        </div>
+      </div>
+
+      <div class="admin-panel">
         <h2>مدیریت منو</h2>
         <p class="sub">افزودن، ویرایش و حذف پیتزا، نوشیدنی، سیب‌زمینی و دسر — تغییرات فوراً روی سایت اعمال می‌شود.</p>
 
@@ -207,10 +218,16 @@
               </div>
               <div class="field">
                 <label>رنگ خمیر</label>
-                <div class="dough-color-picker">
-                  <label class="dough-swatch dough-swatch-red"><input type="radio" name="size0Dough" value="red" checked><span></span>قرمز</label>
-                  <label class="dough-swatch dough-swatch-green"><input type="radio" name="size0Dough" value="green"><span></span>سبز</label>
-                  <label class="dough-swatch dough-swatch-plain"><input type="radio" name="size0Dough" value="plain"><span></span>ساده</label>
+                <div class="dough-color-picker" data-dough-picker="0"></div>
+              </div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="p-size0-glb">فایل GLB این رنگ (اختیاری)</label>
+                  <input id="p-size0-glb" name="size0Glb" type="text" placeholder="models/margherita-plain.glb">
+                </div>
+                <div class="field">
+                  <label for="p-size0-usdz">فایل USDZ این رنگ (اختیاری)</label>
+                  <input id="p-size0-usdz" name="size0Usdz" type="text" placeholder="models/margherita-plain.usdz">
                 </div>
               </div>
             </div>
@@ -235,10 +252,16 @@
               </div>
               <div class="field">
                 <label>رنگ خمیر</label>
-                <div class="dough-color-picker">
-                  <label class="dough-swatch dough-swatch-red"><input type="radio" name="size1Dough" value="red"><span></span>قرمز</label>
-                  <label class="dough-swatch dough-swatch-green"><input type="radio" name="size1Dough" value="green" checked><span></span>سبز</label>
-                  <label class="dough-swatch dough-swatch-plain"><input type="radio" name="size1Dough" value="plain"><span></span>ساده</label>
+                <div class="dough-color-picker" data-dough-picker="1"></div>
+              </div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="p-size1-glb">فایل GLB این رنگ (اختیاری)</label>
+                  <input id="p-size1-glb" name="size1Glb" type="text" placeholder="models/margherita-green.glb">
+                </div>
+                <div class="field">
+                  <label for="p-size1-usdz">فایل USDZ این رنگ (اختیاری)</label>
+                  <input id="p-size1-usdz" name="size1Usdz" type="text" placeholder="models/margherita-green.usdz">
                 </div>
               </div>
             </div>

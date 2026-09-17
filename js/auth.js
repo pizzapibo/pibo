@@ -39,13 +39,89 @@ document.addEventListener("DOMContentLoaded", () => {
     adminShell?.classList.add("show");
 
     initPublishBar();
-    initProductManager();
+    initDoughColorManager().then(initProductManager);
     renderOrders();
     initHeroImageForm();
     initHoursForm();
     initCategoryManager();
   }
 });
+
+/* ---------- رنگ‌های اصلی خمیر ---------- */
+let PIBO_DOUGH_COLORS_DRAFT = [];
+
+async function initDoughColorManager(){
+  const listWrap = document.querySelector("[data-dough-manage-list]");
+  const addBtn = document.querySelector("[data-dough-add]");
+  const saveBtn = document.querySelector("[data-dough-save]");
+  const status = document.querySelector("[data-dough-status]");
+  if(!listWrap || typeof pibo_loadDoughColors !== "function") return;
+
+  PIBO_DOUGH_COLORS_DRAFT = (await pibo_loadDoughColors()).map(c => ({ ...c }));
+  paintDoughManageList();
+  renderDoughPickers(); // populate the (currently empty) product-form swatches too
+
+  addBtn?.addEventListener("click", () => {
+    const n = PIBO_DOUGH_COLORS_DRAFT.length + 1;
+    PIBO_DOUGH_COLORS_DRAFT.push({ key: "dough" + Date.now().toString(36), label: `رنگ ${n}`, color: "#D8A15B" });
+    paintDoughManageList();
+  });
+
+  saveBtn?.addEventListener("click", async () => {
+    const cleaned = PIBO_DOUGH_COLORS_DRAFT.filter(c => c.label.trim());
+    if(!cleaned.length){ alert("حداقل یک رنگ خمیر لازم است."); return; }
+    await pibo_saveDoughColors(cleaned);
+    PIBO_DOUGH_COLORS_DRAFT = cleaned.map(c => ({ ...c }));
+    pibo_markChanged();
+    renderDoughPickers();
+    if(status){
+      status.textContent = "ذخیره شد ✓";
+      setTimeout(() => { status.textContent = ""; }, 2000);
+    }
+  });
+
+  function paintDoughManageList(){
+    listWrap.innerHTML = PIBO_DOUGH_COLORS_DRAFT.map((c, i) => `
+      <div class="dough-manage-row" data-dough-row="${i}">
+        <input type="color" value="${c.color}" data-dough-color-input>
+        <input type="text" value="${c.label}" placeholder="اسم رنگ (مثلاً قرمز)" data-dough-label-input>
+        <button type="button" data-dough-remove title="حذف">✕</button>
+      </div>
+    `).join("");
+
+    listWrap.querySelectorAll("[data-dough-row]").forEach(row => {
+      const i = parseInt(row.dataset.doughRow, 10);
+      row.querySelector("[data-dough-color-input]").addEventListener("input", (e) => {
+        PIBO_DOUGH_COLORS_DRAFT[i].color = e.target.value;
+      });
+      row.querySelector("[data-dough-label-input]").addEventListener("input", (e) => {
+        PIBO_DOUGH_COLORS_DRAFT[i].label = e.target.value;
+      });
+      row.querySelector("[data-dough-remove]").addEventListener("click", () => {
+        if(PIBO_DOUGH_COLORS_DRAFT.length <= 1){ alert("حداقل یک رنگ خمیر لازم است."); return; }
+        PIBO_DOUGH_COLORS_DRAFT.splice(i, 1);
+        paintDoughManageList();
+      });
+    });
+  }
+}
+
+/* fills the two (per-size) dough-color radio pickers inside the
+   product form, using whichever colors are currently saved */
+function renderDoughPickers(){
+  const colors = (typeof pibo_getDoughColorsSync === "function") ? pibo_getDoughColorsSync() : [];
+  [0, 1].forEach(i => {
+    const wrap = document.querySelector(`[data-dough-picker="${i}"]`);
+    if(!wrap) return;
+    const currentChecked = wrap.querySelector("input:checked")?.value;
+    wrap.innerHTML = colors.map((c, idx) => `
+      <label class="dough-swatch" style="--dough-color:${c.color}">
+        <input type="radio" name="size${i}Dough" value="${c.key}" ${(currentChecked ? currentChecked === c.key : idx === (i === 1 ? 1 : 0) % colors.length) ? "checked" : ""}>
+        <span></span>${c.label}
+      </label>
+    `).join("");
+  });
+}
 
 const PIBO_DEFAULT_CATEGORIES = ["پیتزا", "نوشیدنی", "سیب‌زمینی", "دسر"];
 
@@ -349,23 +425,33 @@ function toggleSizeMode(form, showSizes){
 }
 
 function readSizeRows(form){
+  const defaultDough = (typeof pibo_getDoughColorsSync === "function" ? pibo_getDoughColorsSync() : [])[0]?.key || "plain";
   return [0, 1].map(i => {
     const diameter = parseInt(form.querySelector(`[name=size${i}Diameter]`).value, 10) || null;
     const price = parseInt(form.querySelector(`[name=size${i}Price]`).value, 10) || 0;
-    const doughColor = form.querySelector(`[name=size${i}Dough]:checked`)?.value || "plain";
+    const doughColor = form.querySelector(`[name=size${i}Dough]:checked`)?.value || defaultDough;
     const enabled = form.querySelector(`[name=size${i}Enabled]`).checked;
-    return { diameter, price, doughColor, enabled };
+    const glb = form.querySelector(`[name=size${i}Glb]`)?.value.trim() || "";
+    const usdz = form.querySelector(`[name=size${i}Usdz]`)?.value.trim() || "";
+    return { diameter, price, doughColor, enabled, glb, usdz };
   });
 }
 
 function writeSizeRows(form, sizes){
+  renderDoughPickers();
+  const colors = (typeof pibo_getDoughColorsSync === "function" ? pibo_getDoughColorsSync() : []);
   [0, 1].forEach(i => {
     const s = (sizes && sizes[i]) || {};
     form.querySelector(`[name=size${i}Diameter]`).value = s.diameter || "";
     form.querySelector(`[name=size${i}Price]`).value = s.price || "";
-    const doughRadio = form.querySelector(`[name=size${i}Dough][value="${s.doughColor || (i === 1 ? "green" : "red")}"]`);
+    const fallbackKey = colors[i % colors.length]?.key;
+    const doughRadio = form.querySelector(`[name=size${i}Dough][value="${s.doughColor || fallbackKey}"]`);
     if(doughRadio) doughRadio.checked = true;
     form.querySelector(`[name=size${i}Enabled]`).checked = s.enabled !== false;
+    const glbInput = form.querySelector(`[name=size${i}Glb]`);
+    const usdzInput = form.querySelector(`[name=size${i}Usdz]`);
+    if(glbInput) glbInput.value = s.glb || "";
+    if(usdzInput) usdzInput.value = s.usdz || "";
   });
 }
 

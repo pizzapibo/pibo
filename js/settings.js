@@ -11,3 +11,9 @@ async function pibo_saveSettings(data){
   store.settings = { ...store.settings, ...data };
   pibo_saveDraft();
 }
+
+/* ---------- رنگ‌های اصلی خمیر (قابل مدیریت از پنل ادمین) ---------- */
+async function pibo_saveDoughColors(list){
+  await pibo_saveSettings({ doughColors: list });
+  if(typeof pibo_loadDoughColors === "function") await pibo_loadDoughColors();
+}

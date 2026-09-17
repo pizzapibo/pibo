@@ -1,41 +1,12 @@
 {
-  "products": {
-    "پپرونی": {
-      "name": "پپرونی",
-      "category": "ایتالیایی",
-      "desc": "",
-      "price": 700000,
-      "emoji": "🍽️",
-      "image": "",
-      "diameter": null,
-      "arEnabled": true,
-      "hasSizes": true,
-      "sizes": [
-        {
-          "diameter": 25,
-          "price": 700000,
-          "doughColor": "red",
-          "enabled": true
-        },
-        {
-          "diameter": 30,
-          "price": 1000000,
-          "doughColor": "plain",
-          "enabled": true
-        }
-      ],
-      "glb": "models/پپرونی.glb",
-      "usdz": "models/پپرونی.usdz",
-      "order": 0
-    }
-  },
+  "products": {},
   "settings": {
-    "categories": [
-      "ایتالیایی",
-      "ناپولیتن",
-      "سیب‌زمینی",
-      "نوشیدنی"
-    ],
-    "logoImage": "assets/images/logo.jpg"
+    "categories": ["پیتزا", "نوشیدنی", "سیب‌زمینی", "دسر"],
+    "logoImage": "assets/images/logo.jpg",
+    "doughColors": [
+      { "key": "plain", "label": "ساده", "color": "#F1DFB2" },
+      { "key": "green", "label": "سبز",  "color": "#2F9E5B" },
+      { "key": "red",   "label": "قرمز", "color": "#E5483C" }
+    ]
   }
 }

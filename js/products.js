@@ -2,14 +2,34 @@
    PIBO — product catalogue (reads/writes through js/store.js)
 =========================================================== */
 
-/* رنگ خمیر — shared between admin panel and the customer-facing menu */
-const PIBO_DOUGH_COLORS = {
-  red:   { label: "قرمز", color: "#E5483C" },
-  green: { label: "سبز",  color: "#2F9E5B" },
-  plain: { label: "ساده", color: "#F1DFB2" }
-};
+/* رنگ‌های خمیر — قابل مدیریت از پنل ادمین (data/store.json → settings.doughColors).
+   این آرایه‌ی پیش‌فرض فقط برای اولین بار (وقتی هنوز از پنل چیزی ذخیره نشده) استفاده می‌شود. */
+const PIBO_DEFAULT_DOUGH_COLORS = [
+  { key: "plain", label: "ساده", color: "#F1DFB2" },
+  { key: "green", label: "سبز",  color: "#2F9E5B" },
+  { key: "red",   label: "قرمز", color: "#E5483C" }
+];
+
+// در حافظه کش می‌شود تا pibo_doughMeta بتواند به‌صورت همزمان (sync) صدا زده شود؛
+// pibo_loadDoughColors باید یک‌بار موقع بارگذاری صفحه صدا زده شود.
+let PIBO_DOUGH_COLORS_CACHE = null;
+
+async function pibo_loadDoughColors(){
+  const settings = (typeof pibo_getSettings !== "undefined") ? await pibo_getSettings() : {};
+  const list = Array.isArray(settings.doughColors) && settings.doughColors.length
+    ? settings.doughColors
+    : PIBO_DEFAULT_DOUGH_COLORS;
+  PIBO_DOUGH_COLORS_CACHE = list;
+  return list;
+}
+
+function pibo_getDoughColorsSync(){
+  return PIBO_DOUGH_COLORS_CACHE || PIBO_DEFAULT_DOUGH_COLORS;
+}
+
 function pibo_doughMeta(key){
-  return PIBO_DOUGH_COLORS[key] || PIBO_DOUGH_COLORS.plain;
+  const list = pibo_getDoughColorsSync();
+  return list.find(c => c.key === key) || list[0] || PIBO_DEFAULT_DOUGH_COLORS[0];
 }
 
 /* returns this product's usable sizes (hasSizes + at least diameter & price),

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initHeader();
   initMobileNav();
   initReveal();
+  if(typeof pibo_loadDoughColors === "function") await pibo_loadDoughColors();
   PIBO_PRODUCTS = await pibo_getProducts();
   await renderMenu();
   applySiteLogo();
@@ -135,23 +136,32 @@ async function renderMenu(){
             const safeName = (p.name || "").replace(/"/g, "&quot;");
 
             let sizePickerHtml = "";
-            let addBtnAttrs = `data-id="${p.id}" data-name="${safeName}" data-price="${p.price || 0}"`;
             let priceHtml = pibo_formatPrice(p.price);
 
             if(sizes.length){
               const first = sizes[0];
               priceHtml = pibo_formatPrice(first.price);
-              addBtnAttrs = `data-id="${p.id}::${first.index}" data-name="${safeName} (${first.diameter} سانتی، خمیر ${pibo_doughMeta(first.doughColor).label})" data-price="${first.price}"`;
+
               sizePickerHtml = `
-                <div class="size-picker" data-size-picker="${p.id}">
-                  ${sizes.map((s, idx) => `
-                    <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
-                      data-size-chip data-product="${p.id}" data-name="${safeName}"
-                      data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}" data-dough="${s.doughColor}">
-                      <span class="dough-dot" style="background:${pibo_doughMeta(s.doughColor).color}"></span>
-                      ${s.diameter} سانتی
-                    </button>
-                  `).join("")}
+                <div class="pibo-picker-block">
+                  <span class="pibo-picker-label">انتخاب اندازه</span>
+                  <div class="size-picker" data-size-picker="${p.id}">
+                    ${sizes.map((s, idx) => `
+                      <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
+                        data-size-chip data-product="${p.id}" data-name="${safeName}"
+                        data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}" data-dough="${s.doughColor}">
+                        <span class="size-chip-check">✓</span>
+                        ${s.diameter} سانتی
+                      </button>
+                    `).join("")}
+                  </div>
+                  <div class="pibo-picker-label pibo-dough-label">رنگ خمیر</div>
+                  <div class="dough-picker" data-dough-display="${p.id}">
+                    ${sizes.map((s, idx) => `
+                      <span class="dough-dot-lg ${idx === 0 ? "active" : ""}" data-dough-dot data-index="${s.index}"
+                        style="background:${pibo_doughMeta(s.doughColor).color}" title="${pibo_doughMeta(s.doughColor).label}"></span>
+                    `).join("")}
+                  </div>
                 </div>
               `;
             }
@@ -169,10 +179,7 @@ async function renderMenu(){
                   </div>
                   ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
                   ${sizePickerHtml}
-                  <div class="overlay-bottom-row">
-                    ${hasAr ? `<a class="badge-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
-                    <button type="button" class="btn-add-overlay" data-add-cart ${addBtnAttrs}>افزودن +</button>
-                  </div>
+                  ${hasAr ? `<div class="overlay-bottom-row"><a class="badge-ar" data-ar-link href="ar.html?pizza=${p.id}${sizes.length ? `&size=${sizes[0].index}` : ""}">✦ مشاهده سه‌بعدی</a></div>` : ""}
                 </div>
               </div>
             </div>
@@ -196,12 +203,11 @@ async function renderMenu(){
 
   initCategoryScrollSpy();
   initReveal();
-  bindAddToCartButtons();
   bindSizeChips();
 }
 
 /* switch a card's selected diameter/dough-color size, updating its
-   displayed price and what the "add to cart" button will add */
+   displayed price and which dough-color dot is highlighted */
 function bindSizeChips(){
   document.querySelectorAll("[data-size-picker]").forEach(picker => {
     picker.querySelectorAll("[data-size-chip]").forEach(chip => {
@@ -211,13 +217,18 @@ function bindSizeChips(){
 
         const card = picker.closest(".pizza-card");
         const priceLabel = card?.querySelector("[data-price-label]");
-        const addBtn = card?.querySelector("[data-add-cart]");
         const price = Number(chip.dataset.price || 0);
         if(priceLabel) priceLabel.textContent = pibo_formatPrice(price);
-        if(addBtn){
-          addBtn.dataset.id = `${chip.dataset.product}::${chip.dataset.index}`;
-          addBtn.dataset.price = String(price);
-          addBtn.dataset.name = `${chip.dataset.name} (${chip.dataset.diameter} سانتی، خمیر ${pibo_doughMeta(chip.dataset.dough).label})`;
+
+        const doughDots = card?.querySelectorAll("[data-dough-dot]");
+        doughDots?.forEach(dot => dot.classList.toggle("active", dot.dataset.index === chip.dataset.index));
+
+        // switch the AR link to this size's own dough color / 3D model
+        const arLink = card?.querySelector("[data-ar-link]");
+        if(arLink){
+          const url = new URL(arLink.getAttribute("href"), location.href);
+          url.searchParams.set("size", chip.dataset.index);
+          arLink.setAttribute("href", url.pathname + url.search);
         }
       });
     });
@@ -239,58 +250,6 @@ function setActiveMenuTab(btn){
   wrap.querySelectorAll(".menu-tab").forEach(t => t.classList.remove("active"));
   btn.classList.add("active");
   moveTabIndicator(btn);
-}
-
-/* clone the product's own thumbnail (photo, once you upload one — or
-   the emoji placeholder until then) and animate it flying, shrinking,
-   from the clicked card toward the sticky cart bar */
-function pibo_flyToCart(fromEl){
-  const card = fromEl.closest(".pizza-card");
-  const mediaEl = card ? card.querySelector(".media") : null;
-  const cartBar = document.querySelector(".sticky-cart");
-  const fromRect = (mediaEl || fromEl).getBoundingClientRect();
-  const toRect = cartBar ? cartBar.getBoundingClientRect() : { left: window.innerWidth - 60, top: 20, width: 40, height: 40 };
-
-  const fly = document.createElement("div");
-  fly.className = "pibo-fly-icon";
-  fly.innerHTML = mediaEl ? mediaEl.innerHTML : "🍕";
-  fly.style.width = fromRect.width + "px";
-  fly.style.height = fromRect.height + "px";
-  fly.style.left = fromRect.left + "px";
-  fly.style.top = fromRect.top + "px";
-  fly.style.transform = "translate(0,0) scale(1)";
-  fly.style.opacity = "1";
-  document.body.appendChild(fly);
-
-  const targetSize = 46; // shrink down to roughly the cart icon's size
-  const scale = targetSize / fromRect.width;
-  const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
-  const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
-
-  requestAnimationFrame(() => {
-    fly.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
-    fly.style.opacity = "0";
-    fly.style.borderRadius = "50%";
-  });
-  setTimeout(() => {
-    fly.remove();
-    pibo_bounceCartBar();
-    pibo_flashNewestCartItem();
-  }, 700);
-}
-
-/* bind "add to cart" buttons rendered inside the menu */
-function bindAddToCartButtons(){
-  document.querySelectorAll("[data-add-cart]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      pibo_flyToCart(btn);
-      pibo_cartAdd({ id: btn.dataset.id, name: btn.dataset.name, price: Number(btn.dataset.price || 0) });
-      const original = btn.textContent;
-      btn.textContent = "اضافه شد ✓";
-      btn.classList.add("added");
-      setTimeout(() => { btn.textContent = original; btn.classList.remove("added"); }, 900);
-    });
-  });
 }
 
 /* highlight the tab matching whichever category section is in view */

@@ -104,7 +104,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
    Tactile "press" feedback — applied via JS (ios-glass.js) to
    buttons, tabs, chips, cards: mirrors iOS 26's spring squeeze.
 =========================================================== */
-.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.qty button,.btn-sm,.ar-launch-btn,.sticky-cart-summary,[data-qty-btn],.ios-switch,.btn-add-overlay,.badge-ar{
+.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.btn-sm,.ar-launch-btn,.ios-switch,.size-chip,.dough-swatch-btn,.badge-ar{
   transition:transform .5s var(--spring), box-shadow .35s var(--ease), background .25s var(--ease), border-color .25s var(--ease), opacity .25s;
 }
 .btn:hover,.menu-tab:hover,.pick-chip:hover,.pizza-card:hover,.is-pressed{
@@ -117,7 +117,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* elements that already carry a translateX(-50%) for centering need the
    scale combined, not replaced, or press-feedback would un-center them */
 .ar-launch-btn.is-pressed{transform:translateX(-50%) scale(var(--press-scale)) !important}
-.sticky-cart-summary.is-pressed{transform:scale(var(--press-scale)) !important}
 
 /* ===========================================================
    Header — floating glass capsule (Dynamic Island style)
@@ -394,14 +393,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
 }
 .overlay-bottom-row{display:flex;align-items:stretch;gap:10px}
-.badge-ar,.btn-add-overlay{flex:1 1 50%;min-width:0}
-.btn-add-overlay{
-  padding:12px 16px;border-radius:100px;border:none;cursor:pointer;
-  background:linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0)), var(--orange);
-  color:#fff;font-weight:800;font-size:.88rem;
-  box-shadow:0 10px 22px -10px rgba(255,90,31,.6), inset 0 1px 0 rgba(255,255,255,.35);
+.badge-ar{flex:1 1 100%;min-width:0}
+
+/* ---------- "انتخاب اندازه" / "رنگ خمیر" picker block on the card ---------- */
+.pibo-picker-block{margin-bottom:14px}
+.pibo-picker-label{
+  display:block;color:rgba(255,255,255,.6);font-size:.72rem;font-weight:800;
+  margin-bottom:8px;
 }
-.btn-add-overlay.added{background:var(--green) !important;color:#fff !important}
+.pibo-dough-label{margin-top:12px}
 
 /* on wide screens keep cards from stretching too tall */
 @media (min-width:640px){
@@ -436,28 +436,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .order-form textarea{min-height:100px;resize:vertical}
 .order-form .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-.cart-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.cart-item{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:14px 16px;border:1px solid var(--glass-border);border-radius:16px;
-  background:rgba(255,255,255,.4);
-  -webkit-backdrop-filter:blur(10px);
-  backdrop-filter:blur(10px);
-}
-.cart-item .name{font-weight:800;font-size:.92rem}
-.cart-item .qty{display:flex;align-items:center;gap:8px}
-.cart-item .qty button{
-  width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.7);border:1px solid var(--glass-border);font-weight:900;
-}
-.cart-item.just-added{animation:cart-item-pop .5s var(--spring)}
-@keyframes cart-item-pop{
-  0%{transform:translateY(-14px) scale(.9);opacity:0}
-  60%{transform:translateY(2px) scale(1.02);opacity:1}
-  100%{transform:translateY(0) scale(1);opacity:1}
-}
-.cart-summary{display:flex;justify-content:space-between;font-weight:900;font-size:1.15rem;padding-top:16px;border-top:2px dashed var(--line);margin-bottom:20px}
-.cart-summary span:last-child{color:var(--orange-dark);font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif}
-.empty-cart{color:var(--ink-soft);font-size:.9rem;text-align:center;padding:24px 0}
+
 
 .order-side h3{font-size:1.3rem;font-weight:900;margin-bottom:14px}
 .order-side p{color:var(--ink-soft);line-height:1.9;margin-bottom:20px;font-size:.94rem}
@@ -719,87 +698,6 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
   50%{box-shadow:0 16px 34px -12px rgba(255,90,31,.7), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,90,31,0)}
 }
 
-/* "fly to cart" — a cloned product thumbnail that shrinks and arcs
-   from the add-to-cart card into the sticky cart bar, mirroring iOS's
-   "add to bag" burst */
-.pibo-fly-icon{
-  position:fixed;z-index:200;pointer-events:none;
-  border-radius:18px;overflow:hidden;
-  box-shadow:0 10px 30px -10px rgba(36,22,8,.4);
-  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
-  background:var(--cream);
-  transition:transform .65s cubic-bezier(.2,.8,.2,1), opacity .55s ease-in .1s, border-radius .5s ease-in-out;
-  will-change:transform, opacity;
-}
-.pibo-fly-icon img{width:100%;height:100%;object-fit:cover;display:block}
-
-/* ===========================================================
-   Sticky cart
-=========================================================== */
-[data-add-cart].added{background:var(--green) !important;color:#fff !important;border-color:var(--green) !important}
-.sticky-cart{
-  position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(140%);
-  z-index:80;width:min(94vw,460px);
-  background:var(--glass-light-strong);
-  -webkit-backdrop-filter:var(--glass-blur);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
-  border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-glass-lg);
-  transition:transform .5s var(--spring-soft);
-  overflow:hidden;
-}
-.sticky-cart.has-items{transform:translateX(-50%) translateY(0)}
-.sticky-cart.bounce{animation:cart-bounce .5s var(--spring)}
-@keyframes cart-bounce{0%{transform:translateX(-50%) translateY(0) scale(1)}35%{transform:translateX(-50%) translateY(0) scale(1.04)}100%{transform:translateX(-50%) translateY(0) scale(1)}}
-.sticky-cart-summary{
-  width:100%;display:flex;align-items:center;gap:12px;padding:14px 20px;
-  background:transparent;border:none;font-family:inherit;cursor:pointer;text-align:right;
-}
-.sticky-cart-icon{font-size:1.2rem;display:inline-block;transition:transform .3s var(--ease)}
-.sticky-cart-icon.morph{animation:cart-icon-morph .6s var(--spring)}
-@keyframes cart-icon-morph{
-  0%{transform:scale(1) rotate(0)}
-  30%{transform:scale(1.35) rotate(-12deg)}
-  60%{transform:scale(.92) rotate(6deg)}
-  100%{transform:scale(1) rotate(0)}
-}
-.sticky-cart-count{
-  background:var(--orange);color:#fff;font-weight:900;font-size:.78rem;
-  min-width:22px;height:22px;border-radius:100px;display:flex;align-items:center;justify-content:center;padding:0 6px;
-}
-.sticky-cart-total{flex:1;font-weight:900;color:var(--ink)}
-.sticky-cart-chevron{transition:transform .3s var(--ease);color:var(--ink-soft)}
-.sticky-cart.open .sticky-cart-chevron{transform:rotate(-90deg)}
-.sticky-cart-panel{
-  max-height:0;overflow:hidden;border-top:1px solid var(--line);
-  transform:translateY(-8px);opacity:0;
-  transition:max-height .55s var(--spring), transform .55s var(--spring), opacity .35s var(--ease);
-}
-.sticky-cart.open .sticky-cart-panel{max-height:340px;overflow-y:auto;transform:translateY(0);opacity:1}
-
-/* Apple Pay-sheet style dim + blur behind the cart when it's open */
-.sticky-cart-scrim{
-  position:fixed;inset:0;z-index:75;background:rgba(20,12,4,.28);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
-}
-.sticky-cart-scrim.show{opacity:1;pointer-events:auto}
-.sticky-cart-items{padding:14px 20px;display:flex;flex-direction:column;gap:10px}
-.sticky-cart-footer{display:flex;justify-content:space-between;padding:14px 20px;border-top:2px dashed var(--line);font-size:.95rem}
-.sticky-cart-footer strong{color:var(--orange-dark)}
-
-/* (10) odometer-style per-digit reveal for the price total */
-.odo-number{unicode-bidi:isolate;direction:ltr;display:inline-block}
-.odo-digit{display:inline-block}
-.odo-digit.odo-in{animation:odo-slide .38s var(--ease)}
-@keyframes odo-slide{
-  from{transform:translateY(55%);opacity:0}
-  to{transform:translateY(0);opacity:1}
-}
-@media (max-width:480px){
-  .sticky-cart{bottom:12px;width:94vw}
-}
 
 /* ===========================================================
    (9) generic gentle "shake" for invalid/blocked actions — reused
@@ -833,27 +731,72 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 .dough-swatch span{
   width:18px;height:18px;border-radius:50%;flex-shrink:0;
   border:1.5px solid rgba(0,0,0,.12);
+  background:var(--dough-color, #F1DFB2);
 }
-.dough-swatch-red span{background:#E5483C}
-.dough-swatch-green span{background:#2F9E5B}
-.dough-swatch-plain span{background:#F1DFB2}
 .dough-swatch:has(input:checked){border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,90,31,.15)}
+
+/* ---------- admin: "رنگ‌های اصلی خمیر" management list ---------- */
+.dough-manage-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.dough-manage-row{
+  display:flex;align-items:center;gap:12px;
+  background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;
+}
+.dough-manage-row input[type=color]{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);padding:0;cursor:pointer;flex-shrink:0;background:none;
+}
+.dough-manage-row input[type=text]{
+  flex:1;min-width:100px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:.9rem;
+}
+.dough-manage-row .dough-manage-key{color:var(--ink-soft);font-size:.75rem;white-space:nowrap}
+.dough-manage-row button{
+  flex-shrink:0;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+  background:#fff;color:var(--red);font-weight:900;cursor:pointer;
+}
 .ios-switch-sm{width:40px;height:24px}
 .ios-switch-sm .ios-switch-track::before{width:20px;height:20px}
 .ios-switch-sm input:checked + .ios-switch-track::before{transform:translateX(-16px)}
 .size-summary-row{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--ink-soft);margin-bottom:2px}
 .size-summary-row .dough-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.12)}
 
-/* ---------- pizza size picker (customer menu card) ---------- */
-.size-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+/* ---------- pizza size picker (customer menu card) — pill toggle,
+   like a segmented control: inactive = translucent glass chip,
+   active = solid orange with a check mark ---------- */
+.size-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
 .size-chip{
   display:inline-flex;align-items:center;gap:6px;cursor:pointer;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
-  color:#fff;font-size:.78rem;font-weight:700;padding:7px 12px;border-radius:100px;
-  transition:background .25s, border-color .25s;
+  color:#fff;font-size:.82rem;font-weight:700;padding:9px 16px;border-radius:100px;
+  transition:background .25s, border-color .25s, box-shadow .25s;
 }
-.size-chip .dough-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.5)}
-.size-chip.active{background:var(--orange);border-color:var(--orange)}
+.size-chip-check{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:50%;font-size:.6rem;line-height:1;
+  background:rgba(255,255,255,.18);opacity:0;transform:scale(.6);
+  transition:opacity .2s, transform .2s, background .2s;
+}
+.size-chip.active{
+  background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,0)), var(--orange);
+  border-color:var(--orange);
+  box-shadow:0 8px 18px -10px rgba(255,90,31,.65);
+}
+.size-chip.active .size-chip-check{opacity:1;transform:scale(1);background:#fff;color:var(--orange)}
+
+/* ---------- dough-color swatches shown under the size picker — plain
+   circular dots (color set per-size from the admin panel), the one
+   matching the selected size gets a bright ring ---------- */
+.dough-picker{display:flex;gap:10px;align-items:center}
+.dough-dot-lg{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;cursor:default;
+  border:2px solid rgba(255,255,255,.35);
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+  transition:border-color .25s, transform .25s, box-shadow .25s;
+  opacity:.55;transform:scale(.9);
+}
+.dough-dot-lg.active{
+  opacity:1;transform:scale(1);
+  border-color:#fff;
+  box-shadow:0 0 0 3px rgba(255,255,255,.18), 0 2px 8px rgba(0,0,0,.3);
+}
 
 .ios-switch{position:relative;display:inline-flex;width:51px;height:31px;flex-shrink:0;cursor:pointer}
 .ios-switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
