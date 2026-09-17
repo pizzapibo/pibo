@@ -17,12 +17,19 @@
 <body>
 
 <div id="preloader" class="preloader" aria-hidden="true">
-  <div class="preloader-wordmark" dir="rtl">
-    <img class="pw-letter" style="--i:0;--l:75%;--r:100%" src="assets/images/logo.jpg" alt="">
-    <img class="pw-letter" style="--i:1;--l:50%;--r:75%" src="assets/images/logo.jpg" alt="">
-    <img class="pw-letter" style="--i:2;--l:25%;--r:50%" src="assets/images/logo.jpg" alt="">
-    <img class="pw-letter" style="--i:3;--l:0%;--r:25%" src="assets/images/logo.jpg" alt="">
-    <span class="pw-sr-only">پیبو</span>
+  <div class="preloader-wordmark">
+    <span class="pw-cell" style="--dx:0vw;  --dy:-62vh; --i:0">
+      <span class="pw-ball"></span><span class="pw-char">P</span>
+    </span>
+    <span class="pw-cell" style="--dx:62vw; --dy:0vh;  --i:1">
+      <span class="pw-ball"></span><span class="pw-char">I</span>
+    </span>
+    <span class="pw-cell" style="--dx:0vw;  --dy:62vh;  --i:2">
+      <span class="pw-ball"></span><span class="pw-char">B</span>
+    </span>
+    <span class="pw-cell" style="--dx:-62vw;--dy:0vh;  --i:3">
+      <span class="pw-ball"></span><span class="pw-char">O</span>
+    </span>
   </div>
 </div>
 <script>
@@ -31,7 +38,7 @@
   // animation is actually seen rather than flashing by instantly
   // on a fast connection.
   (function(){
-    var MIN_MS = 2300;
+    var MIN_MS = 2200;
     var start = performance.now();
     function reveal(){
       var el = document.getElementById("preloader");

@@ -888,9 +888,10 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 .mn-cta{margin-top:18px}
 
 /* ===========================================================
-   Preloader — the پیبو logo mark, sliced into 4 vertical
-   strips of the real logo image so it springs in "letter by
-   letter" (right→left) while looking exactly like our logo
+   Preloader — "PIBO" letter by letter: a ball flies in from
+   a different edge of the screen for each letter (P top,
+   I right, B bottom, O left), converges to the middle, then
+   morphs (cross-fade + scale) into the actual letter
 =========================================================== */
 .preloader{
   position:fixed;inset:0;z-index:9999;
@@ -903,26 +904,46 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 
 .preloader-wordmark{
   position:relative;z-index:2;
-  width:clamp(220px,52vw,340px);
-  height:clamp(220px,52vw,340px);
+  display:flex;align-items:baseline;
+  font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
+  font-weight:900;
+  font-size:clamp(3rem,15vw,5.4rem);
+  line-height:1;
+  letter-spacing:.02em;
+  color:#fff;
 }
-.pw-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0}
-.pw-letter{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:contain;
-  clip-path:polygon(var(--l) 0, var(--r) 0, var(--r) 100%, var(--l) 100%);
-  transform:translateY(36px) scale(.82) rotate(3deg);
+.pw-cell{position:relative;display:inline-block;min-width:.62em;height:1em}
+
+.pw-ball{
+  position:absolute;left:50%;top:54%;
+  width:.5em;height:.5em;border-radius:50%;
+  background:#fff;
+  transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.5);
   opacity:0;
-  filter:blur(4px);
-  animation:pw-letter-spring 1.4s var(--spring-soft) forwards;
-  animation-delay:calc(var(--i) * .22s + .15s);
+  animation:pw-ball-fly .95s var(--spring-soft) forwards;
+  animation-delay:calc(var(--i) * .16s + .1s);
 }
-@keyframes pw-letter-spring{
-  70%{ filter:blur(0); }
-  to{ transform:translateY(0) scale(1) rotate(0deg); opacity:1; filter:blur(0); }
+@keyframes pw-ball-fly{
+  0%{ opacity:0; transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.5); }
+  22%{ opacity:1; }
+  78%{ opacity:1; transform:translate(-50%,-50%) translate(0,0) scale(1.1); }
+  100%{ opacity:0; transform:translate(-50%,-50%) translate(0,0) scale(.35); }
+}
+
+.pw-char{
+  position:relative;
+  display:inline-block;
+  opacity:0;
+  transform:scale(.35);
+  filter:blur(2px);
+  animation:pw-char-in .5s var(--spring) forwards;
+  animation-delay:calc(var(--i) * .16s + .1s + .68s);
+}
+@keyframes pw-char-in{
+  to{ opacity:1; transform:scale(1); filter:blur(0); }
 }
 
 @media (prefers-reduced-motion: reduce){
-  .pw-letter{animation:none;opacity:1;transform:none;filter:none}
+  .pw-ball{display:none}
+  .pw-char{animation:none;opacity:1;transform:none;filter:none}
 }
