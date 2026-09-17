@@ -17,28 +17,17 @@
 <body>
 
 <div id="preloader" class="preloader" aria-hidden="true">
-  <div class="preloader-wordmark" dir="ltr">
-    <span class="pw-cell" style="--dx:0vw;  --dy:-62vh; --i:0">
-      <span class="pw-ball"></span><span class="pw-char">P</span>
-    </span>
-    <span class="pw-cell" style="--dx:62vw; --dy:0vh;  --i:1">
-      <span class="pw-ball"></span><span class="pw-char">I</span>
-    </span>
-    <span class="pw-cell" style="--dx:0vw;  --dy:62vh;  --i:2">
-      <span class="pw-ball"></span><span class="pw-char">B</span>
-    </span>
-    <span class="pw-cell" style="--dx:-62vw;--dy:0vh;  --i:3">
-      <span class="pw-ball"></span><span class="pw-char">O</span>
-    </span>
+  <div class="preloader-logo-wrap">
+    <img class="preloader-logo" src="assets/images/preloader-logo.png" alt="پیبو">
   </div>
 </div>
 <script>
   // Hide the preloader once the page has fully loaded, but keep it
-  // on screen for a small minimum time so the spring/sunburst
-  // animation is actually seen rather than flashing by instantly
-  // on a fast connection.
+  // on screen for a small minimum time so the logo animation is
+  // actually seen rather than flashing by instantly on a fast
+  // connection.
   (function(){
-    var MIN_MS = 2200;
+    var MIN_MS = 3800;
     var start = performance.now();
     function reveal(){
       var el = document.getElementById("preloader");
