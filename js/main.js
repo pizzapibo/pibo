@@ -137,19 +137,22 @@ async function renderMenu(){
 
             let sizePickerHtml = "";
             let priceHtml = pibo_formatPrice(p.price);
+            let initialImage = p.image || "";
 
             if(sizes.length){
               const first = sizes[0];
               priceHtml = pibo_formatPrice(first.price);
+              if(first.image) initialImage = first.image;
 
               sizePickerHtml = `
                 <div class="pibo-picker-block">
                   <span class="pibo-picker-label">انتخاب اندازه</span>
-                  <div class="size-picker" data-size-picker="${p.id}">
+                  <div class="size-picker" data-size-picker="${p.id}" data-fallback-image="${p.image || ""}">
                     ${sizes.map((s, idx) => `
                       <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
                         data-size-chip data-product="${p.id}" data-name="${safeName}"
-                        data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}" data-dough="${s.doughColor}">
+                        data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}"
+                        data-dough="${s.doughColor}" data-image="${s.image || ""}">
                         <span class="size-chip-check">✓</span>
                         ${s.diameter} سانتی
                       </button>
@@ -169,9 +172,9 @@ async function renderMenu(){
             return `
             <div class="pizza-card reveal" style="--i:${i % 6}">
               <div class="media">
-                ${p.image
-                  ? `<img src="${p.image}" alt="${p.name || ""}" loading="lazy" decoding="async">`
-                  : `<span class="media-emoji">${p.emoji || "🍽️"}</span>`}
+                ${p.image || initialImage
+                  ? `<img src="${initialImage}" alt="${p.name || ""}" loading="lazy" decoding="async" data-card-img>`
+                  : `<span class="media-emoji" data-card-emoji>${p.emoji || "🍽️"}</span>`}
                 <div class="card-overlay">
                   <div class="overlay-top-row">
                     <h3 class="overlay-name">${p.name}</h3>
@@ -222,6 +225,20 @@ function bindSizeChips(){
 
         const doughDots = card?.querySelectorAll("[data-dough-dot]");
         doughDots?.forEach(dot => dot.classList.toggle("active", dot.dataset.index === chip.dataset.index));
+
+        // swap the card photo if this size has its own image, otherwise
+        // fall back to the product's main photo — with a quick crossfade
+        const mediaImg = card?.querySelector("[data-card-img]");
+        if(mediaImg){
+          const nextSrc = chip.dataset.image || picker.dataset.fallbackImage || "";
+          if(nextSrc && mediaImg.getAttribute("src") !== nextSrc){
+            mediaImg.classList.add("swapping");
+            setTimeout(() => {
+              mediaImg.src = nextSrc;
+              mediaImg.classList.remove("swapping");
+            }, 180);
+          }
+        }
 
         // switch the AR link to this size's own dough color / 3D model
         const arLink = card?.querySelector("[data-ar-link]");

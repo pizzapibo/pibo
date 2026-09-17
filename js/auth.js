@@ -433,7 +433,8 @@ function readSizeRows(form){
     const enabled = form.querySelector(`[name=size${i}Enabled]`).checked;
     const glb = form.querySelector(`[name=size${i}Glb]`)?.value.trim() || "";
     const usdz = form.querySelector(`[name=size${i}Usdz]`)?.value.trim() || "";
-    return { diameter, price, doughColor, enabled, glb, usdz };
+    const image = form.querySelector(`[name=size${i}Image]`)?.value.trim() || "";
+    return { diameter, price, doughColor, enabled, glb, usdz, image };
   });
 }
 
@@ -450,8 +451,14 @@ function writeSizeRows(form, sizes){
     form.querySelector(`[name=size${i}Enabled]`).checked = s.enabled !== false;
     const glbInput = form.querySelector(`[name=size${i}Glb]`);
     const usdzInput = form.querySelector(`[name=size${i}Usdz]`);
+    const imageInput = form.querySelector(`[name=size${i}Image]`);
     if(glbInput) glbInput.value = s.glb || "";
     if(usdzInput) usdzInput.value = s.usdz || "";
+    if(imageInput) imageInput.value = s.image || "";
+    // auto-expand the "extra" details panel if this size already has
+    // something in it, so editing an item doesn't hide saved data
+    const details = form.querySelector(`[data-size-row="${i}"] .size-extra`);
+    if(details) details.open = !!(s.glb || s.usdz || s.image);
   });
 }
 
@@ -471,6 +478,7 @@ function resetProductForm(){
   const title = document.querySelector("[data-product-form-title]");
   const cancelBtn = document.querySelector("[data-product-cancel]");
   form?.reset();
+  form?.querySelectorAll(".size-extra").forEach(d => { d.open = false; });
   if(form) toggleSizeMode(form, false);
   if(title) title.textContent = "افزودن پیتزای جدید";
   cancelBtn?.setAttribute("hidden", "true");
