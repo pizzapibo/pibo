@@ -146,24 +146,28 @@ async function renderMenu(){
 
               sizePickerHtml = `
                 <div class="pibo-picker-block">
-                  <span class="pibo-picker-label">انتخاب اندازه</span>
-                  <div class="size-picker" data-size-picker="${p.id}" data-fallback-image="${p.image || ""}">
-                    ${sizes.map((s, idx) => `
-                      <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
-                        data-size-chip data-product="${p.id}" data-name="${safeName}"
-                        data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}"
-                        data-dough="${s.doughColor}" data-image="${s.image || ""}">
-                        <span class="size-chip-check">✓</span>
-                        ${s.diameter} سانتی
-                      </button>
-                    `).join("")}
+                  <div class="pibo-picker-row">
+                    <span class="pibo-picker-label">اندازه</span>
+                    <div class="size-picker" data-size-picker="${p.id}" data-fallback-image="${p.image || ""}">
+                      ${sizes.map((s, idx) => `
+                        <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
+                          data-size-chip data-product="${p.id}" data-name="${safeName}"
+                          data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}"
+                          data-dough="${s.doughColor}" data-image="${s.image || ""}">
+                          <span class="size-chip-check">✓</span>
+                          ${s.diameter}
+                        </button>
+                      `).join("")}
+                    </div>
                   </div>
-                  <div class="pibo-picker-label pibo-dough-label">رنگ خمیر</div>
-                  <div class="dough-picker" data-dough-display="${p.id}">
-                    ${sizes.map((s, idx) => `
-                      <span class="dough-dot-lg ${idx === 0 ? "active" : ""}" data-dough-dot data-index="${s.index}"
-                        style="background:${pibo_doughMeta(s.doughColor).color}" title="${pibo_doughMeta(s.doughColor).label}"></span>
-                    `).join("")}
+                  <div class="pibo-picker-row">
+                    <span class="pibo-picker-label">رنگ خمیر</span>
+                    <div class="dough-picker" data-dough-display="${p.id}">
+                      ${sizes.map((s, idx) => `
+                        <span class="dough-dot-lg ${idx === 0 ? "active" : ""}" data-dough-dot data-index="${s.index}"
+                          style="background:${pibo_doughMeta(s.doughColor).color}" title="${pibo_doughMeta(s.doughColor).label}"></span>
+                      `).join("")}
+                    </div>
                   </div>
                 </div>
               `;

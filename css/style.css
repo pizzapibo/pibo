@@ -363,18 +363,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   color:#fff;
 }
 
-/* small ghost pill, tucked in its own row — a quiet secondary action
-   rather than a full-width bar competing with the photo */
+/* floating AR badge — a prominent standalone pill sitting on the photo
+   itself (not tucked inside the bottom info panel), so it reads as its
+   own call-to-action rather than a small metadata chip */
 .badge-ar{
-  display:inline-flex;align-items:center;justify-content:center;gap:5px;
-  padding:7px 14px;border-radius:100px;
-  background:rgba(255,255,255,.12);
-  color:#fff;font-weight:700;font-size:.7rem;text-align:center;
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px 10px;border-radius:100px;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)), var(--green);
+  color:#fff;font-weight:800;font-size:.8rem;text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  border:1px solid rgba(255,255,255,.3);
-  transition:background .2s, border-color .2s;
+  border:1px solid rgba(255,255,255,.45);
+  box-shadow:0 10px 26px -8px rgba(47,158,91,.65), inset 0 1px 0 rgba(255,255,255,.4);
 }
-.badge-ar:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.45)}
 
 .overlay-top-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:10px}
 .overlay-chip{
@@ -393,15 +393,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   color:var(--gold);font-weight:900;font-size:.95rem;white-space:nowrap;
   font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
 }
-.overlay-bottom-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:8px}
+.overlay-bottom-row{display:flex;align-items:stretch;gap:10px;margin-top:8px}
+.badge-ar{flex:1 1 100%;min-width:0}
 
-/* ---------- "انتخاب اندازه" / "رنگ خمیر" picker block on the card ---------- */
-.pibo-picker-block{margin-bottom:8px}
+/* ---------- "اندازه" / "رنگ خمیر" picker rows on the card — label on
+   one side, controls on the other, so each stays a single tidy row ---------- */
+.pibo-picker-block{margin-bottom:6px;display:flex;flex-direction:column;gap:6px}
+.pibo-picker-row{display:flex;align-items:center;gap:10px}
 .pibo-picker-label{
-  display:block;color:rgba(255,255,255,.55);font-size:.66rem;font-weight:800;
-  margin-bottom:5px;
+  flex:0 0 auto;color:rgba(255,255,255,.55);font-size:.66rem;font-weight:800;
+  white-space:nowrap;
 }
-.pibo-dough-label{margin-top:6px}
+.pibo-picker-row .size-picker,
+.pibo-picker-row .dough-picker{flex:1 1 auto;justify-content:flex-start}
 
 /* on wide screens keep cards from stretching too tall */
 @media (min-width:640px){
@@ -772,7 +776,7 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 /* ---------- pizza size picker (customer menu card) — pill toggle,
    like a segmented control: inactive = translucent glass chip,
    active = solid orange with a check mark ---------- */
-.size-picker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px}
+.size-picker{display:flex;gap:6px;flex-wrap:wrap}
 .size-chip{
   display:inline-flex;align-items:center;gap:5px;cursor:pointer;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
