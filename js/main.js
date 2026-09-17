@@ -131,6 +131,31 @@ async function renderMenu(){
         <div class="menu-grid stagger">
           ${items.map((p, i) => {
             const hasAr = p.arEnabled !== false;
+            const sizes = pibo_productSizes(p).filter(s => s.enabled !== false);
+            const safeName = (p.name || "").replace(/"/g, "&quot;");
+
+            let sizePickerHtml = "";
+            let addBtnAttrs = `data-id="${p.id}" data-name="${safeName}" data-price="${p.price || 0}"`;
+            let priceHtml = pibo_formatPrice(p.price);
+
+            if(sizes.length){
+              const first = sizes[0];
+              priceHtml = pibo_formatPrice(first.price);
+              addBtnAttrs = `data-id="${p.id}::${first.index}" data-name="${safeName} (${first.diameter} سانتی، خمیر ${pibo_doughMeta(first.doughColor).label})" data-price="${first.price}"`;
+              sizePickerHtml = `
+                <div class="size-picker" data-size-picker="${p.id}">
+                  ${sizes.map((s, idx) => `
+                    <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
+                      data-size-chip data-product="${p.id}" data-name="${safeName}"
+                      data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}" data-dough="${s.doughColor}">
+                      <span class="dough-dot" style="background:${pibo_doughMeta(s.doughColor).color}"></span>
+                      ${s.diameter} سانتی
+                    </button>
+                  `).join("")}
+                </div>
+              `;
+            }
+
             return `
             <div class="pizza-card reveal" style="--i:${i % 6}">
               <div class="media">
@@ -140,12 +165,13 @@ async function renderMenu(){
                 <div class="card-overlay">
                   <div class="overlay-top-row">
                     <h3 class="overlay-name">${p.name}</h3>
-                    <span class="overlay-price">${pibo_formatPrice(p.price)}</span>
+                    <span class="overlay-price" data-price-label>${priceHtml}</span>
                   </div>
                   ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
+                  ${sizePickerHtml}
                   <div class="overlay-bottom-row">
                     ${hasAr ? `<a class="badge-ar" href="ar.html?pizza=${p.id}">✦ مشاهده سه‌بعدی</a>` : ""}
-                    <button type="button" class="btn-add-overlay" data-add-cart data-id="${p.id}" data-name="${(p.name||"").replace(/"/g,'&quot;')}" data-price="${p.price||0}">افزودن +</button>
+                    <button type="button" class="btn-add-overlay" data-add-cart ${addBtnAttrs}>افزودن +</button>
                   </div>
                 </div>
               </div>
@@ -171,6 +197,31 @@ async function renderMenu(){
   initCategoryScrollSpy();
   initReveal();
   bindAddToCartButtons();
+  bindSizeChips();
+}
+
+/* switch a card's selected diameter/dough-color size, updating its
+   displayed price and what the "add to cart" button will add */
+function bindSizeChips(){
+  document.querySelectorAll("[data-size-picker]").forEach(picker => {
+    picker.querySelectorAll("[data-size-chip]").forEach(chip => {
+      chip.addEventListener("click", () => {
+        picker.querySelectorAll("[data-size-chip]").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+
+        const card = picker.closest(".pizza-card");
+        const priceLabel = card?.querySelector("[data-price-label]");
+        const addBtn = card?.querySelector("[data-add-cart]");
+        const price = Number(chip.dataset.price || 0);
+        if(priceLabel) priceLabel.textContent = pibo_formatPrice(price);
+        if(addBtn){
+          addBtn.dataset.id = `${chip.dataset.product}::${chip.dataset.index}`;
+          addBtn.dataset.price = String(price);
+          addBtn.dataset.name = `${chip.dataset.name} (${chip.dataset.diameter} سانتی، خمیر ${pibo_doughMeta(chip.dataset.dough).label})`;
+        }
+      });
+    });
+  });
 }
 
 /* slide the segmented-control indicator behind the active tab,

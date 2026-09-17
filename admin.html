@@ -165,16 +165,85 @@
               <select id="p-category" name="category" required data-category-select></select>
             </div>
           </div>
-          <div class="grid-2">
-            <div class="field">
-              <label for="p-price">قیمت (تومان)</label>
-              <input id="p-price" name="price" type="number" min="0" step="1000" placeholder="185000" required>
-            </div>
-            <div class="field">
-              <label for="p-diameter">قطر (سانتی‌متر — اختیاری)</label>
-              <input id="p-diameter" name="diameter" type="number" min="0" step="1" placeholder="مثلاً 30">
+          <div class="field" style="display:flex;align-items:center;gap:10px">
+            <label class="ios-switch">
+              <input id="p-has-sizes" name="hasSizes" type="checkbox">
+              <span class="ios-switch-track"></span>
+            </label>
+            <label for="p-has-sizes" style="margin:0">این مورد دو سایز جدا داره (هر سایز قطر، قیمت و رنگ خمیر مخصوص خودش رو داره — مخصوص پیتزا)</label>
+          </div>
+
+          <div data-single-price-wrap>
+            <div class="grid-2">
+              <div class="field">
+                <label for="p-price">قیمت (تومان)</label>
+                <input id="p-price" name="price" type="number" min="0" step="1000" placeholder="185000">
+              </div>
+              <div class="field">
+                <label for="p-diameter">قطر (سانتی‌متر — اختیاری)</label>
+                <input id="p-diameter" name="diameter" type="number" min="0" step="1" placeholder="مثلاً 30">
+              </div>
             </div>
           </div>
+
+          <div data-sizes-wrap hidden>
+            <div class="size-row" data-size-row="0">
+              <div class="size-row-head">
+                <span>سایز ۱</span>
+                <label class="ios-switch ios-switch-sm">
+                  <input type="checkbox" name="size0Enabled" checked>
+                  <span class="ios-switch-track"></span>
+                </label>
+              </div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="p-size0-diameter">قطر (سانتی‌متر)</label>
+                  <input id="p-size0-diameter" name="size0Diameter" type="number" min="0" step="1" placeholder="مثلاً 25">
+                </div>
+                <div class="field">
+                  <label for="p-size0-price">قیمت (تومان)</label>
+                  <input id="p-size0-price" name="size0Price" type="number" min="0" step="1000" placeholder="150000">
+                </div>
+              </div>
+              <div class="field">
+                <label>رنگ خمیر</label>
+                <div class="dough-color-picker">
+                  <label class="dough-swatch dough-swatch-red"><input type="radio" name="size0Dough" value="red" checked><span></span>قرمز</label>
+                  <label class="dough-swatch dough-swatch-green"><input type="radio" name="size0Dough" value="green"><span></span>سبز</label>
+                  <label class="dough-swatch dough-swatch-plain"><input type="radio" name="size0Dough" value="plain"><span></span>ساده</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="size-row" data-size-row="1">
+              <div class="size-row-head">
+                <span>سایز ۲</span>
+                <label class="ios-switch ios-switch-sm">
+                  <input type="checkbox" name="size1Enabled" checked>
+                  <span class="ios-switch-track"></span>
+                </label>
+              </div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="p-size1-diameter">قطر (سانتی‌متر)</label>
+                  <input id="p-size1-diameter" name="size1Diameter" type="number" min="0" step="1" placeholder="مثلاً 35">
+                </div>
+                <div class="field">
+                  <label for="p-size1-price">قیمت (تومان)</label>
+                  <input id="p-size1-price" name="size1Price" type="number" min="0" step="1000" placeholder="220000">
+                </div>
+              </div>
+              <div class="field">
+                <label>رنگ خمیر</label>
+                <div class="dough-color-picker">
+                  <label class="dough-swatch dough-swatch-red"><input type="radio" name="size1Dough" value="red"><span></span>قرمز</label>
+                  <label class="dough-swatch dough-swatch-green"><input type="radio" name="size1Dough" value="green" checked><span></span>سبز</label>
+                  <label class="dough-swatch dough-swatch-plain"><input type="radio" name="size1Dough" value="plain"><span></span>ساده</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="grid-2">
             <div class="field">
               <label for="p-emoji">آیکون (وقتی عکس نداری)</label>
@@ -216,7 +285,7 @@
         <div class="table-scroll">
           <table class="orders-table" style="margin-bottom:14px">
             <thead>
-              <tr><th>نام</th><th>دسته</th><th>قیمت</th><th>قطر</th><th>عملیات</th></tr>
+              <tr><th>نام</th><th>دسته</th><th>قیمت / سایزها</th><th>عملیات</th></tr>
             </thead>
             <tbody data-products-body></tbody>
           </table>

@@ -2,6 +2,33 @@
    PIBO — product catalogue (reads/writes through js/store.js)
 =========================================================== */
 
+/* رنگ خمیر — shared between admin panel and the customer-facing menu */
+const PIBO_DOUGH_COLORS = {
+  red:   { label: "قرمز", color: "#E5483C" },
+  green: { label: "سبز",  color: "#2F9E5B" },
+  plain: { label: "ساده", color: "#F1DFB2" }
+};
+function pibo_doughMeta(key){
+  return PIBO_DOUGH_COLORS[key] || PIBO_DOUGH_COLORS.plain;
+}
+
+/* returns this product's usable sizes (hasSizes + at least diameter & price),
+   in stored order — includes disabled ones; callers filter `.enabled` as needed */
+function pibo_productSizes(product){
+  if(!product || !product.hasSizes || !Array.isArray(product.sizes)) return [];
+  return product.sizes
+    .map((s, i) => ({ ...s, index: i }))
+    .filter(s => Number.isFinite(s.diameter) && Number.isFinite(s.price) && s.diameter > 0);
+}
+
+/* the price to show on a card before a size is picked: the cheapest
+   *enabled* size, or the legacy flat price when this item has no sizes */
+function pibo_productDisplayPrice(product){
+  const sizes = pibo_productSizes(product).filter(s => s.enabled !== false);
+  if(sizes.length) return Math.min(...sizes.map(s => s.price));
+  return product.price || 0;
+}
+
 async function pibo_getProducts(){
   const store = await pibo_loadStore();
   const list = Object.keys(store.products).map(id => ({ id, ...store.products[id] }));

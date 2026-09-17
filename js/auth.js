@@ -277,6 +277,10 @@ async function initProductManager(){
   const cancelBtn = document.querySelector("[data-product-cancel]");
   if(!form) return;
 
+  const hasSizesToggle = form.querySelector("[name=hasSizes]");
+  hasSizesToggle?.addEventListener("change", () => toggleSizeMode(form, hasSizesToggle.checked));
+  toggleSizeMode(form, false);
+
   await refreshProductViews();
 
   form.addEventListener("submit", async (e) => {
@@ -284,17 +288,32 @@ async function initProductManager(){
     const name = form.querySelector("[name=name]").value.trim();
     const category = form.querySelector("[name=category]").value;
     const desc = form.querySelector("[name=desc]").value.trim();
-    const price = parseInt(form.querySelector("[name=price]").value, 10) || 0;
-    const diameter = parseInt(form.querySelector("[name=diameter]").value, 10) || null;
     const emoji = form.querySelector("[name=emoji]").value.trim() || pibo_defaultEmoji(category);
     const image = form.querySelector("[name=image]").value.trim();
     const arEnabled = form.querySelector("[name=arEnabled]").checked;
     const glbName = form.querySelector("[name=glb]").value.trim();
     const usdzName = form.querySelector("[name=usdz]").value.trim();
+    const hasSizes = !!hasSizesToggle?.checked;
 
-    if(!name || !price){
-      alert("لطفاً نام و قیمت را وارد کنید.");
-      return;
+    let price = parseInt(form.querySelector("[name=price]").value, 10) || 0;
+    let diameter = parseInt(form.querySelector("[name=diameter]").value, 10) || null;
+    let sizes = [];
+
+    if(hasSizes){
+      sizes = readSizeRows(form);
+      const usable = sizes.filter(s => s.diameter && s.price);
+      if(!name || !usable.length){
+        alert("لطفاً نام را وارد کنید و برای حداقل یک سایز، قطر و قیمت را پر کنید.");
+        return;
+      }
+      const enabledUsable = usable.filter(s => s.enabled);
+      price = (enabledUsable.length ? enabledUsable : usable).reduce((min, s) => Math.min(min, s.price), Infinity);
+      diameter = null;
+    }else{
+      if(!name || !price){
+        alert("لطفاً نام و قیمت را وارد کنید.");
+        return;
+      }
     }
 
     const submitBtn = form.querySelector("button[type=submit]");
@@ -303,7 +322,7 @@ async function initProductManager(){
     try{
       const id = pibo_editingId || pibo_slugify(name);
       await pibo_saveProduct({
-        name, category, desc, price, emoji, image, diameter, arEnabled,
+        name, category, desc, price, emoji, image, diameter, arEnabled, hasSizes, sizes,
         glb: glbName || (arEnabled ? `models/${id}.glb` : ""),
         usdz: usdzName || (arEnabled ? `models/${id}.usdz` : "")
       }, pibo_editingId || id);
@@ -322,6 +341,34 @@ async function initProductManager(){
   cancelBtn?.addEventListener("click", resetProductForm);
 }
 
+function toggleSizeMode(form, showSizes){
+  const singleWrap = form.querySelector("[data-single-price-wrap]");
+  const sizesWrap = form.querySelector("[data-sizes-wrap]");
+  if(singleWrap) singleWrap.hidden = showSizes;
+  if(sizesWrap) sizesWrap.hidden = !showSizes;
+}
+
+function readSizeRows(form){
+  return [0, 1].map(i => {
+    const diameter = parseInt(form.querySelector(`[name=size${i}Diameter]`).value, 10) || null;
+    const price = parseInt(form.querySelector(`[name=size${i}Price]`).value, 10) || 0;
+    const doughColor = form.querySelector(`[name=size${i}Dough]:checked`)?.value || "plain";
+    const enabled = form.querySelector(`[name=size${i}Enabled]`).checked;
+    return { diameter, price, doughColor, enabled };
+  });
+}
+
+function writeSizeRows(form, sizes){
+  [0, 1].forEach(i => {
+    const s = (sizes && sizes[i]) || {};
+    form.querySelector(`[name=size${i}Diameter]`).value = s.diameter || "";
+    form.querySelector(`[name=size${i}Price]`).value = s.price || "";
+    const doughRadio = form.querySelector(`[name=size${i}Dough][value="${s.doughColor || (i === 1 ? "green" : "red")}"]`);
+    if(doughRadio) doughRadio.checked = true;
+    form.querySelector(`[name=size${i}Enabled]`).checked = s.enabled !== false;
+  });
+}
+
 function pibo_defaultEmoji(category){
   return { "پیتزا":"🍕", "نوشیدنی":"🥤", "سیب‌زمینی":"🍟", "دسر":"🍰" }[category] || "🍽️";
 }
@@ -338,6 +385,7 @@ function resetProductForm(){
   const title = document.querySelector("[data-product-form-title]");
   const cancelBtn = document.querySelector("[data-product-cancel]");
   form?.reset();
+  if(form) toggleSizeMode(form, false);
   if(title) title.textContent = "افزودن پیتزای جدید";
   cancelBtn?.setAttribute("hidden", "true");
 }
@@ -347,7 +395,7 @@ function renderProductTable(products){
   if(!body) return;
 
   if(!products.length){
-    body.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--ink-soft)">هنوز موردی اضافه نشده است.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--ink-soft)">هنوز موردی اضافه نشده است.</td></tr>`;
     return;
   }
 
@@ -362,15 +410,22 @@ function renderProductTable(products){
 
   let rows = "";
   byCategory.forEach((items, cat) => {
-    rows += `<tr><td colspan="5" style="background:var(--cream);font-weight:800;font-size:.8rem;padding:8px 12px">${cat}</td></tr>`;
+    rows += `<tr><td colspan="4" style="background:var(--cream);font-weight:800;font-size:.8rem;padding:8px 12px">${cat}</td></tr>`;
     items.forEach((p, i) => {
       const available = p.available !== false;
+      const sizeCell = p.hasSizes
+        ? (p.sizes || []).filter(s => s && s.diameter && s.price).map(s => `
+            <div class="size-summary-row">
+              <span class="dough-dot" style="background:${pibo_doughMeta(s.doughColor).color}"></span>
+              ${s.diameter} سانتی — ${pibo_formatPrice(s.price)}${s.enabled === false ? " (غیرفعال)" : ""}
+            </div>
+          `).join("") || "—"
+        : `${pibo_formatPrice(p.price)}${p.diameter ? ` <span style="color:var(--ink-soft);font-size:.8rem">(${p.diameter} سانتی‌متر)</span>` : ""}`;
       rows += `
       <tr style="${available ? "" : "opacity:.55"}">
         <td>${p.image ? `<img src="${p.image}" alt="" style="width:32px;height:32px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-left:8px">` : (p.emoji || "🍽️") + " "}${p.name}${p.arEnabled !== false ? ` <span style="font-size:.7rem;background:var(--green);color:#fff;padding:2px 8px;border-radius:100px;font-family:'Fredoka','Vazirmatn',sans-serif">AR</span>` : ""}</td>
         <td style="font-size:.8rem;color:var(--ink-soft)">${p.category || "پیتزا"}</td>
-        <td>${pibo_formatPrice(p.price)}</td>
-        <td style="font-size:.85rem;color:var(--ink-soft)">${p.diameter ? p.diameter + " سانتی‌متر" : "—"}</td>
+        <td>${sizeCell}</td>
         <td>
           <div class="table-actions" style="align-items:center">
             <span style="display:inline-flex;flex-direction:column;gap:2px">
@@ -441,13 +496,18 @@ function startEditProduct(id, products){
   form.querySelector("[name=name]").value = product.name;
   form.querySelector("[name=category]").value = product.category || "پیتزا";
   form.querySelector("[name=desc]").value = product.desc || "";
-  form.querySelector("[name=price]").value = product.price;
-  form.querySelector("[name=diameter]").value = product.diameter || "";
+  form.querySelector("[name=price]").value = product.hasSizes ? "" : product.price;
+  form.querySelector("[name=diameter]").value = product.hasSizes ? "" : (product.diameter || "");
   form.querySelector("[name=emoji]").value = product.emoji || "";
   form.querySelector("[name=image]").value = product.image || "";
   form.querySelector("[name=arEnabled]").checked = product.arEnabled !== false;
   form.querySelector("[name=glb]").value = product.glb || "";
   form.querySelector("[name=usdz]").value = product.usdz || "";
+
+  const hasSizesToggle = form.querySelector("[name=hasSizes]");
+  if(hasSizesToggle) hasSizesToggle.checked = !!product.hasSizes;
+  writeSizeRows(form, product.sizes || []);
+  toggleSizeMode(form, !!product.hasSizes);
 
   if(title) title.textContent = `ویرایش «${product.name}»`;
   cancelBtn?.removeAttribute("hidden");

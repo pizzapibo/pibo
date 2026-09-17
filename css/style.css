@@ -816,6 +816,45 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
 /* ===========================================================
    iOS 26 switch (toggle) — spring thumb slide, like Settings.app
 =========================================================== */
+/* ---------- pizza size / dough-color picker (admin panel) ---------- */
+.size-row{
+  background:var(--cream);border:1.5px solid var(--line);border-radius:16px;
+  padding:16px 16px 4px;margin-bottom:16px;
+}
+.size-row-head{display:flex;align-items:center;justify-content:space-between;font-weight:900;margin-bottom:14px}
+.dough-color-picker{display:flex;gap:10px;flex-wrap:wrap}
+.dough-swatch{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  background:#fff;border:1.5px solid var(--line);border-radius:100px;
+  padding:8px 14px 8px 10px;font-size:.85rem;font-weight:700;color:var(--ink);
+  transition:border-color .25s, box-shadow .25s;
+}
+.dough-swatch input{position:absolute;opacity:0;width:0;height:0}
+.dough-swatch span{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid rgba(0,0,0,.12);
+}
+.dough-swatch-red span{background:#E5483C}
+.dough-swatch-green span{background:#2F9E5B}
+.dough-swatch-plain span{background:#F1DFB2}
+.dough-swatch:has(input:checked){border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,90,31,.15)}
+.ios-switch-sm{width:40px;height:24px}
+.ios-switch-sm .ios-switch-track::before{width:20px;height:20px}
+.ios-switch-sm input:checked + .ios-switch-track::before{transform:translateX(-16px)}
+.size-summary-row{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--ink-soft);margin-bottom:2px}
+.size-summary-row .dough-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.12)}
+
+/* ---------- pizza size picker (customer menu card) ---------- */
+.size-picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.size-chip{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+  color:#fff;font-size:.78rem;font-weight:700;padding:7px 12px;border-radius:100px;
+  transition:background .25s, border-color .25s;
+}
+.size-chip .dough-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.5)}
+.size-chip.active{background:var(--orange);border-color:var(--orange)}
+
 .ios-switch{position:relative;display:inline-flex;width:51px;height:31px;flex-shrink:0;cursor:pointer}
 .ios-switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
 .ios-switch-track{
