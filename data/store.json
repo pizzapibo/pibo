@@ -1,12 +1,62 @@
 {
-  "products": {},
+  "products": {
+    "پپرونی": {
+      "name": "پپرونی",
+      "category": "پیتزا",
+      "desc": "",
+      "price": 700000,
+      "emoji": "🍕",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 25,
+          "price": 700000,
+          "doughColor": "green",
+          "enabled": true,
+          "glb": "",
+          "usdz": ""
+        },
+        {
+          "diameter": 30,
+          "price": 1000000,
+          "doughColor": "red",
+          "enabled": true,
+          "glb": "",
+          "usdz": ""
+        }
+      ],
+      "glb": "models/پپرونی.glb",
+      "usdz": "models/پپرونی.usdz",
+      "order": 0
+    }
+  },
   "settings": {
-    "categories": ["پیتزا", "نوشیدنی", "سیب‌زمینی", "دسر"],
+    "categories": [
+      "پیتزا",
+      "نوشیدنی",
+      "سیب‌زمینی",
+      "دسر"
+    ],
     "logoImage": "assets/images/logo.jpg",
     "doughColors": [
-      { "key": "plain", "label": "ساده", "color": "#F1DFB2" },
-      { "key": "green", "label": "سبز",  "color": "#2F9E5B" },
-      { "key": "red",   "label": "قرمز", "color": "#E5483C" }
+      {
+        "key": "plain",
+        "label": "ساده",
+        "color": "#F1DFB2"
+      },
+      {
+        "key": "green",
+        "label": "سبز",
+        "color": "#2F9E5B"
+      },
+      {
+        "key": "red",
+        "label": "قرمز",
+        "color": "#E5483C"
+      }
     ]
   }
 }
