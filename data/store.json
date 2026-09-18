@@ -341,7 +341,7 @@
       "emoji": "🥤",
       "image": "",
       "diameter": null,
-      "arEnabled": true,
+      "arEnabled": false,
       "hasSizes": false,
       "sizes": [],
       "glb": "models/cola.glb",
