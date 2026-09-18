@@ -143,29 +143,30 @@ async function renderMenu(){
               const first = sizes[0];
               priceHtml = pibo_formatPrice(first.price);
               if(first.image) initialImage = first.image;
+              const firstDough = pibo_sizeDoughColors(first);
 
               sizePickerHtml = `
                 <div class="pibo-picker-block">
                   <div class="pibo-picker-row">
-                    <span class="pibo-picker-label">اندازه</span>
+                    <span class="pibo-picker-label">قطر</span>
                     <div class="size-picker" data-size-picker="${p.id}" data-fallback-image="${p.image || ""}">
                       ${sizes.map((s, idx) => `
                         <button type="button" class="size-chip ${idx === 0 ? "active" : ""}"
                           data-size-chip data-product="${p.id}" data-name="${safeName}"
                           data-index="${s.index}" data-price="${s.price}" data-diameter="${s.diameter}"
-                          data-dough="${s.doughColor}" data-image="${s.image || ""}">
+                          data-dough="${pibo_sizeDoughColors(s).join(",")}" data-image="${s.image || ""}">
                           <span class="size-chip-check">✓</span>
                           ${s.diameter}
                         </button>
                       `).join("")}
                     </div>
                   </div>
-                  <div class="pibo-picker-row">
+                  <div class="pibo-picker-row" ${firstDough.length > 1 ? "" : "hidden"} data-dough-row="${p.id}">
                     <span class="pibo-picker-label">رنگ خمیر</span>
-                    <div class="dough-picker" data-dough-display="${p.id}">
-                      ${sizes.map((s, idx) => `
-                        <span class="dough-dot-lg ${idx === 0 ? "active" : ""}" data-dough-dot data-index="${s.index}"
-                          style="background:${pibo_doughMeta(s.doughColor).color}" title="${pibo_doughMeta(s.doughColor).label}"></span>
+                    <div class="dough-picker" data-dough-picker-live="${p.id}">
+                      ${firstDough.map((key, idx) => `
+                        <button type="button" class="dough-dot-lg ${idx === 0 ? "active" : ""}" data-dough-choice
+                          data-key="${key}" style="background:${pibo_doughMeta(key).color}" title="${pibo_doughMeta(key).label}"></button>
                       `).join("")}
                     </div>
                   </div>
@@ -186,7 +187,7 @@ async function renderMenu(){
                   </div>
                   ${p.desc ? `<p class="overlay-desc">${p.desc}</p>` : ""}
                   ${sizePickerHtml}
-                  ${hasAr ? `<div class="overlay-bottom-row"><a class="badge-ar" data-ar-link href="ar.html?pizza=${p.id}${sizes.length ? `&size=${sizes[0].index}` : ""}">✦ مشاهده سه‌بعدی</a></div>` : ""}
+                  ${hasAr ? `<div class="overlay-bottom-row"><a class="badge-ar" data-ar-link href="ar.html?pizza=${p.id}${sizes.length ? `&size=${sizes[0].index}&dough=${pibo_sizeDoughColors(sizes[0])[0] || ""}` : ""}">✦ مشاهده سه‌بعدی</a></div>` : ""}
                 </div>
               </div>
             </div>
@@ -213,8 +214,9 @@ async function renderMenu(){
   bindSizeChips();
 }
 
-/* switch a card's selected diameter/dough-color size, updating its
-   displayed price and which dough-color dot is highlighted */
+/* switch a card's selected diameter, updating its price/photo/AR link —
+   and rebuilds the (independent) dough-color row for whichever colors
+   that diameter offers, remembering the color the person had picked */
 function bindSizeChips(){
   document.querySelectorAll("[data-size-picker]").forEach(picker => {
     picker.querySelectorAll("[data-size-chip]").forEach(chip => {
@@ -227,8 +229,20 @@ function bindSizeChips(){
         const price = Number(chip.dataset.price || 0);
         if(priceLabel) priceLabel.textContent = pibo_formatPrice(price);
 
-        const doughDots = card?.querySelectorAll("[data-dough-dot]");
-        doughDots?.forEach(dot => dot.classList.toggle("active", dot.dataset.index === chip.dataset.index));
+        // rebuild the dough-color row for this diameter's own color list,
+        // keeping the previously-chosen color when this diameter offers it too
+        const doughRow = card?.querySelector("[data-dough-row]");
+        const doughWrap = card?.querySelector("[data-dough-picker-live]");
+        const prevChosen = doughWrap?.querySelector(".dough-dot-lg.active")?.dataset.key;
+        const keys = (chip.dataset.dough || "").split(",").filter(Boolean);
+        if(doughRow) doughRow.hidden = keys.length <= 1;
+        if(doughWrap){
+          doughWrap.innerHTML = keys.map((key, idx) => `
+            <button type="button" class="dough-dot-lg ${(prevChosen ? prevChosen === key : idx === 0) ? "active" : ""}" data-dough-choice
+              data-key="${key}" style="background:${pibo_doughMeta(key).color}" title="${pibo_doughMeta(key).label}"></button>
+          `).join("");
+          bindDoughChoices(doughWrap);
+        }
 
         // swap the card photo if this size has its own image, otherwise
         // fall back to the product's main photo — with a quick crossfade
@@ -244,16 +258,38 @@ function bindSizeChips(){
           }
         }
 
-        // switch the AR link to this size's own dough color / 3D model
-        const arLink = card?.querySelector("[data-ar-link]");
-        if(arLink){
-          const url = new URL(arLink.getAttribute("href"), location.href);
-          url.searchParams.set("size", chip.dataset.index);
-          arLink.setAttribute("href", url.pathname + url.search);
-        }
+        // switch the AR link to this size's own 3D model / chosen color
+        updateArLink(card, chip.dataset.index, keys.includes(prevChosen) ? prevChosen : keys[0]);
       });
     });
+    // wire up whichever dough dots are on the card right now (page load)
+    const card = picker.closest(".pizza-card");
+    const doughWrap = card?.querySelector("[data-dough-picker-live]");
+    if(doughWrap) bindDoughChoices(doughWrap);
   });
+}
+
+/* picking a dough color never changes price or diameter — only which
+   color is highlighted and which 3D model the AR link points to */
+function bindDoughChoices(doughWrap){
+  doughWrap.querySelectorAll("[data-dough-choice]").forEach(dot => {
+    dot.addEventListener("click", () => {
+      doughWrap.querySelectorAll("[data-dough-choice]").forEach(d => d.classList.remove("active"));
+      dot.classList.add("active");
+      const card = doughWrap.closest(".pizza-card");
+      const activeChip = card?.querySelector("[data-size-chip].active");
+      updateArLink(card, activeChip?.dataset.index, dot.dataset.key);
+    });
+  });
+}
+
+function updateArLink(card, sizeIndex, doughKey){
+  const arLink = card?.querySelector("[data-ar-link]");
+  if(!arLink) return;
+  const url = new URL(arLink.getAttribute("href"), location.href);
+  if(sizeIndex !== undefined) url.searchParams.set("size", sizeIndex);
+  if(doughKey) url.searchParams.set("dough", doughKey);
+  arLink.setAttribute("href", url.pathname + url.search);
 }
 
 /* slide the segmented-control indicator behind the active tab,

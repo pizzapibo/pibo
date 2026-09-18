@@ -183,7 +183,8 @@
       const effectiveGlb = (activeSize && activeSize.glb) ? activeSize.glb : product.glb;
       const effectiveUsdz = (activeSize && activeSize.usdz) ? activeSize.usdz : product.usdz;
       if(activeSize && typeof pibo_doughMeta === "function"){
-        nameEl.textContent = `${product.name} (خمیر ${pibo_doughMeta(activeSize.doughColor).label})`;
+        const doughKey = params.get("dough") || (typeof pibo_sizeDoughColors === "function" ? pibo_sizeDoughColors(activeSize)[0] : activeSize.doughColor);
+        nameEl.textContent = `${product.name} (خمیر ${pibo_doughMeta(doughKey).label})`;
       }
 
       const shareBtn = document.getElementById("share-btn");

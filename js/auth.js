@@ -106,17 +106,19 @@ async function initDoughColorManager(){
   }
 }
 
-/* fills the two (per-size) dough-color radio pickers inside the
-   product form, using whichever colors are currently saved */
+/* fills the two (per-size) dough-color checkbox pickers inside the
+   product form, using whichever colors are currently saved — several
+   colors can be ticked per size, since that choice is now up to the
+   admin rather than being locked one-color-per-diameter */
 function renderDoughPickers(){
   const colors = (typeof pibo_getDoughColorsSync === "function") ? pibo_getDoughColorsSync() : [];
   [0, 1].forEach(i => {
     const wrap = document.querySelector(`[data-dough-picker="${i}"]`);
     if(!wrap) return;
-    const currentChecked = wrap.querySelector("input:checked")?.value;
+    const previouslyChecked = Array.from(wrap.querySelectorAll("input:checked")).map(el => el.value);
     wrap.innerHTML = colors.map((c, idx) => `
       <label class="dough-swatch" style="--dough-color:${c.color}">
-        <input type="radio" name="size${i}Dough" value="${c.key}" ${(currentChecked ? currentChecked === c.key : idx === (i === 1 ? 1 : 0) % colors.length) ? "checked" : ""}>
+        <input type="checkbox" name="size${i}Dough" value="${c.key}" ${(previouslyChecked.length ? previouslyChecked.includes(c.key) : idx === 0) ? "checked" : ""}>
         <span></span>${c.label}
       </label>
     `).join("");
@@ -429,12 +431,12 @@ function readSizeRows(form){
   return [0, 1].map(i => {
     const diameter = parseInt(form.querySelector(`[name=size${i}Diameter]`).value, 10) || null;
     const price = parseInt(form.querySelector(`[name=size${i}Price]`).value, 10) || 0;
-    const doughColor = form.querySelector(`[name=size${i}Dough]:checked`)?.value || defaultDough;
+    const doughColors = Array.from(form.querySelectorAll(`[name=size${i}Dough]:checked`)).map(el => el.value);
     const enabled = form.querySelector(`[name=size${i}Enabled]`).checked;
     const glb = form.querySelector(`[name=size${i}Glb]`)?.value.trim() || "";
     const usdz = form.querySelector(`[name=size${i}Usdz]`)?.value.trim() || "";
     const image = form.querySelector(`[name=size${i}Image]`)?.value.trim() || "";
-    return { diameter, price, doughColor, enabled, glb, usdz, image };
+    return { diameter, price, doughColors: doughColors.length ? doughColors : [defaultDough], enabled, glb, usdz, image };
   });
 }
 
@@ -446,8 +448,11 @@ function writeSizeRows(form, sizes){
     form.querySelector(`[name=size${i}Diameter]`).value = s.diameter || "";
     form.querySelector(`[name=size${i}Price]`).value = s.price || "";
     const fallbackKey = colors[i % colors.length]?.key;
-    const doughRadio = form.querySelector(`[name=size${i}Dough][value="${s.doughColor || fallbackKey}"]`);
-    if(doughRadio) doughRadio.checked = true;
+    const wanted = (typeof pibo_sizeDoughColors === "function" ? pibo_sizeDoughColors(s) : []);
+    const wantedKeys = wanted.length ? wanted : [fallbackKey];
+    form.querySelectorAll(`[name=size${i}Dough]`).forEach(cb => {
+      cb.checked = wantedKeys.includes(cb.value);
+    });
     form.querySelector(`[name=size${i}Enabled]`).checked = s.enabled !== false;
     const glbInput = form.querySelector(`[name=size${i}Glb]`);
     const usdzInput = form.querySelector(`[name=size${i}Usdz]`);
@@ -510,7 +515,7 @@ function renderProductTable(products){
       const sizeCell = p.hasSizes
         ? (p.sizes || []).filter(s => s && s.diameter && s.price).map(s => `
             <div class="size-summary-row">
-              <span class="dough-dot" style="background:${pibo_doughMeta(s.doughColor).color}"></span>
+              <span class="dough-dot-group">${pibo_sizeDoughColors(s).map(k => `<span class="dough-dot" style="background:${pibo_doughMeta(k).color}"></span>`).join("")}</span>
               ${s.diameter} سانتی — ${pibo_formatPrice(s.price)}${s.enabled === false ? " (غیرفعال)" : ""}
             </div>
           `).join("") || "—"

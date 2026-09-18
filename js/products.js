@@ -32,6 +32,16 @@ function pibo_doughMeta(key){
   return list.find(c => c.key === key) || list[0] || PIBO_DEFAULT_DOUGH_COLORS[0];
 }
 
+/* a size row can list several selectable dough colors (doughColors: [...]).
+   older/legacy rows only had one (doughColor: "x") — normalize to an array
+   either way, always returning at least one key. */
+function pibo_sizeDoughColors(size){
+  if(!size) return [];
+  if(Array.isArray(size.doughColors) && size.doughColors.length) return size.doughColors;
+  if(size.doughColor) return [size.doughColor];
+  return [];
+}
+
 /* returns this product's usable sizes (hasSizes + at least diameter & price),
    in stored order — includes disabled ones; callers filter `.enabled` as needed */
 function pibo_productSizes(product){
