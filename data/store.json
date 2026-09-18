@@ -1,21 +1,21 @@
 {
   "products": {
-    "پپرونی": {
-      "name": "پپرونی",
-      "category": "پیتزا",
-      "desc": "خمیر رنگی و سس گوجه و پپرونی",
-      "price": 700000,
-      "emoji": "🍕",
+    "truffle-chicken": {
+      "name": "truffle chicken",
+      "category": "ایتالیایی",
+      "desc": "مرغ‌گریل|موزارلا|قارچ|سس‌ترافل|پارمزان|فلفل‌دلمه|زیتون",
+      "price": 850000,
+      "emoji": "🍽️",
       "image": "",
       "diameter": null,
       "arEnabled": true,
       "hasSizes": true,
       "sizes": [
         {
-          "diameter": 25,
-          "price": 700000,
+          "diameter": 30,
+          "price": 1035000,
           "doughColors": [
-            "green"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -23,10 +23,10 @@
           "image": ""
         },
         {
-          "diameter": 30,
-          "price": 1000000,
+          "diameter": 25,
+          "price": 850000,
           "doughColors": [
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -34,17 +34,17 @@
           "image": ""
         }
       ],
-      "glb": "models/پپرونی.glb",
-      "usdz": "models/پپرونی.usdz",
+      "glb": "models/truffle-chicken.glb",
+      "usdz": "models/truffle-chicken.usdz",
       "order": 0
     }
   },
   "settings": {
     "categories": [
-      "پیتزا",
-      "نوشیدنی",
+      "ایتالیایی",
+      "ناپولیتن",
       "سیب‌زمینی",
-      "دسر"
+      "نوشیدنی"
     ],
     "logoImage": "assets/images/logo.jpg",
     "doughColors": [
