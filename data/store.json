@@ -3,7 +3,7 @@
     "پپرونی": {
       "name": "پپرونی",
       "category": "پیتزا",
-      "desc": "",
+      "desc": "خمیر رنگی و سس گوجه و پپرونی",
       "price": 700000,
       "emoji": "🍕",
       "image": "",
@@ -14,18 +14,24 @@
         {
           "diameter": 25,
           "price": 700000,
-          "doughColor": "green",
+          "doughColors": [
+            "green"
+          ],
           "enabled": true,
           "glb": "",
-          "usdz": ""
+          "usdz": "",
+          "image": ""
         },
         {
           "diameter": 30,
           "price": 1000000,
-          "doughColor": "red",
+          "doughColors": [
+            "red"
+          ],
           "enabled": true,
           "glb": "",
-          "usdz": ""
+          "usdz": "",
+          "image": ""
         }
       ],
       "glb": "models/پپرونی.glb",
