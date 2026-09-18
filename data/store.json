@@ -37,6 +37,82 @@
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
       "order": 0
+    },
+    "garlic-steak": {
+      "name": "garlic steak",
+      "category": "ایتالیایی",
+      "desc": "استیک‌گوساله|موزارلا|سس‌سیر|قارچ|سس‌آلفردو‌ پیبو",
+      "price": 900000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 1080000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": 25,
+          "price": 900000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
+      "glb": "models/garlic-steak.glb",
+      "usdz": "models/garlic-steak.usdz",
+      "order": 1
+    },
+    "smoky-beef": {
+      "name": "smoky beef",
+      "category": "ایتالیایی",
+      "desc": "رست‌بیف|موزارلا|سس‌مخصوص‌پیبو|قارچ|فلفل‌دلمه|زیتون",
+      "price": 830000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 1035000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": 25,
+          "price": 830000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
+      "glb": "models/smoky-beef.glb",
+      "usdz": "models/smoky-beef.usdz",
+      "order": 2
     }
   },
   "settings": {
