@@ -35,8 +35,8 @@
         }
       ],
       "glb": "models/truffle-chicken.glb",
-      "usdz": "models/truffle-chicken.usdz",
-      "order": 0
+      "usdz": "https://assets.3dmarketiran.ir/Untitled%20Object.usdz",
+      "order": 4
     },
     "garlic-steak": {
       "name": "garlic steak",
