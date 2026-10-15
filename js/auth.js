@@ -349,6 +349,18 @@ function applyLogoToPage(url){
   });
 }
 
+/* Model assets may be public absolute URLs (e.g. Cloudflare R2) or legacy
+   relative paths within the GitHub Pages project. Block unsafe schemes. */
+function pibo_isValidAssetReference(value){
+  if(!value) return true;
+  try{
+    const parsed = new URL(value, location.href);
+    return parsed.protocol === "https:" || parsed.protocol === "http:";
+  }catch(e){
+    return false;
+  }
+}
+
 /* ---------- product manager (add / edit / delete / price) ---------- */
 async function initProductManager(){
   const form = document.querySelector("[data-product-form]");
@@ -392,6 +404,13 @@ async function initProductManager(){
         alert("لطفاً نام و قیمت را وارد کنید.");
         return;
       }
+    }
+
+    const assetRefs = [glbName, usdzName, ...sizes.flatMap(size => [size.glb, size.usdz])].filter(Boolean);
+    const invalidAssetRef = assetRefs.find(value => !pibo_isValidAssetReference(value));
+    if(invalidAssetRef){
+      alert("آدرس مدل باید URL عمومی http/https یا مسیر نسبی فایل باشد. آدرس را بررسی کنید: " + invalidAssetRef);
+      return;
     }
 
     const submitBtn = form.querySelector("button[type=submit]");

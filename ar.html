@@ -39,6 +39,7 @@
       shadow-intensity="1"
       exposure="1"
       tone-mapping="neutral"
+      crossorigin="anonymous"
       alt="مدل سه‌بعدی پیتزا">
     </model-viewer>
 
@@ -91,16 +92,15 @@
     fallbackTitle.textContent = "در حال بررسی…";
     fallbackText.textContent = "";
 
-    async function pibo_fileExists(url){
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 8000);
+    function pibo_resolveModelUrl(value, baseUrl){
+      if(typeof value !== "string" || !value.trim()) return null;
+      const raw = value.trim();
       try{
-        const res = await fetch(url, { method: "GET", cache: "no-store", signal: controller.signal });
-        return res.ok;
+        const resolved = new URL(raw, baseUrl);
+        if(resolved.protocol !== "https:" && resolved.protocol !== "http:") return null;
+        return resolved.href;
       }catch(e){
-        return false;
-      }finally{
-        clearTimeout(timer);
+        return null;
       }
     }
 
@@ -208,17 +208,13 @@
       }
       fallbackTitle.textContent = "در حال بررسی فایل مدل سه‌بعدی…";
 
-      const base = location.href.replace(/ar\.html.*$/, "");
-      const glbUrl = encodeURI(base + effectiveGlb);
-      const usdzUrl = effectiveUsdz ? encodeURI(base + effectiveUsdz) : null;
+      const base = new URL("./", location.href).href;
+      const glbUrl = pibo_resolveModelUrl(effectiveGlb, base);
+      const usdzUrl = pibo_resolveModelUrl(effectiveUsdz, base);
 
-      const glbOk = await pibo_fileExists(glbUrl);
-      const usdzOk = usdzUrl ? await pibo_fileExists(usdzUrl) : false;
-
-      // Native AR launchers work independently of model-viewer / WebGL
-      // rendering succeeding — wired up as soon as the relevant file is
-      // confirmed to exist, regardless of whether the in-page 3D preview
-      // below manages to render on this device.
+      // Do not download the whole model just to test whether it exists.
+      // The viewer itself reports load/error, avoiding duplicate bandwidth
+      // consumption for large R2 assets.
       const ua = navigator.userAgent;
       const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
       const isAndroid = /Android/.test(ua);
@@ -254,11 +250,11 @@
         return arLink;
       }
 
-      if(isIOS && usdzOk){
+      if(isIOS && usdzUrl){
         // Quick Look — triggered by a plain <a rel="ar"> anchor.
         const arLink = addArButton(usdzUrl + "#allowsContentScaling=0", "مشاهده در فضای واقعی (AR)", true);
         arLink.setAttribute("rel", "ar");
-      }else if(isAndroid && glbOk){
+      }else if(isAndroid && glbUrl){
         // Scene Viewer — triggered by a Google-documented intent:// link,
         // independent of model-viewer's own AR button/rendering state.
         const fallbackUrl = encodeURIComponent(location.href);
@@ -266,32 +262,30 @@
         addArButton(intentUrl, "مشاهده در فضای واقعی (AR)", false);
       }
 
-      const arButtonReady = (isIOS && usdzOk) || (isAndroid && glbOk);
+      const arButtonReady = (isIOS && !!usdzUrl) || (isAndroid && !!glbUrl);
 
-      if(!glbOk){
+      if(!glbUrl){
         if(arButtonReady){
-          // GLB missing but USDZ present (iOS): AR still works via the
-          // native link above — just show a friendly filler in place of
-          // the (otherwise empty) in-page preview area, purely visual.
           fallbackTitle.textContent = product.name || "پیبو";
           fallbackText.textContent = "برای دیدن مدل سه‌بعدی، دکمه‌ی زیر رو بزن.";
           fallback.classList.add("show");
           return;
         }
-        fallbackTitle.textContent = "فایل مدل سه‌بعدی (GLB) پیدا نشد";
-        fallbackText.innerHTML = `این آدرس روی سرور پیدا یا در ۸ ثانیه لود نشد:<br><code style="word-break:break-all">${glbUrl}</code><br><br>فایل را داخل پوشه <code>models</code> با همین نام دقیق (حروف بزرگ/کوچک هم مهم است) قرار دهید و دوباره Push کنید.`;
+        fallbackTitle.textContent = "آدرس فایل سه‌بعدی ثبت نشده است";
+        fallbackText.textContent = "از پنل مدیریت، URL عمومی فایل GLB را برای این پیتزا وارد کنید.";
         return;
       }
 
       fallbackTitle.textContent = "در حال رندر مدل سه‌بعدی…";
-      viewer.setAttribute("src", effectiveGlb);
-      if(usdzOk) viewer.setAttribute("ios-src", effectiveUsdz + "#allowsContentScaling=0");
-      viewer.style.display = "block";
-
-      const renderedOk = await Promise.race([
+      const renderResult = Promise.race([
         new Promise(res => viewer.addEventListener("load", () => res(true), { once: true })),
-        new Promise(res => setTimeout(() => res(false), 10000))
+        new Promise(res => viewer.addEventListener("error", () => res(false), { once: true })),
+        new Promise(res => setTimeout(() => res(false), 15000))
       ]);
+      viewer.setAttribute("src", glbUrl);
+      if(usdzUrl) viewer.setAttribute("ios-src", usdzUrl + "#allowsContentScaling=0");
+      viewer.style.display = "block";
+      const renderedOk = await renderResult;
 
       if(!renderedOk){
         viewer.style.display = "none";
@@ -304,14 +298,14 @@
           fallback.classList.add("show");
           return;
         }
-        fallbackTitle.textContent = "فایل پیدا شد ولی رندر نشد";
-        fallbackText.innerHTML = `فایل GLB دانلود شد ولی نمایشگر سه‌بعدی نتونست ازش تصویر بسازه (نه لود شد، نه خطای مشخصی داد).<br><br>احتمال ۱: خروجی Luma AI معتبر نیست یا فرمتش با model-viewer سازگار نیست — دوباره از Luma خروجی GLB بگیر.<br>احتمال ۲: منابع کمکی نمایشگر (نور محیطی) روی این شبکه فیلتر شده — با VPN یا دیتای موبایل دوباره امتحان کن.`;
+        fallbackTitle.textContent = "مدل سه‌بعدی بارگذاری نشد";
+        fallbackText.textContent = `آدرس فایل GLB را بررسی کنید؛ فایل باید عمومی باشد، فرمت معتبری داشته باشد و CORS باکت R2 اجازه‌ی دسترسی از دامنه‌ی سایت را بدهد. آدرس: ${glbUrl}`;
         return;
       }
 
       fallback.classList.remove("show");
 
-      if(isIOS && !usdzOk){
+      if(isIOS && !usdzUrl){
         const warn = document.createElement("div");
         warn.style.cssText = "position:absolute;bottom:90px;left:50%;transform:translateX(-50%);background:#fff3;color:#fff;padding:10px 18px;border-radius:100px;font-size:.8rem;font-weight:700;text-align:center;max-width:90%;";
         warn.textContent = "فایل USDZ پیدا نشد — روی آیفون دکمه AR باز نمی‌شود، فقط مشاهده سه‌بعدی در همین صفحه کار می‌کند.";
@@ -321,8 +315,8 @@
       viewer.addEventListener("error", () => {
         viewer.style.display = "none";
         fallback.classList.add("show");
-        fallbackTitle.textContent = "فایل مدل سه‌بعدی نامعتبر است";
-        fallbackText.textContent = "فایل پیدا شد ولی به‌عنوان مدل سه‌بعدی معتبر (GLB) قابل خواندن نبود. خروجی Luma AI را دوباره بررسی کنید.";
+        fallbackTitle.textContent = "مدل سه‌بعدی بارگذاری نشد";
+        fallbackText.textContent = `URL مدل را بررسی کنید. فایل باید عمومی باشد، فرمت GLB معتبر داشته باشد و CORS در R2 اجازه‌ی دسترسی از دامنه‌ی سایت را بدهد. آدرس: ${glbUrl || "—"}`;
       });
     }catch(err){
       // absolute last resort: show the raw error so nothing stays invisible

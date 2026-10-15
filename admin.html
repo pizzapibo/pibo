@@ -228,12 +228,12 @@
                 </div>
                 <div class="grid-2">
                   <div class="field">
-                    <label for="p-size0-glb">فایل GLB</label>
-                    <input id="p-size0-glb" name="size0Glb" type="text" placeholder="models/margherita-plain.glb">
+                    <label for="p-size0-glb">URL فایل GLB سه‌بعدی</label>
+                    <input id="p-size0-glb" name="size0Glb" type="text" placeholder="https://...r2.dev/margherita-plain.glb یا models/margherita-plain.glb">
                   </div>
                   <div class="field">
-                    <label for="p-size0-usdz">فایل USDZ</label>
-                    <input id="p-size0-usdz" name="size0Usdz" type="text" placeholder="models/margherita-plain.usdz">
+                    <label for="p-size0-usdz">URL فایل USDZ برای آیفون / AR</label>
+                    <input id="p-size0-usdz" name="size0Usdz" type="text" placeholder="https://...r2.dev/margherita-plain.usdz یا models/margherita-plain.usdz">
                   </div>
                 </div>
               </details>
@@ -269,12 +269,12 @@
                 </div>
                 <div class="grid-2">
                   <div class="field">
-                    <label for="p-size1-glb">فایل GLB</label>
-                    <input id="p-size1-glb" name="size1Glb" type="text" placeholder="models/margherita-green.glb">
+                    <label for="p-size1-glb">URL فایل GLB سه‌بعدی</label>
+                    <input id="p-size1-glb" name="size1Glb" type="text" placeholder="https://...r2.dev/margherita-green.glb یا models/margherita-green.glb">
                   </div>
                   <div class="field">
-                    <label for="p-size1-usdz">فایل USDZ</label>
-                    <input id="p-size1-usdz" name="size1Usdz" type="text" placeholder="models/margherita-green.usdz">
+                    <label for="p-size1-usdz">URL فایل USDZ برای آیفون / AR</label>
+                    <input id="p-size1-usdz" name="size1Usdz" type="text" placeholder="https://...r2.dev/margherita-green.usdz یا models/margherita-green.usdz">
                   </div>
                 </div>
               </details>
@@ -305,12 +305,12 @@
           </div>
           <div class="grid-2">
             <div class="field">
-              <label for="p-glb">فایل GLB (اختیاری)</label>
-              <input id="p-glb" name="glb" type="text" placeholder="models/margherita.glb">
+              <label for="p-glb">URL فایل GLB سه‌بعدی (اختیاری)</label>
+              <input id="p-glb" name="glb" type="text" placeholder="https://...r2.dev/margherita.glb یا models/margherita.glb">
             </div>
             <div class="field">
-              <label for="p-usdz">فایل USDZ (اختیاری)</label>
-              <input id="p-usdz" name="usdz" type="text" placeholder="models/margherita.usdz">
+              <label for="p-usdz">URL فایل USDZ برای آیفون / AR (اختیاری)</label>
+              <input id="p-usdz" name="usdz" type="text" placeholder="https://...r2.dev/margherita.usdz یا models/margherita.usdz">
             </div>
           </div>
           <div style="display:flex;gap:12px">
@@ -352,10 +352,10 @@
       <div class="admin-panel">
         <h2>راهنمای اتصال مدل سه‌بعدی</h2>
         <p class="sub">
-          ۱. پیتزا را در Luma AI اسکن کرده و خروجی GLB و USDZ بگیرید.<br>
-          ۲. فایل‌ها را داخل پوشه <code>models</code> پروژه قرار دهید.<br>
-          ۳. هنگام افزودن یا ویرایش پیتزا در همین پنل، نام فایل‌های glb و usdz را وارد کنید.<br>
-          ۴. پروژه را روی گیت‌هاب Push کنید — GitHub Pages به‌صورت خودکار سایت را به‌روزرسانی می‌کند.
+          ۱. برای هر پیتزا خروجی GLB و در صورت نیاز USDZ بگیرید و در باکت عمومی Cloudflare R2 آپلود کنید.<br>
+          ۲. URL عمومی هر فایل را کپی کنید.<br>
+          ۳. در فیلدهای URL فایل GLB و USDZ همین پنل، آدرس مربوط به همان پیتزا (یا سایز/رنگ خمیر) را وارد و ذخیره کنید.<br>
+          ۴. «انتشار مستقیم روی گیت‌هاب» را بزنید؛ پس از پایان انتشار GitHub Pages، دکمه مشاهده سه‌بعدی از URL جدید استفاده می‌کند. CORS باکت باید دامنه سایت را مجاز کرده باشد.
         </p>
       </div>
 
