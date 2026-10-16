@@ -38,7 +38,7 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "https://assets.3dmarketiran.ir/Untitled%20Object.usdz",
-      "order": 12
+      "order": 14
     },
     "garlic-steak": {
       "name": "garlic steak",
@@ -78,7 +78,7 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 14
+      "order": 15
     },
     "smoky-beef": {
       "name": "meat lovers",
@@ -118,10 +118,10 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 17
+      "order": 19
     },
     "pibo-chef-special": {
-      "name": "pibo chef special",
+      "name": "monaco",
       "category": "ایتالیایی",
       "desc": "سس‌مخصوص‌پیبو|رست‌بیف|استیک‌گوساله|موزارلا|قارچ|فلفل‌دلمه|سیب‌زمینی",
       "price": 1200000,
@@ -133,7 +133,8 @@
       "sizes": [],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 18
+      "order": 12,
+      "available": false
     },
     "margherita": {
       "name": "margherita",
@@ -173,7 +174,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 15
+      "order": 16
     },
     "misto-speciale": {
       "name": "misto speciale",
@@ -213,7 +214,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 19
+      "order": 20
     },
     "pepperoni": {
       "name": "pepperoni",
@@ -253,10 +254,10 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 16
+      "order": 17
     },
     "buffalo-chicken": {
-      "name": "buffalo chicken",
+      "name": "fire chicken",
       "category": "ایتالیایی",
       "desc": "مرغ‌مرینیت‌شده|سس‌بوفالو|فلفل‌هالوپینو|موزارلا",
       "price": 738000,
@@ -268,7 +269,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 987000,
+          "price": 875000,
           "doughColors": [
             "plain",
             "red"
@@ -293,7 +294,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 11
+      "order": 22
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -308,7 +309,8 @@
       "sizes": [],
       "glb": "models/pesto-turkey.glb",
       "usdz": "models/pesto-turkey.usdz",
-      "order": 10
+      "order": 10,
+      "available": false
     },
     "vegetarian-pizza": {
       "name": "vegetarian pizza",
@@ -323,7 +325,8 @@
       "sizes": [],
       "glb": "models/vegetarian-pizza.glb",
       "usdz": "models/vegetarian-pizza.usdz",
-      "order": 9
+      "order": 9,
+      "available": false
     },
     "diavola": {
       "name": "diavola",
@@ -338,7 +341,8 @@
       "sizes": [],
       "glb": "models/diavola.glb",
       "usdz": "models/diavola.usdz",
-      "order": 0
+      "order": 0,
+      "available": false
     },
     "beef-tartufo": {
       "name": "beef tartufo",
@@ -353,7 +357,8 @@
       "sizes": [],
       "glb": "models/beef-tartufo.glb",
       "usdz": "models/beef-tartufo.usdz",
-      "order": 1
+      "order": 1,
+      "available": false
     },
     "capricciosa": {
       "name": "capricciosa",
@@ -368,7 +373,8 @@
       "sizes": [],
       "glb": "models/capricciosa.glb",
       "usdz": "models/capricciosa.usdz",
-      "order": 2
+      "order": 2,
+      "available": false
     },
     "steak-torino": {
       "name": "steak torino",
@@ -383,7 +389,8 @@
       "sizes": [],
       "glb": "models/steak-torino.glb",
       "usdz": "models/steak-torino.usdz",
-      "order": 3
+      "order": 3,
+      "available": false
     },
     "pibo-signature": {
       "name": "pibo signature",
@@ -398,7 +405,8 @@
       "sizes": [],
       "glb": "models/pibo-signature.glb",
       "usdz": "models/pibo-signature.usdz",
-      "order": 0
+      "order": 0,
+      "available": false
     },
     "classic-fries": {
       "name": "classic fries",
@@ -413,7 +421,8 @@
       "sizes": [],
       "glb": "models/classic-fries.glb",
       "usdz": "models/classic-fries.usdz",
-      "order": 1
+      "order": 1,
+      "available": false
     },
     "cola": {
       "name": "cola",
@@ -443,7 +452,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 879000,
+          "price": 800000,
           "doughColors": [
             "plain",
             "green"
@@ -468,7 +477,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 13
+      "order": 21
     }
   },
   "settings": {
