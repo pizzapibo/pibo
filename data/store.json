@@ -13,7 +13,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 935000,
+          "price": 890000,
           "doughColors": [
             "plain",
             "green"
@@ -38,7 +38,7 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "https://assets.3dmarketiran.ir/Untitled%20Object.usdz",
-      "order": 4
+      "order": 12
     },
     "garlic-steak": {
       "name": "garlic steak",
@@ -53,7 +53,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 1200000,
+          "price": 1190000,
           "doughColors": [
             "plain",
             "red"
@@ -78,10 +78,10 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 5
+      "order": 14
     },
     "smoky-beef": {
-      "name": "smoky beef",
+      "name": "meat lovers",
       "category": "ایتالیایی",
       "desc": "رست‌بیف|موزارلا|سس‌مخصوص‌پیبو|قارچ|فلفل‌دلمه|زیتون",
       "price": 850000,
@@ -118,49 +118,22 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 8
+      "order": 17
     },
     "pibo-chef-special": {
       "name": "pibo chef special",
       "category": "ایتالیایی",
       "desc": "سس‌مخصوص‌پیبو|رست‌بیف|استیک‌گوساله|موزارلا|قارچ|فلفل‌دلمه|سیب‌زمینی",
-      "price": 1100000,
+      "price": 1200000,
       "emoji": "🍽️",
       "image": "",
-      "diameter": null,
+      "diameter": 30,
       "arEnabled": true,
-      "hasSizes": true,
-      "sizes": [
-        {
-          "diameter": 30,
-          "price": 1330000,
-          "doughColors": [
-            "plain",
-            "green",
-            "red"
-          ],
-          "enabled": true,
-          "glb": "",
-          "usdz": "",
-          "image": ""
-        },
-        {
-          "diameter": 25,
-          "price": 1100000,
-          "doughColors": [
-            "plain",
-            "green",
-            "red"
-          ],
-          "enabled": true,
-          "glb": "",
-          "usdz": "",
-          "image": ""
-        }
-      ],
+      "hasSizes": false,
+      "sizes": [],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 9
+      "order": 18
     },
     "margherita": {
       "name": "margherita",
@@ -175,7 +148,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 710000,
+          "price": 680000,
           "doughColors": [
             "plain",
             "green"
@@ -200,7 +173,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 6
+      "order": 15
     },
     "misto-speciale": {
       "name": "misto speciale",
@@ -215,7 +188,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 1015000,
+          "price": 985000,
           "doughColors": [
             "plain",
             "green"
@@ -240,7 +213,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 10
+      "order": 19
     },
     "pepperoni": {
       "name": "pepperoni",
@@ -255,7 +228,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 900000,
+          "price": 885000,
           "doughColors": [
             "plain",
             "red"
@@ -280,7 +253,7 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 7
+      "order": 16
     },
     "buffalo-chicken": {
       "name": "buffalo chicken",
@@ -495,7 +468,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 12
+      "order": 13
     }
   },
   "settings": {
