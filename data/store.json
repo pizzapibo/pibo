@@ -134,7 +134,7 @@
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
       "order": 12,
-      "available": false
+      "available": true
     },
     "margherita": {
       "name": "margherita",
@@ -478,6 +478,21 @@
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
       "order": 30
+    },
+    "آب-معدنی": {
+      "name": "آب معدنی",
+      "category": "نوشیدنی",
+      "desc": "",
+      "price": 25000,
+      "emoji": "🥤",
+      "image": "",
+      "diameter": null,
+      "arEnabled": false,
+      "hasSizes": false,
+      "sizes": [],
+      "glb": "",
+      "usdz": "",
+      "order": 1
     }
   },
   "settings": {
