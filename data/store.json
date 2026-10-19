@@ -395,8 +395,8 @@
     "pibo-signature": {
       "name": "pibo signature",
       "category": "سیب‌زمینی",
-      "desc": "",
-      "price": 450000,
+      "desc": "سیب‌زمینی|قارچ‌ و پنیر|بیکن",
+      "price": 480000,
       "emoji": "🍟",
       "image": "",
       "diameter": null,
@@ -405,8 +405,7 @@
       "sizes": [],
       "glb": "models/pibo-signature.glb",
       "usdz": "models/pibo-signature.usdz",
-      "order": 0,
-      "available": false
+      "order": 2
     },
     "classic-fries": {
       "name": "classic fries",
@@ -421,8 +420,8 @@
       "sizes": [],
       "glb": "models/classic-fries.glb",
       "usdz": "models/classic-fries.usdz",
-      "order": 1,
-      "available": false
+      "order": 3,
+      "available": true
     },
     "cola": {
       "name": "cola",
