@@ -38,7 +38,7 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
-      "order": 23
+      "order": 24
     },
     "garlic-steak": {
       "name": "garlic steak",
@@ -78,7 +78,7 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 24
+      "order": 25
     },
     "smoky-beef": {
       "name": "meat lovers",
@@ -118,7 +118,7 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 27
+      "order": 28
     },
     "pibo-chef-special": {
       "name": "monaco",
@@ -127,14 +127,38 @@
       "price": 1200000,
       "emoji": "🍽️",
       "image": "",
-      "diameter": 30,
+      "diameter": null,
       "arEnabled": true,
-      "hasSizes": false,
-      "sizes": [],
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 1200000,
+          "doughColors": [
+            "plain",
+            "green",
+            "red"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": null,
+          "price": 0,
+          "doughColors": [
+            "green"
+          ],
+          "enabled": false,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 12,
-      "available": true
+      "order": 23
     },
     "margherita": {
       "name": "margherita",
@@ -174,13 +198,13 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 25
+      "order": 26
     },
     "misto-speciale": {
       "name": "misto speciale",
       "category": "ایتالیایی",
       "desc": "سس‌مخصوص‌پیبو|بیکن‌مخلوط|قارچ|فلفل‌دلمه‌ای|زیتون",
-      "price": 785000,
+      "price": 890000,
       "emoji": "🍽️",
       "image": "",
       "diameter": null,
@@ -189,7 +213,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 985000,
+          "price": 1135000,
           "doughColors": [
             "plain",
             "green"
@@ -201,7 +225,7 @@
         },
         {
           "diameter": 25,
-          "price": 785000,
+          "price": 890000,
           "doughColors": [
             "plain",
             "green"
@@ -214,7 +238,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 28
+      "order": 32
     },
     "pepperoni": {
       "name": "pepperoni",
@@ -254,7 +278,7 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 26
+      "order": 27
     },
     "buffalo-chicken": {
       "name": "fire chicken",
@@ -294,7 +318,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 29
+      "order": 30
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -476,7 +500,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 30
+      "order": 31
     },
     "آب-معدنی": {
       "name": "آب معدنی",
