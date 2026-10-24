@@ -201,9 +201,9 @@
       "order": 26
     },
     "misto-speciale": {
-      "name": "misto speciale",
+      "name": "misto rosso",
       "category": "ایتالیایی",
-      "desc": "سس‌مخصوص‌پیبو|بیکن‌مخلوط|قارچ|فلفل‌دلمه‌ای|زیتون",
+      "desc": "سس‌‌گوجه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
       "price": 890000,
       "emoji": "🍽️",
       "image": "",
@@ -516,6 +516,44 @@
       "glb": "",
       "usdz": "",
       "order": 1
+    },
+    "misto-bianco": {
+      "name": "misto bianco",
+      "category": "ایتالیایی",
+      "desc": "سس‌خامه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
+      "price": 1190000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 1190000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": 25,
+          "price": 0,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
+      "glb": "models/misto-bianco.glb",
+      "usdz": "models/misto-bianco.usdz",
+      "order": 33
     }
   },
   "settings": {
