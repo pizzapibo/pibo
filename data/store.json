@@ -118,7 +118,7 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 28
+      "order": 30
     },
     "pibo-chef-special": {
       "name": "monaco",
@@ -198,7 +198,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 26
+      "order": 27
     },
     "misto-speciale": {
       "name": "misto rosso",
@@ -238,7 +238,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 32
+      "order": 34
     },
     "pepperoni": {
       "name": "pepperoni",
@@ -278,7 +278,7 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 27
+      "order": 28
     },
     "buffalo-chicken": {
       "name": "fire chicken",
@@ -318,7 +318,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 30
+      "order": 31
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -499,7 +499,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 31
+      "order": 32
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -552,7 +552,7 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 34
+      "order": 35
     },
     "salamy": {
       "name": "salamy",
@@ -590,7 +590,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 35
+      "order": 36
     },
     "supreme": {
       "name": "SUPREME",
@@ -628,7 +628,7 @@
       ],
       "glb": "models/supreme.glb",
       "usdz": "models/supreme.usdz",
-      "order": 36
+      "order": 37
     },
     "garlic-bread": {
       "name": "garlic bread",
@@ -644,6 +644,46 @@
       "glb": "models/garlic-bread.glb",
       "usdz": "models/garlic-bread.usdz",
       "order": 2
+    },
+    "pesto-steak": {
+      "name": "pesto steak",
+      "category": "ایتالیایی",
+      "desc": "",
+      "price": 1165000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 1290000,
+          "doughColors": [
+            "plain",
+            "green"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": 25,
+          "price": 1165000,
+          "doughColors": [
+            "plain",
+            "green"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
+      "glb": "models/pesto-steak.glb",
+      "usdz": "models/pesto-steak.usdz",
+      "order": 26
     }
   },
   "settings": {
