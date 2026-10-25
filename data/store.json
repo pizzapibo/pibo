@@ -418,7 +418,7 @@
     },
     "pibo-signature": {
       "name": "pibo signature",
-      "category": "سیب‌زمینی",
+      "category": "پیش غذا",
       "desc": "سیب‌زمینی|قارچ‌ و پنیر|بیکن",
       "price": 480000,
       "emoji": "🍟",
@@ -429,11 +429,11 @@
       "sizes": [],
       "glb": "models/pibo-signature.glb",
       "usdz": "models/pibo-signature.usdz",
-      "order": 2
+      "order": 1
     },
     "classic-fries": {
       "name": "classic fries",
-      "category": "سیب‌زمینی",
+      "category": "پیش غذا",
       "desc": "",
       "price": 250000,
       "emoji": "🍽️",
@@ -444,8 +444,7 @@
       "sizes": [],
       "glb": "models/classic-fries.glb",
       "usdz": "models/classic-fries.usdz",
-      "order": 3,
-      "available": true
+      "order": 0
     },
     "cola": {
       "name": "cola",
@@ -521,7 +520,7 @@
       "name": "misto bianco",
       "category": "ایتالیایی",
       "desc": "سس‌خامه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
-      "price": 1190000,
+      "price": 960000,
       "emoji": "🍽️",
       "image": "",
       "diameter": null,
@@ -541,7 +540,7 @@
         },
         {
           "diameter": 25,
-          "price": 0,
+          "price": 960000,
           "doughColors": [
             "plain"
           ],
@@ -553,7 +552,7 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 33
+      "order": 34
     },
     "salamy": {
       "name": "salamy",
@@ -591,7 +590,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 34
+      "order": 35
     },
     "supreme": {
       "name": "SUPREME",
@@ -629,14 +628,29 @@
       ],
       "glb": "models/supreme.glb",
       "usdz": "models/supreme.usdz",
-      "order": 35
+      "order": 36
+    },
+    "garlic-bread": {
+      "name": "garlic bread",
+      "category": "پیش غذا",
+      "desc": "",
+      "price": 360000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": false,
+      "sizes": [],
+      "glb": "models/garlic-bread.glb",
+      "usdz": "models/garlic-bread.usdz",
+      "order": 2
     }
   },
   "settings": {
     "categories": [
       "ایتالیایی",
       "ناپولیتن",
-      "سیب‌زمینی",
+      "پیش غذا",
       "نوشیدنی"
     ],
     "logoImage": "assets/images/logo.jpg",
