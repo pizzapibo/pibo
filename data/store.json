@@ -554,6 +554,82 @@
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
       "order": 33
+    },
+    "salamy": {
+      "name": "salamy",
+      "category": "ایتالیایی",
+      "desc": "سس گوجه|سالامی|قارچ|فلفل دلمه|زييتون|روغن زيتون",
+      "price": 840000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 988000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": 25,
+          "price": 840000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
+      "glb": "models/salamy.glb",
+      "usdz": "models/salamy.usdz",
+      "order": 34
+    },
+    "supreme": {
+      "name": "SUPREME",
+      "category": "ایتالیایی",
+      "desc": "سس مخصوص پيبو|ژامبون|استيک|هاتداگ|قارچ|فلفل دلمه|زيتون",
+      "price": 880000,
+      "emoji": "🍽️",
+      "image": "",
+      "diameter": null,
+      "arEnabled": true,
+      "hasSizes": true,
+      "sizes": [
+        {
+          "diameter": 30,
+          "price": 1075000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        },
+        {
+          "diameter": 25,
+          "price": 880000,
+          "doughColors": [
+            "plain"
+          ],
+          "enabled": true,
+          "glb": "",
+          "usdz": "",
+          "image": ""
+        }
+      ],
+      "glb": "models/supreme.glb",
+      "usdz": "models/supreme.usdz",
+      "order": 35
     }
   },
   "settings": {
