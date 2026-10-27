@@ -281,7 +281,7 @@
       "order": 28
     },
     "buffalo-chicken": {
-      "name": "fire chicken",
+      "name": "buffalo chicken",
       "category": "ایتالیایی",
       "desc": "مرغ‌مرینیت‌شده|سس‌بوفالو|فلفل‌هالوپینو|موزارلا",
       "price": 745000,
@@ -318,7 +318,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 31
+      "order": 38
     },
     "pesto-turkey": {
       "name": "pesto turkey",
