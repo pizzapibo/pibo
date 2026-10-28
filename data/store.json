@@ -38,7 +38,7 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
-      "order": 24
+      "order": 25
     },
     "garlic-steak": {
       "name": "garlic steak",
@@ -78,7 +78,7 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 25
+      "order": 27
     },
     "smoky-beef": {
       "name": "meat lovers",
@@ -118,12 +118,12 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 30
+      "order": 34
     },
     "pibo-chef-special": {
       "name": "monaco",
       "category": "ایتالیایی",
-      "desc": "سس‌مخصوص‌پیبو|رست‌بیف|استیک‌گوساله|موزارلا|قارچ|فلفل‌دلمه|سیب‌زمینی",
+      "desc": "سس‌مخصوص‌پیبو|رست‌بیف|بیکن ایرلندی|موزارلا|پنیر‌گودا|قارچ|فلفل‌دلمه|سیب‌زمینی",
       "price": 1200000,
       "emoji": "🍽️",
       "image": "",
@@ -158,7 +158,7 @@
       ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 23
+      "order": 24
     },
     "margherita": {
       "name": "margherita",
@@ -198,7 +198,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 27
+      "order": 30
     },
     "misto-speciale": {
       "name": "misto rosso",
@@ -238,7 +238,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 34
+      "order": 36
     },
     "pepperoni": {
       "name": "pepperoni",
@@ -278,7 +278,7 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 28
+      "order": 32
     },
     "buffalo-chicken": {
       "name": "buffalo chicken",
@@ -318,7 +318,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 35
+      "order": 38
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -429,7 +429,7 @@
       "sizes": [],
       "glb": "models/pibo-signature.glb",
       "usdz": "models/pibo-signature.usdz",
-      "order": 1
+      "order": 0
     },
     "classic-fries": {
       "name": "classic fries",
@@ -444,7 +444,7 @@
       "sizes": [],
       "glb": "models/classic-fries.glb",
       "usdz": "models/classic-fries.usdz",
-      "order": 0
+      "order": 1
     },
     "cola": {
       "name": "cola",
@@ -499,13 +499,13 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 32
+      "order": 35
     },
     "آب-معدنی": {
       "name": "آب معدنی",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 25000,
+      "price": 40000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -514,7 +514,7 @@
       "sizes": [],
       "glb": "",
       "usdz": "",
-      "order": 1
+      "order": 5
     },
     "misto-bianco": {
       "name": "misto bianco",
@@ -552,7 +552,7 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 36
+      "order": 39
     },
     "salamy": {
       "name": "salamy",
@@ -590,7 +590,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 38
+      "order": 40
     },
     "garlic-bread": {
       "name": "garlic bread",
@@ -610,7 +610,7 @@
     "pesto-steak": {
       "name": "pesto steak",
       "category": "ایتالیایی",
-      "desc": "",
+      "desc": "استیک‌گوساله|موزارلا|سس‌سیر|قارچ|سس‌آلفردو‌ پیبو|سس‌پستو",
       "price": 1165000,
       "emoji": "🍽️",
       "image": "",
@@ -645,7 +645,37 @@
       ],
       "glb": "models/pesto-steak.glb",
       "usdz": "models/pesto-steak.usdz",
-      "order": 26
+      "order": 28
+    },
+    "fanta": {
+      "name": "fanta",
+      "category": "نوشیدنی",
+      "desc": "",
+      "price": 95000,
+      "emoji": "🥤",
+      "image": "",
+      "diameter": null,
+      "arEnabled": false,
+      "hasSizes": false,
+      "sizes": [],
+      "glb": "models/fanta.glb",
+      "usdz": "models/fanta.usdz",
+      "order": 3
+    },
+    "sprite": {
+      "name": "sprite",
+      "category": "نوشیدنی",
+      "desc": "",
+      "price": 95000,
+      "emoji": "🥤",
+      "image": "",
+      "diameter": null,
+      "arEnabled": false,
+      "hasSizes": false,
+      "sizes": [],
+      "glb": "models/sprite.glb",
+      "usdz": "models/sprite.usdz",
+      "order": 4
     }
   },
   "settings": {
