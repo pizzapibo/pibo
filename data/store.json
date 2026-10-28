@@ -318,7 +318,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 38
+      "order": 35
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -552,7 +552,7 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 35
+      "order": 36
     },
     "salamy": {
       "name": "salamy",
@@ -590,45 +590,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 36
-    },
-    "supreme": {
-      "name": "SUPREME",
-      "category": "ایتالیایی",
-      "desc": "سس مخصوص پيبو|ژامبون|استيک|هاتداگ|قارچ|فلفل دلمه|زيتون",
-      "price": 880000,
-      "emoji": "🍽️",
-      "image": "",
-      "diameter": null,
-      "arEnabled": true,
-      "hasSizes": true,
-      "sizes": [
-        {
-          "diameter": 30,
-          "price": 1075000,
-          "doughColors": [
-            "plain"
-          ],
-          "enabled": true,
-          "glb": "",
-          "usdz": "",
-          "image": ""
-        },
-        {
-          "diameter": 25,
-          "price": 880000,
-          "doughColors": [
-            "plain"
-          ],
-          "enabled": true,
-          "glb": "",
-          "usdz": "",
-          "image": ""
-        }
-      ],
-      "glb": "models/supreme.glb",
-      "usdz": "models/supreme.usdz",
-      "order": 37
+      "order": 38
     },
     "garlic-bread": {
       "name": "garlic bread",
