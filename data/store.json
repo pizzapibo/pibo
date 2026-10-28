@@ -450,7 +450,7 @@
       "name": "cola",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 95000,
+      "price": 90000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -459,7 +459,7 @@
       "sizes": [],
       "glb": "models/cola.glb",
       "usdz": "models/cola.usdz",
-      "order": 0
+      "order": 5
     },
     "vegetarian": {
       "name": "vegetarian",
@@ -514,7 +514,7 @@
       "sizes": [],
       "glb": "",
       "usdz": "",
-      "order": 5
+      "order": 8
     },
     "misto-bianco": {
       "name": "misto bianco",
@@ -651,7 +651,7 @@
       "name": "fanta",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 95000,
+      "price": 90000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -660,13 +660,13 @@
       "sizes": [],
       "glb": "models/fanta.glb",
       "usdz": "models/fanta.usdz",
-      "order": 3
+      "order": 6
     },
     "sprite": {
       "name": "sprite",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 95000,
+      "price": 90000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -675,7 +675,7 @@
       "sizes": [],
       "glb": "models/sprite.glb",
       "usdz": "models/sprite.usdz",
-      "order": 4
+      "order": 7
     }
   },
   "settings": {
