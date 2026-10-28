@@ -93,7 +93,7 @@
       "sizes": [
         {
           "diameter": 30,
-          "price": 1085000,
+          "price": 1175000,
           "doughColors": [
             "plain",
             "red"
@@ -118,7 +118,7 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 34
+      "order": 41
     },
     "pibo-chef-special": {
       "name": "monaco",
@@ -204,7 +204,7 @@
       "name": "misto rosso",
       "category": "ایتالیایی",
       "desc": "سس‌‌گوجه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
-      "price": 890000,
+      "price": 940000,
       "emoji": "🍽️",
       "image": "",
       "diameter": null,
@@ -225,7 +225,7 @@
         },
         {
           "diameter": 25,
-          "price": 890000,
+          "price": 940000,
           "doughColors": [
             "plain",
             "green"
@@ -238,7 +238,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 36
+      "order": 42
     },
     "pepperoni": {
       "name": "pepperoni",
