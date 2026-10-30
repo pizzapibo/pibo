@@ -1,7 +1,7 @@
 {
   "products": {
     "truffle-chicken": {
-      "name": "truffle chicken",
+      "name": "ترافل چیکن",
       "category": "ایتالیایی",
       "desc": "مرغ‌گریل|موزارلا|قارچ|سس‌ترافل|پارمزان|فلفل‌دلمه|زیتون",
       "price": 770000,
@@ -38,10 +38,10 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
-      "order": 25
+      "order": 44
     },
     "garlic-steak": {
-      "name": "garlic steak",
+      "name": "گارلیک استیک",
       "category": "ایتالیایی",
       "desc": "استیک‌گوساله|موزارلا|سس‌سیر|قارچ|سس‌آلفردو‌ پیبو",
       "price": 1065000,
@@ -78,10 +78,10 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 27
+      "order": 45
     },
     "smoky-beef": {
-      "name": "meat lovers",
+      "name": "میت لاورز",
       "category": "ایتالیایی",
       "desc": "رست‌بیف|موزارلا|سس‌مخصوص‌پیبو|قارچ|فلفل‌دلمه|زیتون",
       "price": 995000,
@@ -118,10 +118,10 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 41
+      "order": 53
     },
     "pibo-chef-special": {
-      "name": "monaco",
+      "name": "موناکو",
       "category": "ایتالیایی",
       "desc": "سس‌مخصوص‌پیبو|رست‌بیف|بیکن ایرلندی|موزارلا|پنیر‌گودا|قارچ|فلفل‌دلمه|سیب‌زمینی",
       "price": 1200000,
@@ -158,10 +158,10 @@
       ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 24
+      "order": 43
     },
     "margherita": {
-      "name": "margherita",
+      "name": "مارگاریتا",
       "category": "ایتالیایی",
       "desc": "سس‌گوجه‌فرنگی|موزارلا|گوجه‌گیلاسی|ریحان|روغن‌زیتون",
       "price": 630000,
@@ -198,10 +198,10 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 30
+      "order": 47
     },
     "misto-speciale": {
-      "name": "misto rosso",
+      "name": "میستو روسو",
       "category": "ایتالیایی",
       "desc": "سس‌‌گوجه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
       "price": 940000,
@@ -238,10 +238,10 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 42
+      "order": 54
     },
     "pepperoni": {
-      "name": "pepperoni",
+      "name": "پپرونی",
       "category": "ایتالیایی",
       "desc": "سس‌مخصوص‌پیبو|پپرونی|فلفل‌هالوپینو|موزارلا",
       "price": 760000,
@@ -278,10 +278,10 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 32
+      "order": 48
     },
     "buffalo-chicken": {
-      "name": "buffalo chicken",
+      "name": "بوفالو چیکن",
       "category": "ایتالیایی",
       "desc": "مرغ‌مرینیت‌شده|سس‌بوفالو|فلفل‌هالوپینو|موزارلا",
       "price": 745000,
@@ -318,7 +318,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 38
+      "order": 50
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -417,7 +417,7 @@
       "available": false
     },
     "pibo-signature": {
-      "name": "pibo signature",
+      "name": "پیبو سیگنیچر",
       "category": "پیش غذا",
       "desc": "سیب‌زمینی|قارچ‌ و پنیر|بیکن",
       "price": 480000,
@@ -429,10 +429,10 @@
       "sizes": [],
       "glb": "models/pibo-signature.glb",
       "usdz": "models/pibo-signature.usdz",
-      "order": 0
+      "order": 3
     },
     "classic-fries": {
-      "name": "classic fries",
+      "name": "کلاسیک فرایز",
       "category": "پیش غذا",
       "desc": "",
       "price": 250000,
@@ -444,10 +444,10 @@
       "sizes": [],
       "glb": "models/classic-fries.glb",
       "usdz": "models/classic-fries.usdz",
-      "order": 1
+      "order": 4
     },
     "cola": {
-      "name": "cola",
+      "name": "کولا",
       "category": "نوشیدنی",
       "desc": "",
       "price": 90000,
@@ -459,10 +459,10 @@
       "sizes": [],
       "glb": "models/cola.glb",
       "usdz": "models/cola.usdz",
-      "order": 5
+      "order": 8
     },
     "vegetarian": {
-      "name": "vegetarian",
+      "name": "وجترین",
       "category": "ایتالیایی",
       "desc": "کدو‌گریل‌شده|سس‌پستو|قارچ|موزارلا|گوجه‌گیلاسی|فلفل‌دلمه|چیپس بادمجان|زیتون",
       "price": 740000,
@@ -499,7 +499,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 35
+      "order": 49
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -514,10 +514,10 @@
       "sizes": [],
       "glb": "",
       "usdz": "",
-      "order": 8
+      "order": 11
     },
     "misto-bianco": {
-      "name": "misto bianco",
+      "name": "میستو بیانکو",
       "category": "ایتالیایی",
       "desc": "سس‌خامه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
       "price": 960000,
@@ -552,10 +552,10 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 39
+      "order": 51
     },
     "salamy": {
-      "name": "salamy",
+      "name": "سالامی",
       "category": "ایتالیایی",
       "desc": "سس گوجه|سالامی|قارچ|فلفل دلمه|زييتون|روغن زيتون",
       "price": 840000,
@@ -590,10 +590,10 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 40
+      "order": 52
     },
     "garlic-bread": {
-      "name": "garlic bread",
+      "name": "گارلیک برد",
       "category": "پیش غذا",
       "desc": "",
       "price": 360000,
@@ -605,10 +605,10 @@
       "sizes": [],
       "glb": "models/garlic-bread.glb",
       "usdz": "models/garlic-bread.usdz",
-      "order": 2
+      "order": 5
     },
     "pesto-steak": {
-      "name": "pesto steak",
+      "name": "پستو استیک",
       "category": "ایتالیایی",
       "desc": "استیک‌گوساله|موزارلا|سس‌سیر|قارچ|سس‌آلفردو‌ پیبو|سس‌پستو",
       "price": 1165000,
@@ -645,10 +645,10 @@
       ],
       "glb": "models/pesto-steak.glb",
       "usdz": "models/pesto-steak.usdz",
-      "order": 28
+      "order": 46
     },
     "fanta": {
-      "name": "fanta",
+      "name": "فانتا",
       "category": "نوشیدنی",
       "desc": "",
       "price": 90000,
@@ -660,10 +660,10 @@
       "sizes": [],
       "glb": "models/fanta.glb",
       "usdz": "models/fanta.usdz",
-      "order": 6
+      "order": 10
     },
     "sprite": {
-      "name": "sprite",
+      "name": "اسپرایت",
       "category": "نوشیدنی",
       "desc": "",
       "price": 90000,
@@ -675,7 +675,7 @@
       "sizes": [],
       "glb": "models/sprite.glb",
       "usdz": "models/sprite.usdz",
-      "order": 7
+      "order": 9
     }
   },
   "settings": {
