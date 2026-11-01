@@ -3,7 +3,7 @@
     "truffle-chicken": {
       "name": "ترافل چیکن",
       "category": "ایتالیایی",
-      "desc": "مرغ‌گریل|موزارلا|قارچ|سس‌ترافل|پارمزان|فلفل‌دلمه|زیتون",
+      "desc": "مرغ مرينت شده،موزارلا،قارچ,سس\nترافل، فلفل دلمه، زيتون",
       "price": 770000,
       "emoji": "🍽️",
       "image": "",
@@ -15,8 +15,7 @@
           "diameter": 30,
           "price": 890000,
           "doughColors": [
-            "plain",
-            "green"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -27,8 +26,7 @@
           "diameter": 25,
           "price": 770000,
           "doughColors": [
-            "plain",
-            "green"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -38,12 +36,12 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
-      "order": 44
+      "order": 58
     },
     "garlic-steak": {
       "name": "گارلیک استیک",
       "category": "ایتالیایی",
-      "desc": "استیک‌گوساله|موزارلا|سس‌سیر|قارچ|سس‌آلفردو‌ پیبو",
+      "desc": "استيک گوساله مرينيت شده، موزارلا,سس\nسير ،قارچ",
       "price": 1065000,
       "emoji": "🍽️",
       "image": "",
@@ -55,8 +53,7 @@
           "diameter": 30,
           "price": 1190000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -67,8 +64,7 @@
           "diameter": 25,
           "price": 1065000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -78,12 +74,12 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 45
+      "order": 55
     },
     "smoky-beef": {
       "name": "میت لاورز",
       "category": "ایتالیایی",
-      "desc": "رست‌بیف|موزارلا|سس‌مخصوص‌پیبو|قارچ|فلفل‌دلمه|زیتون",
+      "desc": "گوشت رست بيف، موزارلا، رسس مخصوص پيبو ،قارچ، فلفل دلمه، زيتون",
       "price": 995000,
       "emoji": "🍽️",
       "image": "",
@@ -95,8 +91,7 @@
           "diameter": 30,
           "price": 1175000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -107,8 +102,7 @@
           "diameter": 25,
           "price": 995000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -118,12 +112,12 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 53
+      "order": 57
     },
     "pibo-chef-special": {
       "name": "موناکو",
       "category": "ایتالیایی",
-      "desc": "سس‌مخصوص‌پیبو|رست‌بیف|بیکن ایرلندی|موزارلا|پنیر‌گودا|قارچ|فلفل‌دلمه|سیب‌زمینی",
+      "desc": "گوشت رست بيف, بيكن ايرلندى،سیب زمینی سرخ شده، سس مخصوص پيبو، موزارلا، پنير گودا، قارچ، فلفل دلمه، زيتون",
       "price": 1200000,
       "emoji": "🍽️",
       "image": "",
@@ -135,9 +129,7 @@
           "diameter": 30,
           "price": 1200000,
           "doughColors": [
-            "plain",
-            "green",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -148,7 +140,7 @@
           "diameter": null,
           "price": 0,
           "doughColors": [
-            "green"
+            "plain"
           ],
           "enabled": false,
           "glb": "",
@@ -158,12 +150,12 @@
       ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 43
+      "order": 66
     },
     "margherita": {
       "name": "مارگاریتا",
       "category": "ایتالیایی",
-      "desc": "سس‌گوجه‌فرنگی|موزارلا|گوجه‌گیلاسی|ریحان|روغن‌زیتون",
+      "desc": "سس گوجه فرنگى، موزارلا، گوجه\nگیلاسى، ريحان، روغن زيتون",
       "price": 630000,
       "emoji": "🍽️",
       "image": "",
@@ -198,12 +190,12 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 47
+      "order": 65
     },
     "misto-speciale": {
       "name": "میستو روسو",
       "category": "ایتالیایی",
-      "desc": "سس‌‌گوجه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
+      "desc": "بيكن ايرلندى، سس گوجه، موزارلا، قارچ, فلفل دلمه، زيتون",
       "price": 940000,
       "emoji": "🍽️",
       "image": "",
@@ -215,8 +207,7 @@
           "diameter": 30,
           "price": 1135000,
           "doughColors": [
-            "plain",
-            "green"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -227,8 +218,7 @@
           "diameter": 25,
           "price": 940000,
           "doughColors": [
-            "plain",
-            "green"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -238,12 +228,12 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 54
+      "order": 60
     },
     "pepperoni": {
       "name": "پپرونی",
       "category": "ایتالیایی",
-      "desc": "سس‌مخصوص‌پیبو|پپرونی|فلفل‌هالوپینو|موزارلا",
+      "desc": "پپرونی، سس مخصوص پيبو ،موزارلا، ،فلفل هالوپینو",
       "price": 760000,
       "emoji": "🍽️",
       "image": "",
@@ -255,8 +245,7 @@
           "diameter": 30,
           "price": 885000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -267,8 +256,7 @@
           "diameter": 25,
           "price": 760000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -278,12 +266,12 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 48
+      "order": 62
     },
     "buffalo-chicken": {
       "name": "بوفالو چیکن",
       "category": "ایتالیایی",
-      "desc": "مرغ‌مرینیت‌شده|سس‌بوفالو|فلفل‌هالوپینو|موزارلا",
+      "desc": "مرغ مرينيت شده، موزارلا، سس\nبوفالو، فلفل هالوپينو",
       "price": 745000,
       "emoji": "🍽️",
       "image": "",
@@ -295,8 +283,7 @@
           "diameter": 30,
           "price": 875000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -307,8 +294,7 @@
           "diameter": 25,
           "price": 745000,
           "doughColors": [
-            "plain",
-            "red"
+            "plain"
           ],
           "enabled": true,
           "glb": "",
@@ -318,7 +304,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 50
+      "order": 59
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -436,7 +422,7 @@
       "category": "پیش غذا",
       "desc": "",
       "price": 250000,
-      "emoji": "🍽️",
+      "emoji": "🍟",
       "image": "",
       "diameter": null,
       "arEnabled": true,
@@ -444,7 +430,7 @@
       "sizes": [],
       "glb": "models/classic-fries.glb",
       "usdz": "models/classic-fries.usdz",
-      "order": 4
+      "order": 5
     },
     "cola": {
       "name": "کولا",
@@ -464,7 +450,7 @@
     "vegetarian": {
       "name": "وجترین",
       "category": "ایتالیایی",
-      "desc": "کدو‌گریل‌شده|سس‌پستو|قارچ|موزارلا|گوجه‌گیلاسی|فلفل‌دلمه|چیپس بادمجان|زیتون",
+      "desc": "كدو گريل شده, بادمجان گريل شده، سس پستو، موزارلا، قارچ، گوجه گيلاسى، فلفل\nدلمه، زيتون",
       "price": 740000,
       "emoji": "🍽️",
       "image": "",
@@ -499,7 +485,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 49
+      "order": 64
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -519,7 +505,7 @@
     "misto-bianco": {
       "name": "میستو بیانکو",
       "category": "ایتالیایی",
-      "desc": "سس‌خامه|بیکن‌ایرلندی|قارچ|فلفل‌دلمه‌ای|زیتون",
+      "desc": "بيكن ايرلندی، سس خامه، موزارلا, قارچ, فلفل دلمه، زيتون",
       "price": 960000,
       "emoji": "🍽️",
       "image": "",
@@ -552,12 +538,12 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 51
+      "order": 61
     },
     "salamy": {
       "name": "سالامی",
       "category": "ایتالیایی",
-      "desc": "سس گوجه|سالامی|قارچ|فلفل دلمه|زييتون|روغن زيتون",
+      "desc": "سالامى، سس مخصوص پيبو، موزارلا، قارچ، فلفل دلمه، زيتون",
       "price": 840000,
       "emoji": "🍽️",
       "image": "",
@@ -590,7 +576,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 52
+      "order": 63
     },
     "garlic-bread": {
       "name": "گارلیک برد",
@@ -605,12 +591,13 @@
       "sizes": [],
       "glb": "models/garlic-bread.glb",
       "usdz": "models/garlic-bread.usdz",
-      "order": 5
+      "order": 6,
+      "available": false
     },
     "pesto-steak": {
       "name": "پستو استیک",
       "category": "ایتالیایی",
-      "desc": "استیک‌گوساله|موزارلا|سس‌سیر|قارچ|سس‌آلفردو‌ پیبو|سس‌پستو",
+      "desc": "استيک گوساله مرينت شده ,موزارلا،سس\nپستو،قارچ",
       "price": 1165000,
       "emoji": "🍽️",
       "image": "",
@@ -645,7 +632,7 @@
       ],
       "glb": "models/pesto-steak.glb",
       "usdz": "models/pesto-steak.usdz",
-      "order": 46
+      "order": 56
     },
     "fanta": {
       "name": "فانتا",
