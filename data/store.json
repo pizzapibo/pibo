@@ -36,7 +36,7 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
-      "order": 58
+      "order": 59
     },
     "garlic-steak": {
       "name": "گارلیک استیک",
@@ -79,7 +79,7 @@
     "smoky-beef": {
       "name": "میت لاورز",
       "category": "ایتالیایی",
-      "desc": "گوشت رست بيف، موزارلا، رسس مخصوص پيبو ،قارچ، فلفل دلمه، زيتون",
+      "desc": "گوشت رست بيف، موزارلا، سس مخصوص پيبو ،قارچ، فلفل دلمه، زيتون",
       "price": 995000,
       "emoji": "🍽️",
       "image": "",
@@ -112,7 +112,7 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 57
+      "order": 58
     },
     "pibo-chef-special": {
       "name": "موناکو",
@@ -150,7 +150,7 @@
       ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 66
+      "order": 67
     },
     "margherita": {
       "name": "مارگاریتا",
@@ -190,7 +190,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 65
+      "order": 66
     },
     "misto-speciale": {
       "name": "میستو روسو",
@@ -228,7 +228,7 @@
       ],
       "glb": "models/misto-speciale.glb",
       "usdz": "models/misto-speciale.usdz",
-      "order": 60
+      "order": 61
     },
     "pepperoni": {
       "name": "پپرونی",
@@ -266,7 +266,7 @@
       ],
       "glb": "models/pepperoni.glb",
       "usdz": "models/pepperoni.usdz",
-      "order": 62
+      "order": 63
     },
     "buffalo-chicken": {
       "name": "بوفالو چیکن",
@@ -304,7 +304,7 @@
       ],
       "glb": "models/buffalo-chicken.glb",
       "usdz": "models/buffalo-chicken.usdz",
-      "order": 59
+      "order": 60
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -485,7 +485,7 @@
       ],
       "glb": "models/vegetarian.glb",
       "usdz": "models/vegetarian.usdz",
-      "order": 64
+      "order": 65
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -538,7 +538,7 @@
       ],
       "glb": "models/misto-bianco.glb",
       "usdz": "models/misto-bianco.usdz",
-      "order": 61
+      "order": 62
     },
     "salamy": {
       "name": "سالامی",
@@ -576,7 +576,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 63
+      "order": 64
     },
     "garlic-bread": {
       "name": "گارلیک برد",
