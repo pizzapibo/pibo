@@ -226,9 +226,9 @@
           "image": ""
         }
       ],
-      "glb": "models/misto-speciale.glb",
-      "usdz": "models/misto-speciale.usdz",
-      "order": 61
+      "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
+      "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
+      "order": 69
     },
     "pepperoni": {
       "name": "پپرونی",
@@ -536,9 +536,9 @@
           "image": ""
         }
       ],
-      "glb": "models/misto-bianco.glb",
-      "usdz": "models/misto-bianco.usdz",
-      "order": 62
+      "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
+      "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
+      "order": 68
     },
     "salamy": {
       "name": "سالامی",
