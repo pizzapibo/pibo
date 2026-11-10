@@ -264,9 +264,9 @@
           "image": ""
         }
       ],
-      "glb": "models/pepperoni.glb",
-      "usdz": "models/pepperoni.usdz",
-      "order": 63
+      "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.glb",
+      "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.usdz",
+      "order": 70
     },
     "buffalo-chicken": {
       "name": "بوفالو چیکن",
@@ -302,9 +302,9 @@
           "image": ""
         }
       ],
-      "glb": "models/buffalo-chicken.glb",
-      "usdz": "models/buffalo-chicken.usdz",
-      "order": 60
+      "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.glb",
+      "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.usdz",
+      "order": 71
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -483,9 +483,9 @@
           "image": ""
         }
       ],
-      "glb": "models/vegetarian.glb",
-      "usdz": "models/vegetarian.usdz",
-      "order": 65
+      "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.glb",
+      "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.usdz",
+      "order": 72
     },
     "آب-معدنی": {
       "name": "آب معدنی",
