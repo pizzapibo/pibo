@@ -936,3 +936,71 @@ model-viewer{width:100%;height:100%;--poster-color:transparent}
   .preloader-logo-wrap{animation:none;opacity:1;transform:none}
   .preloader-logo{animation:none;filter:none}
 }
+
+
+/* ===========================================================
+   Android performance mode (html.is-android — set in <head>)
+   -----------------------------------------------------------
+   iOS keeps the full liquid-glass look untouched. On Android
+   Chrome, live backdrop-filter blur layers and the animated,
+   blurred full-screen background are what cause the heavy lag,
+   so they are replaced with equivalent, more opaque static
+   surfaces — same colours and shapes, no per-frame blur work.
+=========================================================== */
+html.is-android *,
+html.is-android *::before,
+html.is-android *::after{
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+
+/* background mesh: no animated hue-rotate / background-position,
+   no 50px blur on a full-screen fixed layer */
+html.is-android body::before{
+  inset:0;
+  filter:none !important;
+  animation:none !important;
+}
+
+/* surfaces that used blur now get a more opaque tint so text behind
+   them (scrolling content) stays unreadable-through, like frosted glass */
+html.is-android .site-header .container{background:rgba(255,250,242,.86)}
+html.is-android .site-header.scrolled .container{background:rgba(255,250,242,.94)}
+html.is-android .btn-outline{background:rgba(255,255,255,.78)}
+html.is-android .btn-outline:hover{background:rgba(255,255,255,.9)}
+html.is-android .eyebrow{background:rgba(255,255,255,.78)}
+html.is-android .menu-tabs{background:rgba(255,250,242,.9)}
+html.is-android .card-overlay{background:linear-gradient(165deg, rgba(30,20,10,.76), rgba(20,12,5,.9))}
+html.is-android .faq-item{background:rgba(255,255,255,.7)}
+html.is-android .order-wrap{background:rgba(255,255,255,.7)}
+html.is-android .order-form input,
+html.is-android .order-form textarea,
+html.is-android .order-form select{background:rgba(255,255,255,.8)}
+html.is-android .pick-chip{background:rgba(255,255,255,.75)}
+html.is-android .mobile-nav{background:rgba(255,250,242,.96)}
+html.is-android .auth-card{background:rgba(255,250,242,.92)}
+html.is-android .admin-top{background:rgba(255,250,242,.94)}
+html.is-android .admin-panel{background:rgba(255,255,255,.72)}
+html.is-android .admin-panel[data-publish-bar]{background:rgba(243,251,246,.85)}
+html.is-android .admin-panel[data-publish-bar].dirty{background:rgba(253,242,240,.85)}
+html.is-android .qr-tile{background:rgba(255,255,255,.65)}
+html.is-android .ar-frame .qr-box{background:rgba(255,255,255,.9)}
+html.is-android .contact-band{background:linear-gradient(120deg, rgba(229,72,60,.95), rgba(255,90,31,.95))}
+
+/* loading skeleton shimmer repaints every frame — keep the placeholder, drop the motion */
+html.is-android .skeleton-card .sk-media,
+html.is-android .skeleton-card .sk-line{animation:none}
+
+/* AR page: the pulsing "invite" ring used to animate box-shadow (a repaint
+   every frame on top of the live WebGL canvas). Same ring, now drawn with
+   transform + opacity only, which stays on the GPU. */
+html.is-android .ar-launch-btn{animation:none}
+html.is-android .ar-launch-btn::after{
+  content:"";position:absolute;inset:0;border-radius:100px;z-index:-1;pointer-events:none;
+  box-shadow:0 0 0 7px rgba(255,90,31,.5);
+  animation:ar-invite-ring 2.4s ease-in-out infinite;
+}
+@keyframes ar-invite-ring{
+  0%,100%{transform:scale(.97);opacity:.85}
+  50%{transform:scale(1.1);opacity:0}
+}

@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 /* ---------- (5) subtle parallax on card images while scrolling ---------- */
 function initCardImageParallax(){
+  // Android: per-frame getBoundingClientRect on every card + a 0.6s transform
+  // transition on each image causes constant layout/compositing work and
+  // scroll jank. The effect is only a +/-14px drift, so it is skipped there.
+  if(document.documentElement.classList.contains("is-android")) return;
   let ticking = false;
   function update(){
     const vh = window.innerHeight;
