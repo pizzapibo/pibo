@@ -274,7 +274,7 @@
       "desc": "مرغ مرينيت شده، موزارلا، سس\nبوفالو، فلفل هالوپينو",
       "price": 745000,
       "emoji": "🍽️",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/IMG_8852.jpeg",
       "diameter": null,
       "arEnabled": true,
       "hasSizes": true,
@@ -304,7 +304,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.usdz",
-      "order": 64
+      "order": 73
     },
     "pesto-turkey": {
       "name": "pesto turkey",
