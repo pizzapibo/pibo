@@ -1,0 +1,1006 @@
+/* ===========================================================
+   PIBO — Pizza Shop
+   "Liquid Glass" (iOS 26) design language:
+   translucent frosted surfaces, saturated backdrop blur,
+   soft specular top-edge highlight, large continuous-corner
+   radii, and spring/bounce tactile feedback on every control.
+   Fredoka carries Latin/numeral accents, Vazirmatn carries
+   all Persian text.
+=========================================================== */
+:root{
+  --white:#FFFDF9;
+  --cream:#FFF4E4;
+  --cream-2:#FFE7B8;
+  --orange:#FF5A1F;
+  --orange-dark:#E0420C;
+  --gold:#FFB400;
+  --red:#E5483C;
+  --green:#2F9E5B;
+  --ink:#241608;
+  --ink-soft:#7C6750;
+  --line:rgba(124,103,80,.16);
+
+  /* liquid glass surface tokens */
+  --glass-blur: blur(28px) saturate(180%);
+  --glass-blur-soft: blur(18px) saturate(160%);
+  --glass-light: rgba(255,255,255,.52);
+  --glass-light-strong: rgba(255,255,255,.72);
+  --glass-light-soft: rgba(255,255,255,.34);
+  --glass-border: rgba(255,255,255,.65);
+  --glass-border-soft: rgba(255,255,255,.4);
+  --glass-dark: rgba(28,18,10,.42);
+  --glass-dark-strong: rgba(20,13,8,.62);
+  --glass-dark-border: rgba(255,255,255,.14);
+  --glass-highlight: inset 0 1px 0 rgba(255,255,255,.85), inset 0 0 0 1px rgba(255,255,255,.18);
+  --glass-highlight-dark: inset 0 1px 0 rgba(255,255,255,.16), inset 0 0 0 1px rgba(255,255,255,.08);
+
+  --shadow: 0 18px 40px -22px rgba(36,22,8,.35);
+  --shadow-lg: 0 30px 70px -28px rgba(36,22,8,.45);
+  --shadow-soft: 0 10px 26px -16px rgba(36,22,8,.28);
+  --shadow-glass: 0 8px 30px -10px rgba(36,22,8,.22), var(--glass-highlight);
+  --shadow-glass-lg: 0 24px 60px -18px rgba(36,22,8,.32), var(--glass-highlight);
+
+  --radius: 26px;
+  --radius-lg: 34px;
+  --radius-pill: 100px;
+
+  /* iOS spring curves */
+  --ease: cubic-bezier(.19,1,.22,1);
+  --spring: cubic-bezier(.34,1.56,.64,1);
+  --spring-soft: cubic-bezier(.22,1.28,.36,1);
+  --press-scale: .95;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', 'Vazirmatn', Tahoma, sans-serif;
+  background:var(--white);
+  color:var(--ink);
+  direction:rtl;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  animation:page-fade-in .5s var(--ease);
+  position:relative;
+}
+/* soft, colorful mesh sitting behind every glass surface —
+   this is what the blur reveals, key to the liquid-glass look */
+body::before{
+  content:'';
+  position:fixed;inset:-5%;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(760px 520px at 8% -6%, rgba(255,90,31,.38), transparent 58%),
+    radial-gradient(680px 520px at 96% 6%, rgba(255,180,0,.42), transparent 62%),
+    radial-gradient(760px 620px at 50% 46%, rgba(229,72,60,.2), transparent 65%),
+    radial-gradient(640px 520px at 4% 78%, rgba(47,158,91,.16), transparent 60%),
+    var(--white);
+  filter:blur(50px);
+  transform:translateZ(0);
+  animation: drift 24s ease-in-out infinite alternate;
+}
+@keyframes drift{
+  0%{ background-position:0 0,0 0,0 0,0 0,0 0; filter:hue-rotate(0deg) }
+  100%{ background-position:30px -20px,-20px 30px,0 -30px,20px 20px,0 0; filter:hue-rotate(6deg) }
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,textarea,select{font-family:inherit}
+
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+
+::selection{background:var(--orange);color:#fff}
+
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--gold);outline-offset:3px;border-radius:6px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+
+/* ===========================================================
+   Tactile "press" feedback — applied via JS (ios-glass.js) to
+   buttons, tabs, chips, cards: mirrors iOS 26's spring squeeze.
+=========================================================== */
+.btn,.menu-tab,.pick-chip,.pizza-card,.faq-item summary,.mobile-nav a,.btn-sm,.ar-launch-btn,.ios-switch,.size-chip,.dough-swatch-btn,.badge-ar{
+  transition:transform .5s var(--spring), box-shadow .35s var(--ease), background .25s var(--ease), border-color .25s var(--ease), opacity .25s;
+}
+.btn:hover,.menu-tab:hover,.pick-chip:hover,.pizza-card:hover,.is-pressed{
+  will-change:transform;
+}
+.is-pressed{
+  transform:scale(var(--press-scale)) !important;
+  transition:transform .12s cubic-bezier(.4,0,.2,1) !important;
+}
+/* elements that already carry a translateX(-50%) for centering need the
+   scale combined, not replaced, or press-feedback would un-center them */
+.ar-launch-btn.is-pressed{transform:translateX(-50%) scale(var(--press-scale)) !important}
+
+/* ===========================================================
+   Header — floating glass capsule (Dynamic Island style)
+=========================================================== */
+.site-header{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  padding:calc(14px + env(safe-area-inset-top)) 16px 0;
+  transition:padding .4s var(--ease);
+}
+.site-header .container{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  max-width:1180px;
+  padding:12px 26px;
+  border-radius:var(--radius-pill);
+  background:var(--glass-light-soft);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border-soft);
+  box-shadow:0 4px 20px -12px rgba(36,22,8,.18);
+  transition:all .5s var(--spring-soft);
+}
+.site-header.scrolled .container{
+  background:var(--glass-light-strong);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border-color:var(--glass-border);
+  box-shadow:var(--shadow-glass);
+  padding:10px 26px;
+}
+
+.logo{
+  display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.5rem;letter-spacing:-.5px;
+  font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
+}
+.logo .mark{
+  width:40px;height:40px;border-radius:50%;
+  background:conic-gradient(from 90deg,var(--orange),var(--gold),var(--red),var(--orange));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.1rem;font-weight:900;
+  box-shadow:var(--shadow-soft), var(--glass-highlight);
+  font-family:'Vazirmatn',sans-serif;
+  border:1px solid var(--glass-border-soft);
+}
+
+.nav-links{display:flex;gap:8px;font-weight:700;font-size:.95rem}
+.nav-links a{position:relative;padding:9px 16px;color:var(--ink);border-radius:var(--radius-pill);transition:background .3s var(--ease), color .3s}
+.nav-links a::after{display:none}
+.nav-links a:hover{background:rgba(255,255,255,.55)}
+
+.nav-actions{display:flex;align-items:center;gap:12px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 26px;border-radius:var(--radius-pill);font-weight:800;font-size:.95rem;
+  position:relative;overflow:hidden;
+}
+.btn-primary{
+  background:linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0)) , var(--orange);
+  color:#fff;box-shadow:var(--shadow), var(--glass-highlight);
+  border:1px solid rgba(255,255,255,.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg), var(--glass-highlight)}
+.btn-outline{
+  background:var(--glass-light);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  color:var(--ink);border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass);
+}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange-dark);transform:translateY(-2px);background:var(--glass-light-strong)}
+.btn-ghost{color:var(--ink);font-weight:700}
+
+.menu-toggle{display:none;flex-direction:column;gap:6px;width:28px;padding:8px 0}
+.menu-toggle span{height:3px;border-radius:3px;background:var(--ink);transition:.3s}
+.menu-toggle span:nth-child(1){width:100%}
+.menu-toggle span:nth-child(2){width:70%;margin-right:0}
+.menu-toggle span:nth-child(3){width:100%}
+
+/* ===========================================================
+   Section shell
+=========================================================== */
+.section{padding:120px 0 110px;position:relative}
+.section.alt{background:transparent}
+.section.alt::before, .section.alt::after{ display:none }
+.section .container{position:relative;z-index:1}
+
+.section-head{max-width:640px;margin:0 auto 60px;text-align:center}
+.section-head .eyebrow{margin-bottom:16px}
+.section-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:900;letter-spacing:-.5px;margin-bottom:14px}
+.section-head p{color:var(--ink-soft);font-size:1.05rem;line-height:1.9}
+
+/* ===========================================================
+   Hero slogan — single line, first thing under the header
+=========================================================== */
+.hero-slogan{
+  padding:calc(128px + env(safe-area-inset-top)) 0 46px;
+  text-align:center;
+}
+.hero-slogan h1{
+  font-family:'Vazirmatn', ui-serif, Georgia, serif;
+  font-size:clamp(1.35rem,3.4vw,2.1rem);
+  font-weight:700;
+  font-style:italic;
+  letter-spacing:.2px;
+  line-height:1.5;
+  white-space:normal;
+  position:relative;
+  display:inline-block;
+  background:linear-gradient(100deg,var(--orange-dark),var(--red) 55%,var(--orange-dark));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero-slogan h1::before,
+.hero-slogan h1::after{
+  content:'';
+  display:block;
+  width:44px;height:2px;margin:0 auto 14px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.hero-slogan h1::after{margin:14px auto 0}
+@media (max-width:560px){
+  .hero-slogan{padding-top:calc(108px + env(safe-area-inset-top));padding-bottom:30px}
+  .hero-slogan h1{font-size:1.08rem}
+}
+
+/* elegant script heading — reads like handwritten calligraphy */
+.hero-italian-heading{
+  font-family:'Vazirmatn', sans-serif;
+  font-weight:800;
+  letter-spacing:.3px;
+  font-size:clamp(1.6rem,3.6vw,2.4rem);
+  line-height:1.3;
+  background:linear-gradient(100deg,var(--orange-dark),var(--red) 55%,var(--orange-dark));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  margin-bottom:18px;
+}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--glass-light);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border);
+  color:var(--orange-dark);
+  padding:8px 18px;border-radius:100px;font-weight:800;font-size:.82rem;
+  box-shadow:var(--shadow-glass);
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes page-fade-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.skeleton-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px}
+.skeleton-card{border-radius:var(--radius-lg);overflow:hidden;background:var(--glass-light);border:1px solid var(--glass-border-soft);box-shadow:var(--shadow-glass)}
+.skeleton-card .sk-media{height:190px;background:linear-gradient(100deg, rgba(124,103,80,.10) 30%, rgba(124,103,80,.22) 45%, rgba(124,103,80,.10) 60%);background-size:200% 100%;animation:sk-shimmer 1.5s ease-in-out infinite}
+.skeleton-card .sk-body{padding:22px;display:flex;flex-direction:column;gap:12px}
+.skeleton-card .sk-line{height:14px;border-radius:8px;background:linear-gradient(100deg, rgba(124,103,80,.10) 30%, rgba(124,103,80,.22) 45%, rgba(124,103,80,.10) 60%);background-size:200% 100%;animation:sk-shimmer 1.5s ease-in-out infinite}
+.skeleton-card .sk-line.w-60{width:60%}
+.skeleton-card .sk-line.w-90{width:90%}
+.skeleton-card .sk-line.w-40{width:40%;height:34px;border-radius:100px;margin-top:6px}
+@keyframes sk-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(36px) scale(.98);transition:opacity .8s var(--spring-soft), transform .8s var(--spring-soft)}
+.reveal.in{opacity:1;transform:translateY(0) scale(1)}
+.reveal-scale{opacity:0;transform:scale(.88);transition:opacity .7s var(--spring-soft), transform .7s var(--spring-soft)}
+.reveal-scale.in{opacity:1;transform:scale(1)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s var(--spring-soft), transform .8s var(--spring-soft)}
+[dir] .reveal-right{transform:translateX(-40px)}
+.reveal-right.in{opacity:1;transform:translateX(0)}
+.stagger > *{transition-delay:calc(var(--i,0) * 90ms)}
+
+/* ===========================================================
+   Menu / product cards
+=========================================================== */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px}
+.menu-sections{display:flex;flex-direction:column;gap:64px}
+.menu-category-section{scroll-margin-top:150px}
+.menu-category-title{font-size:1.5rem;font-weight:900;margin-bottom:24px;padding-right:14px;border-right:4px solid var(--orange)}
+
+/* segmented glass control, like iOS tab bar */
+.menu-tabs{
+  display:flex;gap:6px;overflow-x:auto;flex-wrap:nowrap;margin-bottom:38px;
+  position:sticky;top:calc(96px + env(safe-area-inset-top));z-index:40;padding:8px;
+  background:var(--glass-light);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-pill);
+  box-shadow:var(--shadow-glass);
+  -ms-overflow-style:none;scrollbar-width:none;
+}
+.menu-tabs::-webkit-scrollbar{display:none}
+.menu-tabs-indicator{
+  position:absolute;top:8px;bottom:8px;left:0;border-radius:var(--radius-pill);
+  background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)), var(--red);
+  box-shadow:0 6px 18px -8px rgba(229,72,60,.65), var(--glass-highlight);
+  transition:transform .45s var(--spring), width .45s var(--spring);
+  z-index:0;pointer-events:none;
+}
+.menu-tab{
+  padding:10px 22px;border-radius:var(--radius-pill);font-weight:800;font-size:.88rem;
+  border:1px solid transparent;color:var(--ink);background:transparent;
+  flex-shrink:0;white-space:nowrap;position:relative;z-index:1;
+  transition:color .35s var(--ease), transform .5s var(--spring);
+}
+.menu-tab:hover{color:var(--orange-dark)}
+.menu-tab.active{
+  color:#fff;
+  border-color:rgba(255,255,255,.4);
+}
+.pizza-card{
+  background:var(--glass-light);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;position:relative;box-shadow:var(--shadow-glass);
+}
+.pizza-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-glass-lg)}
+
+/* tall, mostly-uncovered photo — the info panel only takes the bottom
+   sliver of the card so the pizza itself stays the focal point */
+.pizza-card .media{
+  position:relative;overflow:hidden;aspect-ratio:4/5;
+  background:linear-gradient(135deg,var(--cream),var(--cream-2));
+  display:flex;align-items:center;justify-content:center;
+}
+.pizza-card .media img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .6s var(--ease), opacity .18s ease;will-change:transform;
+  transform:translateY(var(--parallax-y, 0px)) scale(var(--img-scale, 1));
+}
+.pizza-card .media img.swapping{opacity:0}
+.pizza-card:hover .media img{--img-scale:1.06}
+.pizza-card .media-emoji{font-size:5rem;position:relative;z-index:1}
+
+.card-overlay{
+  position:absolute;left:8px;right:8px;bottom:8px;z-index:2;
+  padding:12px 14px;border-radius:16px;
+  background:linear-gradient(165deg, rgba(30,20,10,.6), rgba(20,12,5,.78));
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 14px 34px -14px rgba(0,0,0,.55);
+  color:#fff;
+}
+
+/* floating AR badge — a prominent standalone pill sitting on the photo
+   itself (not tucked inside the bottom info panel), so it reads as its
+   own call-to-action rather than a small metadata chip */
+.badge-ar{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px 10px;border-radius:100px;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)), var(--green);
+  color:#fff;font-weight:800;font-size:.8rem;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  border:1px solid rgba(255,255,255,.45);
+  box-shadow:0 10px 26px -8px rgba(47,158,91,.65), inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+.overlay-top-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:10px}
+.overlay-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+  color:#fff;font-size:.68rem;font-weight:700;padding:5px 11px;border-radius:100px;
+  white-space:nowrap;
+}
+.overlay-name{font-size:1rem;font-weight:900;color:#fff}
+.overlay-desc{
+  color:rgba(255,255,255,.7);font-size:.78rem;line-height:1.5;
+  margin-bottom:8px;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+.overlay-price{
+  color:var(--gold);font-weight:900;font-size:.95rem;white-space:nowrap;
+  font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
+}
+.overlay-bottom-row{display:flex;align-items:stretch;gap:10px;margin-top:8px}
+.badge-ar{flex:1 1 100%;min-width:0}
+
+/* ---------- "اندازه" / "رنگ خمیر" picker rows on the card — label on
+   one side, controls on the other, so each stays a single tidy row ---------- */
+.pibo-picker-block{margin-bottom:6px;display:flex;flex-direction:column;gap:6px}
+.pibo-picker-row{display:flex;align-items:center;gap:10px}
+.pibo-picker-label{
+  flex:0 0 auto;color:rgba(255,255,255,.55);font-size:.66rem;font-weight:800;
+  white-space:nowrap;
+}
+.pibo-picker-row .size-picker,
+.pibo-picker-row .dough-picker{flex:1 1 auto;justify-content:flex-start}
+
+/* on wide screens keep cards from stretching too tall */
+@media (min-width:640px){
+  .pizza-card .media{aspect-ratio:4/5}
+}
+
+
+
+/* ===========================================================
+   Order section
+=========================================================== */
+.order-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:flex-start;
+  background:var(--glass-light);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:44px;
+  box-shadow:var(--shadow-glass-lg);
+}
+.order-form .field{margin-bottom:18px}
+.order-form label{display:block;font-weight:800;font-size:.9rem;margin-bottom:8px}
+.order-form input,.order-form textarea,.order-form select{
+  width:100%;padding:14px 16px;border-radius:16px;border:1px solid var(--glass-border);
+  background:rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  font-size:.95rem;transition:border-color .25s, background .25s;
+}
+.order-form input:focus,.order-form textarea:focus,.order-form select:focus{
+  border-color:var(--orange);background:#fff;
+}
+.order-form textarea{min-height:100px;resize:vertical}
+.order-form .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+
+
+.order-side h3{font-size:1.3rem;font-weight:900;margin-bottom:14px}
+.order-side p{color:var(--ink-soft);line-height:1.9;margin-bottom:20px;font-size:.94rem}
+.pick-list{display:flex;flex-wrap:wrap;gap:10px}
+.pick-chip{
+  padding:9px 16px;border:1px solid var(--glass-border);border-radius:100px;font-size:.85rem;font-weight:700;
+  background:rgba(255,255,255,.5);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+.pick-chip:hover{border-color:var(--orange);color:var(--orange-dark);background:rgba(255,255,255,.75)}
+
+/* ===========================================================
+   AR section
+=========================================================== */
+.ar-showcase{
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;
+}
+.ar-steps{display:flex;flex-direction:column;gap:22px}
+.ar-step{display:flex;gap:16px;align-items:flex-start}
+.ar-step .num{
+  width:42px;height:42px;border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)), var(--red);
+  color:#fff;border:1px solid rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;
+  font-family:'Vazirmatn',-apple-system,'Segoe UI',sans-serif;
+  box-shadow:var(--glass-highlight);
+}
+.ar-step h4{font-weight:800;margin-bottom:4px}
+.ar-step p{color:var(--ink-soft);font-size:.92rem;line-height:1.8}
+
+.ar-frame{
+  border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass-lg);aspect-ratio:3/4;
+  background:linear-gradient(160deg,var(--cream),var(--cream-2));
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.ar-frame .qr-box{
+  background:rgba(255,255,255,.75);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  padding:18px;border-radius:20px;box-shadow:var(--shadow-glass);
+}
+.ar-frame .qr-hint{position:absolute;bottom:22px;font-size:.8rem;font-weight:800;color:var(--ink-soft)}
+
+/* ===========================================================
+   FAQ
+=========================================================== */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{
+  border:1px solid var(--glass-border);border-radius:20px;overflow:hidden;
+  background:var(--glass-light);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  box-shadow:var(--shadow-glass);
+}
+.faq-item summary{
+  padding:18px 22px;font-weight:800;cursor:pointer;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';font-size:1.4rem;color:var(--red);transition:transform .4s var(--spring)}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item p{padding:0 22px 20px;color:var(--ink-soft);line-height:1.8;font-size:.92rem}
+
+/* ===========================================================
+   Contact / footer
+=========================================================== */
+.contact-band{
+  background:linear-gradient(120deg, rgba(229,72,60,.85), rgba(255,90,31,.85));
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  backdrop-filter:blur(30px) saturate(180%);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:var(--radius-lg);padding:64px 40px;text-align:center;color:#fff;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg), var(--glass-highlight);
+}
+.contact-band h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:900;margin-bottom:14px}
+.contact-band p{opacity:.95;margin-bottom:30px;font-size:1.02rem}
+.contact-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.contact-buttons .btn{background:rgba(255,255,255,.9);color:var(--ink)}
+
+footer{padding:60px 0 30px;background:var(--glass-dark-strong);-webkit-backdrop-filter:blur(30px) saturate(160%);backdrop-filter:blur(30px) saturate(160%);color:#fff;border-top:1px solid var(--glass-dark-border)}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-grid h4{font-weight:800;margin-bottom:16px;font-size:1rem}
+.footer-grid ul li{margin-bottom:10px}
+.footer-grid ul a{color:#cbbfae;font-size:.9rem;transition:.25s}
+.footer-grid ul a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:24px;display:flex;justify-content:space-between;color:#9d8f7d;font-size:.85rem;flex-wrap:wrap;gap:10px}
+
+.footer-social{display:flex;flex-direction:column;gap:12px}
+.footer-social a{display:flex;align-items:center;gap:10px;color:#cbbfae;font-size:.9rem;transition:.25s}
+.footer-social a:hover{color:var(--gold)}
+.footer-social a .ic{
+  width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.footer-social a .ic svg{width:16px;height:16px}
+
+/* ===========================================================
+   Floating quick-order button
+=========================================================== */
+.quick-order-fab{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120%);
+  z-index:90;opacity:0;transition:transform .5s var(--spring-soft), opacity .4s var(--ease);
+  box-shadow:var(--shadow-lg), var(--glass-highlight);
+}
+.quick-order-fab.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ===========================================================
+   Admin / login
+=========================================================== */
+.auth-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.auth-card{
+  width:100%;max-width:400px;
+  background:var(--glass-light-strong);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);border-radius:var(--radius-lg);
+  padding:40px 32px;box-shadow:var(--shadow-glass-lg);text-align:center;
+}
+.auth-card .mark{width:56px;height:56px;margin:0 auto 18px}
+.auth-card h1{font-size:1.5rem;font-weight:900;margin-bottom:8px}
+.auth-card p{color:var(--ink-soft);font-size:.9rem;margin-bottom:26px}
+.auth-card .field{position:relative;margin-bottom:16px}
+.auth-card input{
+  width:100%;padding:15px 16px;border-radius:16px;border:1px solid var(--glass-border);
+  background:rgba(255,255,255,.5);font-size:1rem;text-align:center;letter-spacing:2px;
+}
+.auth-card input:focus{border-color:var(--orange);background:#fff}
+.auth-error{color:var(--red);font-size:.85rem;font-weight:700;min-height:20px;margin-bottom:10px}
+.auth-card .btn{width:100%}
+
+.admin-shell{display:none;min-height:100vh}
+.admin-shell.show{display:block}
+.admin-top{
+  background:var(--glass-light-strong);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border-bottom:1px solid var(--glass-border);
+  padding:calc(18px + env(safe-area-inset-top)) 0 18px;position:sticky;top:0;z-index:20;
+}
+.admin-top .container{display:flex;justify-content:space-between;align-items:center}
+.admin-main{padding:40px 0 80px}
+.admin-panel{
+  background:var(--glass-light);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:30px;margin-bottom:28px;
+  box-shadow:var(--shadow-glass);
+}
+.admin-panel[data-publish-bar]{border:1.5px solid rgba(47,158,91,.55);background:rgba(243,251,246,.6)}
+.admin-panel[data-publish-bar].dirty{border-color:rgba(229,72,60,.55);background:rgba(253,242,240,.6)}
+.admin-panel h2{font-size:1.2rem;font-weight:900;margin-bottom:6px}
+.admin-panel .sub{color:var(--ink-soft);font-size:.88rem;margin-bottom:24px}
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
+.qr-tile{
+  border:1px solid var(--glass-border);border-radius:18px;padding:18px;text-align:center;
+  background:rgba(255,255,255,.4);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+.qr-tile img{margin:0 auto 12px;border-radius:12px;background:#fff;padding:8px}
+.qr-tile b{display:block;font-size:.9rem;margin-bottom:4px}
+.qr-tile span{font-size:.75rem;color:var(--ink-soft);word-break:break-all}
+.orders-table{width:100%;min-width:560px;border-collapse:collapse;font-size:.88rem}
+.orders-table th,.orders-table td{padding:12px 10px;text-align:right;border-bottom:1px solid var(--glass-border);white-space:nowrap}
+.orders-table th{color:var(--ink-soft);font-weight:800;font-size:.8rem}
+.orders-table td:nth-child(3){white-space:normal;min-width:140px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -6px;padding:0 6px}
+.orders-empty{text-align:center;color:var(--ink-soft);padding:30px 0;font-size:.9rem}
+.btn-sm{padding:9px 16px;font-size:.8rem;border-radius:12px}
+.table-actions{display:flex;gap:8px}
+
+/* ===========================================================
+   AR viewer page
+   Now matches the main site's warm cream/orange/gold "liquid
+   glass" palette instead of its own separate theme.
+=========================================================== */
+.ar-page{
+  min-height:100vh;display:flex;flex-direction:column;position:relative;color:var(--ink);
+  background:
+    radial-gradient(120% 90% at 15% 0%, rgba(255,90,31,.16), transparent 60%),
+    radial-gradient(120% 90% at 100% 100%, rgba(255,180,0,.14), transparent 55%),
+    linear-gradient(180deg, #2B1B0C 0%, #241608 55%, #180F06 100%);
+}
+.ar-page::before{
+  content:"";position:fixed;inset:0 0 auto 0;height:6px;z-index:5;
+  background:linear-gradient(90deg, var(--orange) 0 50%, var(--gold) 50% 100%);
+}
+.ar-page-top{
+  padding:22px 24px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--cream);
+  background:linear-gradient(180deg, rgba(24,15,6,.85), rgba(24,15,6,0));
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  backdrop-filter:blur(16px) saturate(160%);
+}
+.ar-page-top a{font-weight:800;display:flex;align-items:center;gap:8px;color:var(--gold)}
+#share-btn{color:var(--cream) !important}
+.ar-viewer-wrap{
+  flex:1;position:relative;min-height:56vh;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.ar-viewer-wrap::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(60% 42% at 50% 38%, rgba(242,183,5,.16), transparent 70%),
+    radial-gradient(90% 60% at 50% 100%, rgba(200,52,31,.20), transparent 70%);
+}
+.ar-viewer-wrap::after{
+  content:"🍕";position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  font-size:min(48vw,220px);line-height:1;opacity:.06;filter:blur(1px);pointer-events:none;
+}
+model-viewer{width:100%;height:100%;--poster-color:transparent}
+.ar-page-info{
+  margin:0 18px 22px;padding:22px 24px 26px;color:var(--cream);text-align:center;
+  background:linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  border:1px solid rgba(242,183,5,.35);
+  border-radius:28px;
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  backdrop-filter:blur(22px) saturate(170%);
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.ar-page-info h1{font-size:1.35rem;font-weight:900;margin-bottom:8px;color:var(--gold);letter-spacing:.2px}
+.ar-page-info p{color:rgba(255,244,228,.78);font-size:.88rem;max-width:420px;margin:0 auto}
+.ar-fallback{
+  position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;
+  gap:16px;color:var(--cream);text-align:center;padding:30px;z-index:2;
+}
+.ar-fallback #fallback-title{color:var(--gold);font-size:1.15rem}
+.ar-fallback.show{display:flex}
+.ar-fallback .fallback-emoji{
+  font-size:3.4rem;line-height:1;
+  filter:drop-shadow(0 12px 26px rgba(0,0,0,.5));
+  animation:ar-float 2.6s ease-in-out infinite;
+}
+@keyframes ar-float{
+  0%,100%{transform:translateY(0) rotate(-4deg)}
+  50%{transform:translateY(-10px) rotate(4deg)}
+}
+.ar-launch-btn{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:6;
+  display:flex;align-items:center;gap:10px;
+  padding:15px 30px;border-radius:100px;
+  background:linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0)), var(--orange);
+  color:#fff;font-weight:800;font-size:.95rem;
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 16px 34px -12px rgba(255,90,31,.55), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.ar-launch-btn:active{transform:translateX(-50%) translateY(1px)}
+.ar-launch-btn .ar-launch-ic{font-size:1.15rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+.ar-launch-btn{animation:ar-invite 2.4s ease-in-out infinite}
+@keyframes ar-invite{
+  0%,100%{box-shadow:0 16px 34px -12px rgba(255,90,31,.55), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 0 rgba(255,90,31,.5)}
+  50%{box-shadow:0 16px 34px -12px rgba(255,90,31,.7), inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,90,31,0)}
+}
+
+
+/* ===========================================================
+   (9) generic gentle "shake" for invalid/blocked actions — reused
+   anywhere a click can't proceed (wrong password, disabled action, …)
+=========================================================== */
+.shake-x{animation:shake-x .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes shake-x{
+  10%,90%{transform:translateX(-1px)}
+  20%,80%{transform:translateX(2px)}
+  30%,50%,70%{transform:translateX(-5px)}
+  40%,60%{transform:translateX(5px)}
+}
+
+/* ===========================================================
+   iOS 26 switch (toggle) — spring thumb slide, like Settings.app
+=========================================================== */
+/* ---------- pizza size / dough-color picker (admin panel) ---------- */
+.size-row{
+  background:var(--cream);border:1.5px solid var(--line);border-radius:16px;
+  padding:14px 16px;margin-bottom:14px;
+}
+.size-row .field{margin-bottom:12px}
+.size-row-head{display:flex;align-items:center;justify-content:space-between;font-weight:900;margin-bottom:12px}
+.size-extra{margin-top:2px}
+.size-extra summary{
+  cursor:pointer;font-size:.82rem;font-weight:700;color:var(--ink-soft);
+  padding:6px 2px;list-style:none;user-select:none;
+}
+.size-extra summary::-webkit-details-marker{display:none}
+.size-extra summary::before{content:"◀ "; display:inline-block;transition:transform .2s;font-size:.7em}
+.size-extra[open] summary::before{transform:rotate(-90deg)}
+.size-extra summary:hover{color:var(--orange-dark)}
+.size-extra .field:first-of-type{margin-top:10px}
+.dough-color-picker{display:flex;gap:10px;flex-wrap:wrap}
+.dough-swatch{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  background:#fff;border:1.5px solid var(--line);border-radius:100px;
+  padding:8px 14px 8px 10px;font-size:.85rem;font-weight:700;color:var(--ink);
+  transition:border-color .25s, box-shadow .25s;
+}
+.dough-swatch input{position:absolute;opacity:0;width:0;height:0}
+.dough-swatch span{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid rgba(0,0,0,.12);
+  background:var(--dough-color, #F1DFB2);
+}
+.dough-swatch:has(input:checked){border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,90,31,.15)}
+
+/* ---------- admin: "رنگ‌های اصلی خمیر" management list ---------- */
+.dough-manage-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.dough-manage-row{
+  display:flex;align-items:center;gap:12px;
+  background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;
+}
+.dough-manage-row input[type=color]{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);padding:0;cursor:pointer;flex-shrink:0;background:none;
+}
+.dough-manage-row input[type=text]{
+  flex:1;min-width:100px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:.9rem;
+}
+.dough-manage-row .dough-manage-key{color:var(--ink-soft);font-size:.75rem;white-space:nowrap}
+.dough-manage-row button{
+  flex-shrink:0;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+  background:#fff;color:var(--red);font-weight:900;cursor:pointer;
+}
+.ios-switch-sm{width:40px;height:24px}
+.ios-switch-sm .ios-switch-track::before{width:20px;height:20px}
+.ios-switch-sm input:checked + .ios-switch-track::before{transform:translateX(-16px)}
+.size-summary-row{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--ink-soft);margin-bottom:2px}
+.size-summary-row .dough-dot-group{display:inline-flex;gap:3px}
+.size-summary-row .dough-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.12)}
+
+/* ---------- pizza size picker (customer menu card) — pill toggle,
+   like a segmented control: inactive = translucent glass chip,
+   active = solid orange with a check mark ---------- */
+.size-picker{display:flex;gap:6px;flex-wrap:wrap}
+.size-chip{
+  display:inline-flex;align-items:center;gap:5px;cursor:pointer;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+  color:#fff;font-size:.74rem;font-weight:700;padding:6px 12px;border-radius:100px;
+  transition:background .25s, border-color .25s, box-shadow .25s;
+}
+.size-chip-check{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:13px;height:13px;border-radius:50%;font-size:.55rem;line-height:1;
+  background:rgba(255,255,255,.18);opacity:0;transform:scale(.6);
+  transition:opacity .2s, transform .2s, background .2s;
+}
+.size-chip.active{
+  background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,0)), var(--orange);
+  border-color:var(--orange);
+  box-shadow:0 8px 18px -10px rgba(255,90,31,.65);
+}
+.size-chip.active .size-chip-check{opacity:1;transform:scale(1);background:#fff;color:var(--orange)}
+
+/* ---------- dough-color swatches — independent from the diameter choice,
+   whichever colors the admin ticked for the current size are clickable
+   here; the picked one gets a bright ring ---------- */
+.dough-picker{display:flex;gap:7px;align-items:center}
+.dough-dot-lg{
+  width:17px;height:17px;border-radius:50%;flex-shrink:0;cursor:pointer;
+  border:2px solid rgba(255,255,255,.35);padding:0;margin:0;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+  transition:border-color .2s, transform .2s, box-shadow .2s, opacity .2s;
+  opacity:.55;transform:scale(.9);
+}
+.dough-dot-lg:hover{opacity:.8}
+.dough-dot-lg.active{
+  opacity:1;transform:scale(1);
+  border-color:#fff;
+  box-shadow:0 0 0 2px rgba(255,255,255,.18), 0 2px 8px rgba(0,0,0,.3);
+}
+
+.ios-switch{position:relative;display:inline-flex;width:51px;height:31px;flex-shrink:0;cursor:pointer}
+.ios-switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.ios-switch-track{
+  position:absolute;inset:0;border-radius:100px;
+  background:rgba(124,103,80,.28);
+  transition:background .3s var(--ease);
+}
+.ios-switch-track::before{
+  content:"";position:absolute;top:2px;right:2px;width:27px;height:27px;border-radius:50%;
+  background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.25);
+  transition:transform .35s var(--spring);
+}
+.ios-switch input:checked + .ios-switch-track{background:var(--green)}
+.ios-switch input:checked + .ios-switch-track::before{transform:translateX(-20px)}
+.ios-switch input:active + .ios-switch-track::before{width:31px}
+
+/* ===========================================================
+   Responsive
+=========================================================== */
+@media (max-width:980px){
+  .order-wrap{grid-template-columns:1fr}
+  .ar-showcase{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:720px){
+  .nav-links,.nav-actions .btn-outline{display:none}
+  .menu-toggle{display:flex}
+  .footer-grid{grid-template-columns:1fr}
+  .order-form .grid-2{grid-template-columns:1fr}
+  .site-header .container{padding:10px 18px}
+  :root{
+    --glass-blur: blur(14px) saturate(150%);
+    --glass-blur-soft: blur(10px) saturate(140%);
+  }
+  body::before{ filter:blur(30px); }
+}
+
+/* mobile nav drawer — full glass sheet, like iOS Control Center */
+.mobile-nav{
+  position:fixed;inset:10px 10px auto 10px;z-index:200;display:flex;flex-direction:column;
+  padding:calc(20px + env(safe-area-inset-top)) 22px 28px;gap:6px;
+  border-radius:var(--radius-lg);
+  background:var(--glass-light-strong);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow-glass-lg);
+  transform:translateY(-140%) scale(.96);opacity:0;
+  transition:transform .55s var(--spring-soft), opacity .4s var(--ease);
+  max-height:calc(100vh - 20px);
+  overflow-y:auto;
+}
+.mobile-nav.open{transform:translateY(0) scale(1);opacity:1}
+.mobile-nav-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--glass-border)}
+.mobile-nav .close-mn{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.6);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--ink);
+}
+.mobile-nav a:not(.mn-cta){
+  display:flex;align-items:center;gap:14px;font-size:1.15rem;font-weight:800;
+  padding:16px 14px;border-radius:18px;color:var(--ink);transition:background .25s var(--ease);
+}
+.mobile-nav a:not(.mn-cta):hover, .mobile-nav a:not(.mn-cta):active{background:rgba(255,255,255,.55)}
+.mn-ic{
+  width:38px;height:38px;border-radius:12px;flex-shrink:0;
+  background:rgba(255,255,255,.6);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;font-size:1.05rem;
+}
+.mn-cta{margin-top:18px}
+
+/* ===========================================================
+   Preloader — full logo mark (kept intact, never sliced),
+   gently scales/fades in, breathes with a soft pulse+glow
+   loop, then the whole thing fades away when the page is ready
+=========================================================== */
+.preloader{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  background:#F26D20;
+  transition:opacity .6s var(--ease);
+}
+.preloader.hide{opacity:0;pointer-events:none}
+
+.preloader-logo-wrap{
+  position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  width:min(62vw,300px);
+  animation:pl-logo-in 1s var(--spring-soft, cubic-bezier(.34,1.56,.64,1)) both;
+}
+
+.preloader-logo{
+  width:100%;
+  height:auto;
+  display:block;
+  filter:drop-shadow(0 0 0 rgba(255,255,255,0));
+  animation:pl-logo-breathe 1.8s ease-in-out .95s infinite;
+}
+
+@keyframes pl-logo-in{
+  0%{ opacity:0; transform:scale(.55) rotate(-6deg); filter:blur(6px); }
+  60%{ opacity:1; filter:blur(0); }
+  100%{ opacity:1; transform:scale(1) rotate(0deg); filter:blur(0); }
+}
+
+@keyframes pl-logo-breathe{
+  0%,100%{
+    transform:scale(1);
+    filter:drop-shadow(0 0 0 rgba(255,255,255,.0));
+  }
+  50%{
+    transform:scale(1.045);
+    filter:drop-shadow(0 0 18px rgba(255,255,255,.55));
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .preloader-logo-wrap{animation:none;opacity:1;transform:none}
+  .preloader-logo{animation:none;filter:none}
+}
+
+
+/* ===========================================================
+   Android performance mode (html.is-android — set in <head>)
+   -----------------------------------------------------------
+   iOS keeps the full liquid-glass look untouched. On Android
+   Chrome, live backdrop-filter blur layers and the animated,
+   blurred full-screen background are what cause the heavy lag,
+   so they are replaced with equivalent, more opaque static
+   surfaces — same colours and shapes, no per-frame blur work.
+=========================================================== */
+html.is-android *,
+html.is-android *::before,
+html.is-android *::after{
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+
+/* background mesh: no animated hue-rotate / background-position,
+   no 50px blur on a full-screen fixed layer */
+html.is-android body::before{
+  inset:0;
+  filter:none !important;
+  animation:none !important;
+}
+
+/* surfaces that used blur now get a more opaque tint so text behind
+   them (scrolling content) stays unreadable-through, like frosted glass */
+html.is-android .site-header .container{background:rgba(255,250,242,.86)}
+html.is-android .site-header.scrolled .container{background:rgba(255,250,242,.94)}
+html.is-android .btn-outline{background:rgba(255,255,255,.78)}
+html.is-android .btn-outline:hover{background:rgba(255,255,255,.9)}
+html.is-android .eyebrow{background:rgba(255,255,255,.78)}
+html.is-android .menu-tabs{background:rgba(255,250,242,.9)}
+html.is-android .card-overlay{background:linear-gradient(165deg, rgba(30,20,10,.76), rgba(20,12,5,.9))}
+html.is-android .faq-item{background:rgba(255,255,255,.7)}
+html.is-android .order-wrap{background:rgba(255,255,255,.7)}
+html.is-android .order-form input,
+html.is-android .order-form textarea,
+html.is-android .order-form select{background:rgba(255,255,255,.8)}
+html.is-android .pick-chip{background:rgba(255,255,255,.75)}
+html.is-android .mobile-nav{background:rgba(255,250,242,.96)}
+html.is-android .auth-card{background:rgba(255,250,242,.92)}
+html.is-android .admin-top{background:rgba(255,250,242,.94)}
+html.is-android .admin-panel{background:rgba(255,255,255,.72)}
+html.is-android .admin-panel[data-publish-bar]{background:rgba(243,251,246,.85)}
+html.is-android .admin-panel[data-publish-bar].dirty{background:rgba(253,242,240,.85)}
+html.is-android .qr-tile{background:rgba(255,255,255,.65)}
+html.is-android .ar-frame .qr-box{background:rgba(255,255,255,.9)}
+html.is-android .contact-band{background:linear-gradient(120deg, rgba(229,72,60,.95), rgba(255,90,31,.95))}
+
+/* loading skeleton shimmer repaints every frame — keep the placeholder, drop the motion */
+html.is-android .skeleton-card .sk-media,
+html.is-android .skeleton-card .sk-line{animation:none}
+
+/* AR page: the pulsing "invite" ring used to animate box-shadow (a repaint
+   every frame on top of the live WebGL canvas). Same ring, now drawn with
+   transform + opacity only, which stays on the GPU. */
+html.is-android .ar-launch-btn{animation:none}
+html.is-android .ar-launch-btn::after{
+  content:"";position:absolute;inset:0;border-radius:100px;z-index:-1;pointer-events:none;
+  box-shadow:0 0 0 7px rgba(255,90,31,.5);
+  animation:ar-invite-ring 2.4s ease-in-out infinite;
+}
+@keyframes ar-invite-ring{
+  0%,100%{transform:scale(.97);opacity:.85}
+  50%{transform:scale(1.1);opacity:0}
+}

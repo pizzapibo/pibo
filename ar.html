@@ -7,8 +7,28 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <title>مشاهده سه‌بعدی | پیبو</title>
 
+<script>(function(){try{if(/Android/i.test(navigator.userAgent||""))document.documentElement.classList.add("is-android");}catch(e){}})();</script>
 <link rel="stylesheet" href="css/style.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<script>
+  // If the primary CDN is unreachable (common on filtered networks) try the others.
+  (function(){
+    var urls = [
+      "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js",
+      "https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
+    ];
+    var i = 0;
+    window.__pibo_mvFallback = function(){
+      if(window.customElements && customElements.get("model-viewer")) return;
+      if(i >= urls.length) return;
+      var s = document.createElement("script");
+      s.type = "module";
+      s.src = urls[i++];
+      s.onerror = window.__pibo_mvFallback;
+      document.head.appendChild(s);
+    };
+  })();
+</script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js" onerror="window.__pibo_mvFallback && window.__pibo_mvFallback()"></script>
 </head>
 <body>
 
@@ -33,7 +53,7 @@
       auto-rotate-delay="1200"
       rotation-per-second="18deg"
       ar
-      ar-modes="webxr scene-viewer quick-look"
+      ar-modes="scene-viewer webxr quick-look"
       ar-scale="fixed"
       ar-placement="floor"
       shadow-intensity="1"
@@ -113,7 +133,7 @@
         fallbackTitle.textContent = "در حال بارگذاری کتابخانه سه‌بعدی…";
         await Promise.race([
           customElements.whenDefined("model-viewer"),
-          new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 8000))
+          new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 15000))
         ]).catch(() => {});
 
         fallbackTitle.textContent = "در حال رندر مدل سه‌بعدی…";
@@ -147,7 +167,7 @@
       if(typeof pibo_loadDoughColors === "function") await pibo_loadDoughColors();
       const libraryReady = Promise.race([
         customElements.whenDefined("model-viewer"),
-        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 8000))
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 15000))
       ]);
 
       let product = null;
@@ -257,8 +277,18 @@
       }else if(isAndroid && glbUrl){
         // Scene Viewer — triggered by a Google-documented intent:// link,
         // independent of model-viewer's own AR button/rendering state.
-        const fallbackUrl = encodeURIComponent(location.href);
-        const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(glbUrl)}&mode=ar_only#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=${fallbackUrl};end;`;
+        // Google's documented Scene Viewer intent. The handler package is the
+        // Google app (not com.google.ar.core), otherwise Chrome can't resolve it.
+        // ar_preferred = AR when supported, otherwise the 3D viewer instead of failing.
+        const sceneParams = new URLSearchParams({
+          file: glbUrl,
+          mode: "ar_preferred",
+          resizable: "false",
+          title: product.name || "PIBO",
+          link: location.href
+        });
+        const fallbackUrl = encodeURIComponent(location.href.split("#")[0] + "#pibo-no-ar-fallback");
+        const intentUrl = `intent://arvr.google.com/scene-viewer/1.0?${sceneParams.toString()}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${fallbackUrl};end;`;
         addArButton(intentUrl, "مشاهده در فضای واقعی (AR)", false);
       }
 
@@ -280,7 +310,7 @@
       const renderResult = Promise.race([
         new Promise(res => viewer.addEventListener("load", () => res(true), { once: true })),
         new Promise(res => viewer.addEventListener("error", () => res(false), { once: true })),
-        new Promise(res => setTimeout(() => res(false), 15000))
+        new Promise(res => setTimeout(() => res(false), 60000))
       ]);
       viewer.setAttribute("src", glbUrl);
       if(usdzUrl) viewer.setAttribute("ios-src", usdzUrl + "#allowsContentScaling=0");
@@ -289,6 +319,11 @@
 
       if(!renderedOk){
         viewer.style.display = "none";
+        // if it was only slow (not broken), show it as soon as it does finish loading
+        viewer.addEventListener("load", () => {
+          viewer.style.display = "block";
+          fallback.classList.remove("show");
+        }, { once: true });
         if(arButtonReady){
           // in-page preview failed on this device, but the native AR
           // launcher above works independently of it — show a friendly
