@@ -423,14 +423,14 @@
       "desc": "",
       "price": 250000,
       "emoji": "🍟",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/fries/fries.webp",
       "diameter": null,
-      "arEnabled": true,
+      "arEnabled": false,
       "hasSizes": false,
       "sizes": [],
-      "glb": "models/classic-fries.glb",
-      "usdz": "models/classic-fries.usdz",
-      "order": 5
+      "glb": "",
+      "usdz": "",
+      "order": 7
     },
     "cola": {
       "name": "کولا",
