@@ -198,7 +198,7 @@
       "desc": "بيكن ايرلندى، سس گوجه، موزارلا، قارچ, فلفل دلمه، زيتون",
       "price": 940000,
       "emoji": "🍽️",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.webp",
       "diameter": null,
       "arEnabled": true,
       "hasSizes": true,
@@ -228,7 +228,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
-      "order": 66
+      "order": 74
     },
     "pepperoni": {
       "name": "پپرونی",
@@ -236,7 +236,7 @@
       "desc": "پپرونی، سس مخصوص پيبو ،موزارلا، ،فلفل هالوپینو",
       "price": 760000,
       "emoji": "🍽️",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.webp",
       "diameter": null,
       "arEnabled": true,
       "hasSizes": true,
@@ -266,7 +266,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.usdz",
-      "order": 68
+      "order": 77
     },
     "buffalo-chicken": {
       "name": "بوفالو چیکن",
@@ -453,7 +453,7 @@
       "desc": "كدو گريل شده, بادمجان گريل شده، سس پستو، موزارلا، قارچ، گوجه گيلاسى، فلفل\nدلمه، زيتون",
       "price": 740000,
       "emoji": "🍽️",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.webp",
       "diameter": null,
       "arEnabled": true,
       "hasSizes": true,
@@ -485,7 +485,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.usdz",
-      "order": 70
+      "order": 76
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -508,7 +508,7 @@
       "desc": "بيكن ايرلندی، سس خامه، موزارلا, قارچ, فلفل دلمه، زيتون",
       "price": 960000,
       "emoji": "🍽️",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.webp",
       "diameter": null,
       "arEnabled": true,
       "hasSizes": true,
@@ -538,7 +538,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
-      "order": 67
+      "order": 75
     },
     "salamy": {
       "name": "سالامی",
