@@ -266,7 +266,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.usdz",
-      "order": 74
+      "order": 73
     },
     "buffalo-chicken": {
       "name": "بوفالو چیکن",
@@ -576,7 +576,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 73
+      "order": 74
     },
     "garlic-bread": {
       "name": "گارلیک برد",
