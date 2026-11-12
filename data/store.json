@@ -150,7 +150,7 @@
       ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 72
+      "order": 77
     },
     "margherita": {
       "name": "مارگاریتا",
@@ -190,7 +190,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 71
+      "order": 76
     },
     "misto-speciale": {
       "name": "میستو روسو",
@@ -228,7 +228,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
-      "order": 74
+      "order": 71
     },
     "pepperoni": {
       "name": "پپرونی",
@@ -266,7 +266,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.usdz",
-      "order": 77
+      "order": 74
     },
     "buffalo-chicken": {
       "name": "بوفالو چیکن",
@@ -304,7 +304,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.usdz",
-      "order": 73
+      "order": 69
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -405,17 +405,17 @@
     "pibo-signature": {
       "name": "پیبو سیگنیچر",
       "category": "پیش غذا",
-      "desc": "سیب‌زمینی|قارچ‌ و پنیر|بیکن",
+      "desc": "سیب‌زمینی، قارچ‌ و پنیر، بیکن ایرلندی",
       "price": 480000,
       "emoji": "🍟",
-      "image": "",
+      "image": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/signature/signature.webp",
       "diameter": null,
-      "arEnabled": true,
+      "arEnabled": false,
       "hasSizes": false,
       "sizes": [],
       "glb": "models/pibo-signature.glb",
       "usdz": "models/pibo-signature.usdz",
-      "order": 3
+      "order": 7
     },
     "classic-fries": {
       "name": "کلاسیک فرایز",
@@ -430,7 +430,7 @@
       "sizes": [],
       "glb": "",
       "usdz": "",
-      "order": 7
+      "order": 8
     },
     "cola": {
       "name": "کولا",
@@ -485,7 +485,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.usdz",
-      "order": 76
+      "order": 75
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -538,7 +538,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
-      "order": 75
+      "order": 72
     },
     "salamy": {
       "name": "سالامی",
@@ -576,7 +576,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 69
+      "order": 73
     },
     "garlic-bread": {
       "name": "گارلیک برد",
