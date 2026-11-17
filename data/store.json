@@ -36,7 +36,7 @@
       ],
       "glb": "models/truffle-chicken.glb",
       "usdz": "models/truffle-chicken.usdz",
-      "order": 59
+      "order": 71
     },
     "garlic-steak": {
       "name": "گارلیک استیک",
@@ -74,7 +74,7 @@
       ],
       "glb": "models/garlic-steak.glb",
       "usdz": "models/garlic-steak.usdz",
-      "order": 55
+      "order": 56
     },
     "smoky-beef": {
       "name": "میت لاورز",
@@ -112,7 +112,7 @@
       ],
       "glb": "models/smoky-beef.glb",
       "usdz": "models/smoky-beef.usdz",
-      "order": 58
+      "order": 59
     },
     "pibo-chef-special": {
       "name": "موناکو",
@@ -150,7 +150,7 @@
       ],
       "glb": "models/pibo-chef-special.glb",
       "usdz": "models/pibo-chef-special.usdz",
-      "order": 77
+      "order": 78
     },
     "margherita": {
       "name": "مارگاریتا",
@@ -190,7 +190,7 @@
       ],
       "glb": "models/margherita.glb",
       "usdz": "models/margherita.usdz",
-      "order": 76
+      "order": 77
     },
     "misto-speciale": {
       "name": "میستو روسو",
@@ -228,7 +228,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
-      "order": 71
+      "order": 72
     },
     "pepperoni": {
       "name": "پپرونی",
@@ -266,10 +266,10 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/pepperoni/pepperoni.usdz",
-      "order": 73
+      "order": 74
     },
     "buffalo-chicken": {
-      "name": "بوفالو چیکن",
+      "name": "ترافل چیکن",
       "category": "ایتالیایی",
       "desc": "مرغ مرينيت شده، موزارلا، سس\nبوفالو، فلفل هالوپينو",
       "price": 745000,
@@ -304,7 +304,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/chiken%20buffalo/chiken%20buffalo.usdz",
-      "order": 69
+      "order": 55
     },
     "pesto-turkey": {
       "name": "pesto turkey",
@@ -485,7 +485,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/vegeterian/vegeterian.usdz",
-      "order": 75
+      "order": 76
     },
     "آب-معدنی": {
       "name": "آب معدنی",
@@ -538,7 +538,7 @@
       ],
       "glb": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.glb",
       "usdz": "https://pub-18dee76617da4ac39db0e1e9161b3c8b.r2.dev/misto/misto.usdz",
-      "order": 72
+      "order": 73
     },
     "salamy": {
       "name": "سالامی",
@@ -576,7 +576,7 @@
       ],
       "glb": "models/salamy.glb",
       "usdz": "models/salamy.usdz",
-      "order": 74
+      "order": 75
     },
     "garlic-bread": {
       "name": "گارلیک برد",
@@ -632,7 +632,7 @@
       ],
       "glb": "models/pesto-steak.glb",
       "usdz": "models/pesto-steak.usdz",
-      "order": 56
+      "order": 58
     },
     "fanta": {
       "name": "فانتا",
