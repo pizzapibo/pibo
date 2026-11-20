@@ -436,7 +436,7 @@
       "name": "کولا",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 90000,
+      "price": 95000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -445,7 +445,7 @@
       "sizes": [],
       "glb": "models/cola.glb",
       "usdz": "models/cola.usdz",
-      "order": 8
+      "order": 11
     },
     "vegetarian": {
       "name": "وجترین",
@@ -500,7 +500,7 @@
       "sizes": [],
       "glb": "",
       "usdz": "",
-      "order": 11
+      "order": 14
     },
     "misto-bianco": {
       "name": "میستو بیانکو",
@@ -638,7 +638,7 @@
       "name": "فانتا",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 90000,
+      "price": 95000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -647,13 +647,13 @@
       "sizes": [],
       "glb": "models/fanta.glb",
       "usdz": "models/fanta.usdz",
-      "order": 10
+      "order": 13
     },
     "sprite": {
       "name": "اسپرایت",
       "category": "نوشیدنی",
       "desc": "",
-      "price": 90000,
+      "price": 95000,
       "emoji": "🥤",
       "image": "",
       "diameter": null,
@@ -662,7 +662,7 @@
       "sizes": [],
       "glb": "models/sprite.glb",
       "usdz": "models/sprite.usdz",
-      "order": 9
+      "order": 12
     }
   },
   "settings": {
