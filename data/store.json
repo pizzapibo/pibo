@@ -500,7 +500,7 @@
       "sizes": [],
       "glb": "",
       "usdz": "",
-      "order": 14
+      "order": 16
     },
     "misto-bianco": {
       "name": "میستو بیانکو",
@@ -663,6 +663,36 @@
       "glb": "models/sprite.glb",
       "usdz": "models/sprite.usdz",
       "order": 12
+    },
+    "لیموناد": {
+      "name": "لیموناد",
+      "category": "نوشیدنی",
+      "desc": "",
+      "price": 95000,
+      "emoji": "🥤",
+      "image": "",
+      "diameter": null,
+      "arEnabled": false,
+      "hasSizes": false,
+      "sizes": [],
+      "glb": "models/لیموناد.glb",
+      "usdz": "models/لیموناد.usdz",
+      "order": 14
+    },
+    "کولا-زیرو": {
+      "name": "کولا زیرو",
+      "category": "نوشیدنی",
+      "desc": "",
+      "price": 95000,
+      "emoji": "🥤",
+      "image": "",
+      "diameter": null,
+      "arEnabled": false,
+      "hasSizes": false,
+      "sizes": [],
+      "glb": "",
+      "usdz": "",
+      "order": 15
     }
   },
   "settings": {
